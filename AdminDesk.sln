@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDesk", "AdminDesk\AdminDesk.csproj", "{D3FC7B05-5839-4E9B-BD1C-9920BFE66BD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{6D833AB4-1F75-4234-BDE2-616720682217}"
+	ProjectSection(SolutionItems) = preProject
+		startDb.sh = startDb.sh
+		build.cmd = build.cmd
+		build.sh = build.sh
+		Dockerfile = Dockerfile
+		startDb.cmd = startDb.cmd
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3FC7B05-5839-4E9B-BD1C-9920BFE66BD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FC7B05-5839-4E9B-BD1C-9920BFE66BD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FC7B05-5839-4E9B-BD1C-9920BFE66BD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FC7B05-5839-4E9B-BD1C-9920BFE66BD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B60E3342-9630-426E-86ED-3A6828077DCB}
+	EndGlobalSection
+EndGlobal
