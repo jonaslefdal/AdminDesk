@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["bacit-dotnet.MVC", "bacit-dotnet.MVC/"]
+COPY ["AdminDesk", "AdminDesk/"]
 RUN ls /src
-WORKDIR "/src/bacit-dotnet.MVC/"
-RUN ls "/src/bacit-dotnet.MVC/"
+WORKDIR "/src/AdminDesk/"
+RUN ls "/src/AdminDesk/"
 RUN dotnet restore 
 RUN dotnet build -c Release  --no-restore
 
@@ -20,4 +20,4 @@ RUN dotnet publish -c Release -o /app/publish  --no-restore
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "bacit-dotnet.MVC.dll"]
+ENTRYPOINT ["dotnet", "AdminDesk.dll"]

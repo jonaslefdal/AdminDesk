@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{
 		build.sh = build.sh
 		Dockerfile = Dockerfile
 		startDb.cmd = startDb.cmd
+		createdb.sql = createdb.sql
 	EndProjectSection
 EndProject
 Global

@@ -1,100 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
 <head>
-
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            color: #313638;
-        }
-
-        .over {
-            display: flex;
-            border: 2px solid black;
-            height: 500px;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 1%;
-        }
-
-        .rad1 {
-            flex-direction: column;
-            border: 1px solid black;
-            width: 25%;
-        }
-
-        .rad2 {
-            flex-direction: row;
-            border: 1px solid black;
-            width: 45%;
-        }
-
-        .rad3 {
-            flex-direction: row;
-            border: 1px solid black;
-            width: 10%;
-        }
-
-        .rad4 {
-            flex-direction: row;
-            border: 1px solid black;
-            width: 10%;
-        }
-
-        .rad5 {
-            flex-direction: row;
-            border: 1px solid black;
-            width: 10%;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            border: 0.5px solid black;
-            text-align: start;
-            font-weight: 400;
-            padding: 1px;
-        }
-
-        
-    </style>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
 </head>
+<body class="start-page">
 
-<body>
 
-    <div class="over">
 
-        <div class="rad1"></div>
-        <div class="rad2">
-            Sjekk punkter<ul>
-                <li>Sjekk clutch lameller for slitasje</li>
-                <li>Sjekk bremser. Bånd/Pal</li>
-                <li>Sjekk lager for trommel</li>
-                <li>Sjekk PTO og opplagring</li>
-                <li>Sjekk kjedestrammer</li>
-                <li>Sjekk wire</li>
-                <li>Sjekk pinion lager</li>
-                <li>Sjekk kile på kjedehjul</li>
 
-            </ul>
+
+    <div class="blokk">
+
+        <div class="Top">
+            NøstedAS
+
         </div>
-        <div class="rad3">OK</div>
-        <div class="rad4">Bør skiftes</div>
-        <div class="rad5">Defekt</div>
+        <div class="TopMid">
+            <div style="color: rgb(122, 176, 195)"> Alt handler om </div> koblinger
 
+        </div>
 
-
-
+        <div class="Bottom">
+            <a asp-area="" asp-controller="Dyrehage" asp-action="Index"><div class="TextToSite">Serviceordre</div></a>
+            <a asp-area="" asp-controller="Ordre" asp-action="Index"><div class="TextToSite">Serviceordre</div></a>
+            <a asp-area="" asp-controller="Iben" asp-action="Index"><div class="TextToSite">Serviceordre</div></a>
+            <a asp-area="" asp-controller="Qwer" asp-action="Index"><div class="TextToSite">Serviceordre</div></a>
+        </div>
     </div>
-
-
 </body>
 

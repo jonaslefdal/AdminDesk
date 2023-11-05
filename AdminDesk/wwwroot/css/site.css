@@ -1,22 +1,91 @@
 ﻿html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+    body.start-page {
+        background-color: black;
+        background-image: url('Nostedbilde.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+.blokk {
+    display: flex;
+    flex-direction: column;
+    font-family: Robotto;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 10rem;
+    color: white;
+    
+}
+
+
+.Top {
+    font-size: 4rem;
+    text-align: center;
+    animation: pop-in 1s ease-out;
+}
+
+@keyframes pop-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.TopMid {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.Bottom {
+    align-self: center;
+    margin: 3rem;
+    font-size: 1.75rem;
+    text-decoration: none;
+}
+
+.TextToSite {
+    margin: 2rem;
+    width: 70rem;
+    text-align: center;
+    padding: 1.25rem;
+    background: #101820;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+    .TextToSite:hover {
+        background-color: #e7792c;
+        cursor: pointer;
+    }
+
+.Bottom a {
+    text-decoration: none;
+ }
+
