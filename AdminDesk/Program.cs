@@ -16,7 +16,7 @@ public class Program
 
         SetupDataConnections(builder);
 
-        SetupAuthentication(builder);
+
 
         var app = builder.Build();
 
@@ -32,7 +32,7 @@ public class Program
 
         app.UseRouting();
 
-        UseAuthentication(app);
+
 
         app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
         app.MapControllers();
@@ -50,58 +50,9 @@ public class Program
             options.UseMySql(builder.Configuration.GetConnectionString("MariaDb"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MariaDb")));
         });
         //builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-        
+        builder.Services.AddScoped<IServiceOrdreRepository, EfServiceOrdreRepository>();
         builder.Services.AddScoped<IDyrRepository, EfDyrRepository>();
         //builder.Services.AddSingleton<IUserRepository, SqlUserRepository>();
         //builder.Services.AddSingleton<IUserRepository, DapperUserRepository>();
-    }
-
-    private static void UseAuthentication(WebApplication app)
-    {
-        app.UseAuthentication();
-        app.UseAuthorization();
-    }
-
-    private static void SetupAuthentication(WebApplicationBuilder builder)
-    {
-        //Setup for Authentication
-        builder.Services.Configure<IdentityOptions>(options =>
-        {
-            // Default Lockout settings.
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            options.Lockout.MaxFailedAccessAttempts = 5;
-            options.Lockout.AllowedForNewUsers = false;
-            options.SignIn.RequireConfirmedPhoneNumber = false;
-            options.SignIn.RequireConfirmedEmail = false;
-            options.SignIn.RequireConfirmedAccount = false;
-            options.User.RequireUniqueEmail = true;
-        });
-
-        builder.Services
-            .AddIdentityCore<IdentityUser>()
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders();
-
-        builder.Services.AddAuthentication(o =>
-        {
-            o.DefaultScheme = IdentityConstants.ApplicationScheme;
-            o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-
-        }).AddIdentityCookies(o => { });
-
-        builder.Services.AddTransient<IEmailSender, AuthMessageSender>();
-    }
-
-    public class AuthMessageSender : IEmailSender
-    {
-        public Task SendEmailAsync(string email, string subject, string htmlMessage)
-        {
-            Console.WriteLine(email);
-            Console.WriteLine(subject);
-            Console.WriteLine(htmlMessage);
-            return Task.CompletedTask;
-        }
     }
 }

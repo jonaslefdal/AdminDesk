@@ -4,10 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>cbe1f0ec-281d-430d-a198-228e155dffd4</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <Compile Remove="Views\ServiceOrdrer\**" />
+    <Content Remove="Views\ServiceOrdrer\**" />
+    <EmbeddedResource Remove="Views\ServiceOrdrer\**" />
+    <None Remove="Views\ServiceOrdrer\**" />
+  </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\" />
     <None Remove="Repositories\" />
@@ -15,26 +22,16 @@
     <None Remove="Models\ServiceOrdre\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Data\" />
-    <Folder Include="Models\ServiceOrdre\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Views\test\index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Entities\Iben.cs">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Compile>
-    <Compile Update="Data\ApplicationDbContext.cs">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Compile>
+    <None Include="Views\ServiceOrder\Index.cshtml" />
+    <None Include="Views\Sjekkliste\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MySql.Data" Version="8.1.0" />
     <PackageReference Include="MySqlConnector" Version="2.2.7" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.78" />

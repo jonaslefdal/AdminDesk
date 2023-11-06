@@ -1,4 +1,4 @@
-﻿@model AdminDesk.Models.Serviceordre
+﻿@model Nøsted_Serviceordre_Behandling.Models.Serviceordre
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,14 +11,45 @@
         font-family: sans-serif;
         color: #313638;
     }
+
+    h1, h4 {
+        text-align: center;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #88afc2;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+    }
+
+        .button:hover {
+            background-color: rgb(251, 114, 19);
+            color: #9cb7c2;
+        }
+
+    .button-save {
+        text-align: center;
+        margin-top: 10px; 
+    }
+
+    .button-list{
+        margin-top: -78px;
+    }
+
+    .button-container {
+        text-align: center;
+    }
 </style>
 
-<h1>Edit</h1>
-
+<h1>Redigere</h1>
 <h4>Serviceordre</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 center-content">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
@@ -67,16 +98,16 @@
                 <input asp-for="ServiceordreStatus" class="form-control" />
                 <span asp-validation-for="ServiceordreStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="button-save button-container">
+                <input type="submit" value="Save" class="button button-custom" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="links button-container">
+    <a asp-action="Index" class=" button button-list">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

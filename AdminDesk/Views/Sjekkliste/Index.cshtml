@@ -1,0 +1,313 @@
+﻿@{
+    ViewData["Title"] = "Sjekkliste";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sjekkliste</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .avdeling {
+            margin: 0 auto;
+            margin-top: 20px;
+            max-width: 800px;
+            border: 2px solid black;
+            padding: 10px;
+            position: relative;
+        }
+
+        .sjekkpunkt {
+            margin-bottom: 10px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .status {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .gronn {
+            background-color: green;
+            color: white;
+        }
+
+        .rod {
+            background-color: red;
+            color: white;
+        }
+
+        .gul {
+            background-color: yellow;
+            color: black;
+        }
+
+        .tomKnapp {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <label for="dato">Dato:</label>
+    <input type="date" id="dato" name="dato" required>
+    <br>
+    <br>
+
+    <label for="godkjentAv">Godkjent av:</label>
+    <input type="text" id="godkjentAv" name="godkjentAv" required>
+    <br>
+    <br>
+
+    <label for="utarbeidetAv">Utarbeidet av:</label>
+    <input type="text" id="utarbeidetAv" name="utarbeidetAv" required>
+    <br>
+    <br>
+
+    <div class="avdeling">
+        <div class="status"></div>
+        <h2>Mekanisk:</h2>
+        <div class="sjekkpunkt">
+            <span>Sjekk clutch lameller for slitasje:</span>
+            <input type="radio" name="avd1sp1" value="OK">OK
+            <input type="radio" name="avd1sp1" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp1" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk bremser. BåndsPal</span>
+            <input type="radio" name="avd1sp2" value="OK">OK
+            <input type="radio" name="avd1sp2" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp2" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk lager for trommel</span>
+            <input type="radio" name="avd1sp3" value="OK">OK
+            <input type="radio" name="avd1sp3" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp3" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk PTO og opplagring</span>
+            <input type="radio" name="avd1sp4" value="OK">OK
+            <input type="radio" name="avd1sp4" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp4" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk kjedestrammer</span>
+            <input type="radio" name="avd1sp5" value="OK">OK
+            <input type="radio" name="avd1sp5" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp5" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk wire</span>
+            <input type="radio" name="avd1sp6" value="OK">OK
+            <input type="radio" name="avd1sp6" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp6" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk pinion lager</span>
+            <input type="radio" name="avd1sp7" value="OK">OK
+            <input type="radio" name="avd1sp7" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp7" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk kile på kjedehjul</span>
+            <input type="radio" name="avd1sp8" value="OK">OK
+            <input type="radio" name="avd1sp8" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd1sp8" value="Defekt">Defekt
+        </div>
+        <button class="tomKnapp" type="button" onclick="tømAvdeling('avd1sp1', 'avd1sp2', 'avd1sp3', 'avd1sp4')">Tøm</button>
+    </div>
+
+    <div class="avdeling">
+        <div class="status"></div>
+        <h2>Hydraulisk:</h2>
+        <div class="sjekkpunkt">
+            <span>Sjekk hydraulikk sylinder for lekkasje</span>
+            <input type="radio" name="avd2sp1" value="OK">OK
+            <input type="radio" name="avd2sp1" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp1" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk slanger for skader og lekkasje:</span>
+            <input type="radio" name="avd2sp2" value="OK">OK
+            <input type="radio" name="avd2sp2" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp2" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Test hydraulikkblokk i testbenk:</span>
+            <input type="radio" name="avd2sp3" value="OK">OK
+            <input type="radio" name="avd2sp3" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp3" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Skift olje i tank:</span>
+            <input type="radio" name="avd2sp4" value="OK">OK
+            <input type="radio" name="avd2sp4" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp4" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Skift olje på gir boks:</span>
+            <input type="radio" name="avd2sp5" value="OK">OK
+            <input type="radio" name="avd2sp5" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp5" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk Ringsylinder åpne og skift tetninger:</span>
+            <input type="radio" name="avd2sp6" value="OK">OK
+            <input type="radio" name="avd2sp6" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp6" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk bremse sylinder åpne og skift tetninger:</span>
+            <input type="radio" name="avd2sp7" value="OK">OK
+            <input type="radio" name="avd2sp7" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd2sp7" value="Defekt">Defekt
+        </div>
+        <button class="tomKnapp" type="button" onclick="tømAvdeling('avd2sp1', 'avd2sp2', 'avd2sp3', 'avd2sp4')">Tøm</button>
+    </div>
+
+    <div class="avdeling">
+        <div class="status"></div>
+        <h2>Elektro:</h2>
+        <div class="sjekkpunkt">
+            <span>Sjekk ledningsnett på vinsj:</span>
+            <input type="radio" name="avd3sp1" value="OK">OK
+            <input type="radio" name="avd3sp1" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd3sp1" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk og test radio:</span>
+            <input type="radio" name="avd3sp2" value="OK">OK
+            <input type="radio" name="avd3sp2" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd3sp2" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Sjekk og test knappekasse:</span>
+            <input type="radio" name="avd3sp3" value="OK">OK
+            <input type="radio" name="avd3sp3" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd3sp3" value="Defekt">Defekt
+        </div>
+        <button class="tomKnapp" type="button" onclick="tømAvdeling('avd2sp1', 'avd2sp2', 'avd2sp3', 'avd2sp4')">Tøm</button>
+    </div>
+
+    <div class="avdeling">
+        <div class="status"></div>
+        <h2>Trykk settinger:</h2>
+        <div class="sjekkpunkt">
+            <span>xx - Bar:</span>
+            <input type="radio" name="avd4sp1" value="OK">OK
+            <input type="radio" name="avd4sp1" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd4sp1" value="Defekt">Defekt
+        </div>
+        <button class="tomKnapp" type="button" onclick="tømAvdeling('avd2sp1', 'avd2sp2', 'avd2sp3', 'avd2sp4')">Tøm</button>
+    </div>
+
+    <div class="avdeling">
+        <div class="status"></div>
+        <h2>Funksjonstest:</h2>
+        <div class="sjekkpunkt">
+            <span>Test vinsj og kjør alle funksjoner:</span>
+            <input type="radio" name="avd5sp1" value="OK">OK
+            <input type="radio" name="avd5sp1" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd5sp1" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>I rekkratt KN:</span>
+            <input type="radio" name="avd5sp2" value="OK">OK
+            <input type="radio" name="avd5sp2" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd5sp2" value="Defekt">Defekt
+        </div>
+        <div class="sjekkpunkt">
+            <span>Bremse kraft KN:</span>
+            <input type="radio" name="avd5sp3" value="OK">OK
+            <input type="radio" name="avd5sp3" value="Bør skiftes">Bør skiftes
+            <input type="radio" name="avd5sp3" value="Defekt">Defekt
+        </div>
+        <button class="tomKnapp" type="button" onclick="tømAvdeling('avd2sp1', 'avd2sp2', 'avd2sp3', 'avd2sp4')">Tøm</button>
+    </div>
+    <br />
+
+    <label for="kommentarer">Kommentar:</label>
+    <input type="text" id="kommentarer" name="kommentarer" required>
+    <br>
+    <br />
+
+    <script>
+        // JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
+        const avdelinger = document.querySelectorAll('.avdeling');
+
+        function tømAvdeling(sjekkpunkter) {
+            sjekkpunkter.forEach(sjekkpunkt => {
+                sjekkpunkt.checked = false;
+            });
+            oppdaterStatus();
+        }
+
+        avdelinger.forEach(avdeling => {
+            const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
+            const statusBoks = avdeling.querySelector('.status');
+            const tømKnapp = avdeling.querySelector('.tomKnapp');
+
+            sjekkpunkter.forEach(sjekkpunkt => {
+                sjekkpunkt.addEventListener('change', oppdaterStatus);
+            });
+
+            tømKnapp.addEventListener('click', () => {
+                tømAvdeling(sjekkpunkter);
+            });
+        });
+
+        function oppdaterStatus() {
+            avdelinger.forEach(avdeling => {
+                const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
+                const statusBoks = avdeling.querySelector('.status');
+                let enDefekt = false;
+                let enBorSkiftes = false;
+                let alleOk = true;
+
+                sjekkpunkter.forEach(sjekkpunkt => {
+                    if (sjekkpunkt.value === 'Defekt' && sjekkpunkt.checked) {
+                        enDefekt = true;
+                    } else if (sjekkpunkt.value === 'Bør skiftes' && sjekkpunkt.checked) {
+                        enBorSkiftes = true;
+                    } else if (sjekkpunkt.value === 'OK' && sjekkpunkt.checked) {
+                        alleOk = true;
+                    } else if (sjekkpunkt.checked) {
+                        alleOk = false;
+                    }
+                });
+
+                if (enDefekt) {
+                    statusBoks.classList.remove('gronn', 'gul');
+                    statusBoks.classList.add('rod');
+                    statusBoks.textContent = 'X';
+                } else if (enBorSkiftes) {
+                    statusBoks.classList.remove('gronn', 'rod');
+                    statusBoks.classList.add('gul');
+                    statusBoks.textContent = '!';
+                } else if (alleOk) {
+                    statusBoks.classList.remove('rod', 'gul');
+                    statusBoks.classList.add('gronn');
+                    statusBoks.textContent = '✔';
+                } else {
+                    statusBoks.textContent = '';
+                }
+            });
+        }
+    </script>
+</body>

@@ -1,9 +1,8 @@
-﻿@model AdminDesk.Models.Serviceordre
+﻿@model Nøsted_Serviceordre_Behandling.Models.Serviceordre
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
-
 <style>
     html, body {
         background-color: #d9e5eb;
@@ -12,17 +11,41 @@
         font-family: sans-serif;
         color: #313638;
     }
-</style>
-<h1>Details</h1>
 
+    h1, h3 {
+        text-align: center;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #88afc2;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+    }
+
+    .button-container {
+        text-align: center;
+    }
+
+        .button:hover {
+            background-color: rgb(251, 114, 19);
+            color: #9cb7c2;
+        }
+</style>
+
+<h1>Slette</h1>
+
+<h3>Er du sikker på at du vil slette?</h3>
 <div>
-    <h4>Serviceordre</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Navn)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Navn)
         </dd>
         <dt class="col-sm-2">
@@ -55,10 +78,10 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ordrenummer)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ServiceordreStatus)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ServiceordreStatus)
         </dd>
         <dt class="col-sm-2">
@@ -74,8 +97,12 @@
             @Html.DisplayFor(model => model.Reparatør)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <div class="button-container">
+            <input type="submit" value="Delete" class="button" />
+            <a asp-action="Index" class="button">Back to List</a>
+        </div>
+    </form>
 </div>
