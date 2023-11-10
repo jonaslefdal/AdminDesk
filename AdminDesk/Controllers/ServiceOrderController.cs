@@ -21,8 +21,36 @@ namespace AdminDesk.Controllers
         public IActionResult Index()
         {
             var model = new ServiceOrderFullViewModel();
-            model.ServiceOrdreList = _serviceOrdreRepository.GetAll().Select(x => new ServiceOrderViewModel { ServiceOrderId = x.ServiceOrderId, CustomerName = x.CustomerName }).ToList();
+            model.ServiceOrdreList = _serviceOrdreRepository.GetAll().Select(x => new ServiceOrderViewModel { ServiceOrderId = x.ServiceOrderId, CustomerName = x.CustomerName, CustomerCity = x.CustomerCity }).ToList();
             return View("Index", model);
+        }
+
+        [HttpGet]
+        public IActionResult NyServiceOrdre()
+        {
+            var model = new ServiceOrderFullViewModel();
+
+            return View("NyServiceOrdre", model);
+        }
+        [HttpGet]
+        public IActionResult Spesific(int id)
+        {
+            var serviceOrdre = _serviceOrdreRepository.Get(id);
+
+            if (serviceOrdre == null)
+            {
+                // Handle the case where the service order with the specified ID is not found
+                return NotFound();
+            }
+
+            var model = new ServiceOrderViewModel
+            {
+                ServiceOrderId = serviceOrdre.ServiceOrderId,
+                CustomerName = serviceOrdre.CustomerName,
+                // Add other properties as needed
+            };
+
+            return View("Spesific", model);
         }
 
         [HttpPost]

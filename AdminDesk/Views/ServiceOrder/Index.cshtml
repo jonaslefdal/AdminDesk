@@ -1,57 +1,67 @@
 ﻿@using AdminDesk.Models.ServiceOrdrer;
 @model ServiceOrderFullViewModel
 
+<head>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
 
-<form asp-action="Post" asp-controller="ServiceOrder" method="post">
-    @Html.ValidationSummary()
-    @Html.AntiForgeryToken()
-    <label asp-for="UpsertModel.Mechanic"></label>
-    <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+    <style>
 
-    <label asp-for="UpsertModel.SerialNumber"></label>
-    <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    <label asp-for="UpsertModel.CreatedDate"></label>
-    <input asp-for="UpsertModel.CreatedDate" type="text" /><br />
+        th, td {
+            border: 1px solid red;
+            padding: 8px;
+            text-align: left;
+        }
 
+    </style>
 
-    <label asp-for="UpsertModel.CustomerCity"></label>
-    <input asp-for="UpsertModel.CustomerCity" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerComment"></label>
-    <input asp-for="UpsertModel.CustomerComment" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerEmail"></label>
-    <input asp-for="UpsertModel.CustomerEmail" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerName"></label>
-    <input asp-for="UpsertModel.CustomerName" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerStreet"></label>
-    <input asp-for="UpsertModel.CustomerStreet" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerTelephoneNumber"></label>
-    <input asp-for="UpsertModel.CustomerTelephoneNumber" type="text" /><br />
-
-    <label asp-for="UpsertModel.CustomerZipcode"></label>
-    <input asp-for="UpsertModel.CustomerZipcode" type="text" /><br />
-
-    <label asp-for="UpsertModel.FutureMaintenance"></label>
-    <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
-
-    <label asp-for="UpsertModel.IsAdministrator"></label>
-    <input asp-for="UpsertModel.IsAdministrator" type="text" /><br />
-
-    <label asp-for="UpsertModel.MechanicComment"></label>
-    <input asp-for="UpsertModel.MechanicComment" type="text" /><br />
-
-    <label asp-for="UpsertModel.ServiceOrderId"></label>
-    <input asp-for="UpsertModel.ServiceOrderId" type="text" /><br />
+</head>
+<body>
 
 
-    <label asp-for="UpsertModel.ConsumedHours"></label>
-    <input asp-for="UpsertModel.ConsumedHours" type="number" />
-    @Html.ValidationMessageFor(x=>x.UpsertModel.ConsumedHours)<br />
-    <input type="submit" />
+    <div class="blokk">
 
-</form>
+        <div class="Top">
+            ServiceOrdrer
+
+        </div>
+        <div class="TopMid">
+            Sorter: Lav til høyt
+
+        </div>
+        <div>
+            <a asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
+
+        </div>
+
+        <div class="Bottom">
+           
+            <table>
+                <tr>
+                    <th>ServiceOrderId</th>
+                    <th>CustomerName</th>
+                    <th>CustomerCity</th>
+                    <th>Ordre detaljer</th>
+                </tr>
+                @foreach (var ServiceOrdrer in Model.ServiceOrdreList)
+                {
+                    <tr>
+                        <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = ServiceOrdrer.ServiceOrderId })">@ServiceOrdrer.ServiceOrderId</a></td>
+
+                        <td>@ServiceOrdrer.CustomerName</td>
+
+                        <td>@ServiceOrdrer.CustomerCity</td>
+                    </tr>
+                }
+            </table>
+
+
+
+        </div>
+    </div>
+</body>
+

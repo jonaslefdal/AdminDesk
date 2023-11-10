@@ -1,0 +1,27 @@
+﻿@using AdminDesk.Models.ServiceOrdrer;
+@model ServiceOrderViewModel
+
+<!DOCTYPE html>
+
+<head>
+    <title>Service Order Details</title>
+</head>
+<body>
+    <h1>Service Order Details</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>@Model.ServiceOrderId</td>
+        </tr>
+        <tr>
+            <th>Customer Name</th>
+            <td>@Model.CustomerName</td>
+        </tr>
+        <!-- Add other rows for additional properties -->
+    </table>
+
+    <p>
+        <!-- Add navigation back to the list or other actions as needed -->
+        <a asp-action="Index">Back to List</a>
+    </p>
+</body>

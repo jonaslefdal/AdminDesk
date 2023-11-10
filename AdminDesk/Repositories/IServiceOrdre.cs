@@ -7,5 +7,6 @@ namespace AdminDesk.Repositories
         void Upsert(ServiceOrdre serviceordre);
         ServiceOrdre Get(int ServiceOrderId);
         List<ServiceOrdre> GetAll();
+        
     }
 }
