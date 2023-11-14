@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Nøsted_Serviceordre_Behandling.Models.Serviceordre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    html, body {
+        background-color: #d9e5eb;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        color: #313638;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 80px
+    }
+
+    p {
+        margin-top: 20px;
+        text-align: center; 
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 70% !important;
+        margin-top: 100px !important;
+        margin: auto;
+    }
+
+    th, td {
+        border: 1px solid #000; 
+        padding: 8px; 
+        text-align: center; 
+    }
+
+    th {
+        background-color: #f2f2f2; 
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #88afc2;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+    }
+
+    .button a {
+        text-decoration: none; 
+        color: black;
+    }
+
+    .button:hover {
+        background-color: rgb(251, 114, 19);
+        color: #9cb7c2;
+    }
+</style>
+
+<h1>Oversikt over serviceordre</h1>
+
+<div class="button-container">
+<div class="button">
+    <a asp-action="Create">Legg inn ny serviceordre</a>
+</div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ordrenummer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceordreStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ordrenummer)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Navn)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon)
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceordreStatus)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Rediger</a> |
+                    <a asp-action="Details" asp-route-id="@item.id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Slette</a> |
+                    <a asp-action="Index" asp-controller="Rapport" asp-route-id="@item.id">Rapport</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

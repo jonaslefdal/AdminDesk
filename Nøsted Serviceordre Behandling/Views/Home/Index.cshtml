@@ -1,0 +1,51 @@
+﻿﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
+</head>
+<body class="start-page">
+    <section class="header">
+        <div class="text-center">
+            <br /><br /><br /><br /><br /><br /><br />
+            <h1 style="color:white">NøstedAS</h1>
+            <br />
+
+            <h4>
+                <span style="color: rgb(122, 176, 195);">Alt handler om</span><br />
+                <span style="color: white;">koblinger</span><span style="color: rgb(251, 114, 19);">.</span>
+            </h4>
+        </div>
+    </section>
+    <section class="box">
+        <div class="container-link">
+            <div>
+                <h3>
+                    <a class="nav-link" asp-area="" asp-controller="Serviceordres" asp-action="Index" style="text-decoration: none; color: #9cb7c2;">Serviceordre</a>
+                </h3>
+
+            </div>
+        </div>
+
+        <div class="container-link">
+            <div>
+                <h3>Behandlet ordre</h3>
+            </div>
+        </div>
+
+        <div class="container-link">
+            <h3>
+                <a class="nav-link" asp-area="" asp-controller="Sjekkliste" asp-action="Index" style="text-decoration: none; color: #9cb7c2;">Sjekkliste</a>
+            </h3>
+        </div>
+
+        <div class="container-link">
+            <div>
+                <h3>
+                    <a class="nav-link" asp-area="" asp-controller="Verksted" asp-action="Index" style="text-decoration: none; color: #9cb7c2;">Verksted Status</a>
+                </h3>
+            </div>
+        </div>
+    </section>
+</body>
+
