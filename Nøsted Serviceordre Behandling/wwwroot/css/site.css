@@ -1,0 +1,88 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+        text-decoration-color: white;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #e7792c;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-page h1 {
+    font-family: sans-serif;
+    font-size: 4rem;
+    animation: pop-in 1s ease-out;
+    text-align: center;
+}
+
+.start-page h4 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.container-link {
+    width: 100%;
+    height: 70px;
+    margin: 30px;
+    max-width: 1300px; 
+    background: #101820;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+    .container-link:hover {
+        background-color: #e7792c;
+        cursor: pointer;
+    }
+
+    .container-link h3 {
+        text-align: center;
+        color: #9cb7c2;
+    }
+
+
+@keyframes pop-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+body.start-page {
+    background-color: black;
+    background-image: url('Nostedbilde.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
