@@ -13,6 +13,16 @@ namespace AdminDesk.Models.ServiceOrdrer
         public ServiceOrderViewModel UpsertModel { get; set; }
         public List<ServiceOrderViewModel> ServiceOrdreList { get; set; }
 
+    }
+    public class CustomerFullViewModel
+    {
+        public CustomerFullViewModel()
+        {
+            UpsertModel = new CustomersViewModel();
+            CustomerList = new List<CustomersViewModel>();
+        }
+        public CustomersViewModel UpsertModel { get; set; }
+        public List<CustomersViewModel> CustomerList { get; set; }
 
     }
 
@@ -21,19 +31,22 @@ namespace AdminDesk.Models.ServiceOrdrer
     {
         [Required]
         public string Mechanic { get; set; }
-        public bool IsAdministrator { get; set; }
         public string SerialNumber { get; set; }
         public DateTime CreatedDate { get; set; }
         [Range(0,100000,ErrorMessage ="Hei sveis, denne verdien er rar, bruk heltall mellom 0 og 100 000")]
         public decimal ConsumedHours { get; set; }
         //public string ImageUrl { get; set; }
         public string MechanicComment { get; set; }
-        public string CustomerComment { get; set; }
-
         public string FutureMaintenance { get; set; }
         public int ServiceOrderId { get; set; }
-        //public List<ServiceOrderJobGroupModel> JobGroups { get; set; }
 
+    }
+    public class CustomersViewModel
+    {
+        [Required]
+
+        public int CustomerId { get; set; }
+        public string CustomerComment { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerStreet { get; set; }

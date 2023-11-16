@@ -65,7 +65,7 @@ namespace AdminDesk.Controllers
                 Mechanic = serviceordre.UpsertModel.Mechanic,
                 SerialNumber = serviceordre.UpsertModel.SerialNumber,
                 CreatedDate = serviceordre.UpsertModel.CreatedDate,
-                ConsumedHours = serviceordre.UpsertModel.ConsumedHours,
+                
                 MechanicComment = serviceordre.UpsertModel.MechanicComment,
                 CustomerComment = serviceordre.UpsertModel.CustomerComment,
                 FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
@@ -76,7 +76,7 @@ namespace AdminDesk.Controllers
                 CustomerCity = serviceordre.UpsertModel.CustomerCity,
                 CustomerZipcode = serviceordre.UpsertModel.CustomerZipcode,
                 CustomerTelephoneNumber = serviceordre.UpsertModel.CustomerTelephoneNumber,
-                IsAdministrator = serviceordre.UpsertModel.IsAdministrator,
+                
             };
             _serviceOrdreRepository.Upsert(entity);
             return Index();

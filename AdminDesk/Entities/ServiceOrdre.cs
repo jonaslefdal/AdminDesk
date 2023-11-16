@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AdminDesk.Entities
 {
-    [Table("ServiceOrdrer")]
+    [Table("serviceorders")]
     public class ServiceOrdre
     {
         public string Mechanic { get; set; }
-        public bool IsAdministrator { get; set; }
+        
         public string SerialNumber { get; set; }
         public DateTime CreatedDate { get; set; }
-        public decimal ConsumedHours { get; set; }
+        
         //public string ImageUrl { get; set; }
         public string MechanicComment { get; set; }
         public string CustomerComment { get; set; }

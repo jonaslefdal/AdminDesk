@@ -16,7 +16,7 @@ namespace AdminDesk.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ServiceOrdre>().ToTable("ServiceOrdrer").HasKey(x => x.ServiceOrderId);
+            modelBuilder.Entity<ServiceOrdre>().ToTable("serviceorders").HasKey(x => x.ServiceOrderId);
             modelBuilder.Entity<Dyr>().ToTable("Dyr").HasKey(x => x.Id);
             base.OnModelCreating(modelBuilder);
         }
