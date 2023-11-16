@@ -88,3 +88,21 @@ CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`orderspareparts` (
     REFERENCES `admindeskdatabase`.`spareparts` (`SparePartId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `report` (
+  `ReportId` INT NOT NULL AUTO_INCREMENT,
+  `ServiceOrdreId` INT NOT NULL,
+  `Mechanic` VARCHAR(255) NULL,
+  `ServiceType` VARCHAR(45) NULL,
+  `MechanicComment` TEXT NULL,
+  `ServiceDescription` TEXT NULL,
+  `ReportWriteDate` DATE NULL,
+  `UserSign` INT NOT NULL,
+  PRIMARY KEY (`ReportId`),
+  INDEX `FK_ServiceOrdreId_idx` (`ServiceOrdreId` ASC),
+  CONSTRAINT `FK_ServiceOrdreId`
+    FOREIGN KEY (`ServiceOrdreId`)
+    REFERENCES `serviceordre` (`ServiceOrdreId`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+);
