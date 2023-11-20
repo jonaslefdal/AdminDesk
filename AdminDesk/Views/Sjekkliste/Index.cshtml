@@ -18,6 +18,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
         .avdeling {
             margin: 0 auto;
             margin-top: 20px;
@@ -29,6 +30,14 @@
             background: white;
         }
 
+        #kommentarer {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical; /* Allow vertical resizing */
+        }
         .sjekkpunkt {
             margin-bottom: 10px;
             border: 1px solid black;
@@ -501,7 +510,7 @@
     <br />
     <div class="avdeling">
         <label for="kommentarer">Kommentar:</label>
-        <input type="text" id="kommentarer" name="kommentarer" required>
+        <textarea id="kommentarer" name="kommentarer" required oninput="autoResize(this)"></textarea>
     </div>
     <br>
     <br />
@@ -574,6 +583,12 @@
             } else {
                 statusBoks.textContent = '';
             }
+        }
+    </script>
+    <script>
+        function autoResize(element) {
+            element.style.height = 'auto';
+            element.style.height = (element.scrollHeight) + 'px';
         }
     </script>
 </body>
