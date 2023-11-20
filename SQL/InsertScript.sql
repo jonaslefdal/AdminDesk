@@ -18,25 +18,16 @@ INSERT INTO users (FirstName, LastName, Email, Passord, AnsattNummer, CreatedDat
 ('Bruker','6', 'user6gmail.com', '6passord123', 'E789', '2023-11-17 11:15:00'),
 ('Bruker','7', 'user7gmail.com', '7passord123', 'F123', '2023-11-17 11:15:00');
 
-INSERT INTO admindeskdatabase.serviceorders (Mechanic, SerialNumber, CreatedDate, Comment, FutureMaintenance, ReserveDeler, CreatedById, OrderStatus, TotalArbeidsTimer) VALUES
-('Mekaniker 1', 'SN123456', '2023-11-15 09:30:00', 'Kunden sier den ikke funker', 'Bytt olje og filter', true, 4, 'Venter', '5 timer'),
-('Mekaniker 2', 'SN789012', '2023-11-16 14:45:00', 'Endre bremseklosser', 'Sjekk bremsesystemet', false, 5, 'Pågående', '0 timer'),
-('Mekaniker 3', 'SN654321', '2023-11-17 11:15:00', 'Undersøk motoren', 'Bytt skrue', true, 7, 'Fullført', '8 timer'),
-('Mekaniker 4', 'SN111111', '2023-11-18 10:00:00', 'Ukjent Problem', 'Null', false, 2, 'Venter', '0 timer'),
-('Mekaniker 5', 'SN222222', '2023-11-19 13:30:00', 'Sjekk motoren', 'Burde oljes', false, 6, 'Pågående', '11 timer'),
-('Mekaniker 6', 'SN333333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
-('Mekaniker 7', 'SN233333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
-('Mekaniker 8', 'SN354333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
-('Mekaniker 9', 'SN3387633', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer');
-
-INSERT INTO admindeskdatabase.orderlink (ServiceOrderId, CustomerId)
-VALUES
-	(1, 1),
-	(2, 2),
-	(3, 3),
-	(4, 4),
-	(5, 5),
-	(6, 6);
+INSERT INTO admindeskdatabase.serviceorders (CustomerId, Mechanic, SerialNumber, CreatedDate, Comment, FutureMaintenance, ReserveDeler, CreatedById, OrderStatus, TotalArbeidsTimer) VALUES
+(1,'Mekaniker 1', 'SN123456', '2023-11-15 09:30:00', 'Kunden sier den ikke funker', 'Bytt olje og filter', true, 4, 'Venter', '5 timer'),
+(2,'Mekaniker 2', 'SN789012', '2023-11-16 14:45:00', 'Endre bremseklosser', 'Sjekk bremsesystemet', false, 5, 'Pågående', '0 timer'),
+(3,'Mekaniker 3', 'SN654321', '2023-11-17 11:15:00', 'Undersøk motoren', 'Bytt skrue', true, 7, 'Fullført', '8 timer'),
+(4,'Mekaniker 4', 'SN111111', '2023-11-18 10:00:00', 'Ukjent Problem', 'Null', false, 2, 'Venter', '0 timer'),
+(5,'Mekaniker 5', 'SN222222', '2023-11-19 13:30:00', 'Sjekk motoren', 'Burde oljes', false, 6, 'Pågående', '11 timer'),
+(6,'Mekaniker 6', 'SN333333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
+(7,'Mekaniker 7', 'SN233333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
+(8,'Mekaniker 8', 'SN354333', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer'),
+(9,'Mekaniker 9', 'SN3387633', '2023-11-20 09:45:00', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', true, 3, 'Fullført', '20 timer');
 
 INSERT INTO admindeskdatabase.spareparts (PartName, Quantity, DeliveryTime)
 VALUES

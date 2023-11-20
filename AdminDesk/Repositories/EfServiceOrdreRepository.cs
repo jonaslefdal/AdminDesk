@@ -1,37 +1,44 @@
 ﻿using AdminDesk.DataAccess;
 using AdminDesk.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminDesk.Repositories
 {
-    public class EfServiceOrdreRepository : IServiceOrdreRepository
+    public class EfServiceOrderRepository : IServiceOrderRepository
     {
         private readonly DataContext _dataContext;
 
-        public EfServiceOrdreRepository(DataContext dataContext) 
+        public EfServiceOrderRepository(DataContext dataContext) 
         {
             _dataContext = dataContext;
         }
-        public ServiceOrdre Get(int ServiceOrderId)
+        public ServiceOrder Get(int ServiceOrderId)
         {
-            return _dataContext.ServiceOrdre.FirstOrDefault(x => x.ServiceOrderId == ServiceOrderId);
+            return _dataContext.ServiceOrder
+            .Include(so => so.Customer) // Include related Customer data
+            .FirstOrDefault(x => x.ServiceOrderId == ServiceOrderId);
+
         }
 
-        public List<ServiceOrdre> GetAll()
+        public List<ServiceOrder> GetAll()
         {
-            return _dataContext.ServiceOrdre.ToList();
-        }
+            return _dataContext.ServiceOrder
+            .Include(so => so.Customer) // Include related Customer data
+    .       ToList();
+        
+    }
 
-        public void Upsert(ServiceOrdre serviceordre)
+        public void Upsert(ServiceOrder serviceorder)
         {
-            var existing = Get(serviceordre.ServiceOrderId);
+            var existing = Get(serviceorder.ServiceOrderId);
             if(existing != null)
             {
-                existing.CustomerName = serviceordre.CustomerName;
+                existing.ServiceOrderId = serviceorder.ServiceOrderId;
                 _dataContext.SaveChanges();
                 return;
             }
-            serviceordre.ServiceOrderId = 0;
-            _dataContext.Add(serviceordre);
+            serviceorder.ServiceOrderId = 0;
+            _dataContext.Add(serviceorder);
             _dataContext.SaveChanges();
         }
     }

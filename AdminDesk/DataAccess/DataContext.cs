@@ -16,12 +16,32 @@ namespace AdminDesk.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ServiceOrdre>().ToTable("serviceorders").HasKey(x => x.ServiceOrderId);
+            
+
+            modelBuilder.Entity<ServiceOrder>()
+                .ToTable("serviceorders")
+                .HasKey(x => x.ServiceOrderId);
+
+            modelBuilder.Entity<ServiceOrder>()
+                .HasOne(s => s.Customer)  // Assuming Customer is a navigation property in ServiceOrder
+                .WithMany()
+                .HasForeignKey(s => s.CustomerId);
+
             modelBuilder.Entity<Dyr>().ToTable("Dyr").HasKey(x => x.Id);
+
+            modelBuilder.Entity<Verksted>().ToTable("Verksted").HasKey(x => x.VerkstedId);
+
+            modelBuilder.Entity<Report>().ToTable("Report").HasKey(x => x.ReportId);
+
+
+
             base.OnModelCreating(modelBuilder);
+
         }
 
-        public DbSet<ServiceOrdre> ServiceOrdre { get; set; }
+        public DbSet<Verksted> Verksted { get; set; }
+        public DbSet<Report> Report { get; set; }
+        public DbSet<ServiceOrder> ServiceOrder { get; set; }
         public DbSet<Dyr> Dyr { get; set; }
     }
 }

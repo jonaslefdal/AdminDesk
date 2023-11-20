@@ -2,11 +2,11 @@
 
 namespace AdminDesk.Repositories
 {
-    public interface IServiceOrdreRepository
+    public interface IServiceOrderRepository
     {
-        void Upsert(ServiceOrdre serviceordre);
-        ServiceOrdre Get(int ServiceOrderId);
-        List<ServiceOrdre> GetAll();
+        void Upsert(ServiceOrder serviceorder);
+        ServiceOrder Get(int ServiceOrderId);
+        List<ServiceOrder> GetAll();
         
     }
 }

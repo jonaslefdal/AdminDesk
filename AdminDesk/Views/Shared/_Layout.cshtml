@@ -10,26 +10,32 @@
 </head>
 <body>
     <header>
-        <nav class="navbar custom-navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
-            
-                <div class="icon">
-                    <a class="navbar-icon" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/css/nlogo.png" alt="Logo" style="width:200px; height:auto">
-                    </a>
-                </div>
-                 <div class="collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1" id="navbar">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Hjemmeside</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Serviceordres" asp-action="ShowSearchForm">Søke</a>
-                        </li>
-                    </ul>
-                </div>
+        <nav class="custom-navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
 
+            <div class="icon">
+                <a class="navbar-icon" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/css/nlogo.png" alt="Logo" style="width:200px; height:auto">
+                </a>
+            </div>
+            <div class="collapse d-sm-inline-flex justify-content-between w-100">
+                <ul class="navbar-nav flex-grow-1" id="navbar">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Hjemmeside</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Serviceordres" asp-action="ShowSearchForm">Søke</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Verksted" asp-action="Index">Status Verksted</a>
+                    </li>
+                    <li class="nav-item right">
+                        <a class="nav-link" asp-area="" asp-controller="login" asp-action="Index">Logg inn</a>
+                    </li>
+                </ul>
+            </div>
             
-
         </nav>
     </header>
 

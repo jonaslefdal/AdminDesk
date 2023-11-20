@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`customer` (
 
 CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`serviceorders` (
  `ServiceOrderId` INT NOT NULL AUTO_INCREMENT,
+ `CustomerId` INT NOT NULL,
  `Mechanic` VARCHAR(255) NULL DEFAULT NULL,
  `SerialNumber` VARCHAR(255) NULL DEFAULT NULL,
  `CreatedDate` DATETIME NULL DEFAULT NULL,
@@ -37,32 +38,22 @@ CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`serviceorders` (
  `CreatedById` INT NOT NULL,
  `OrderStatus` VARCHAR(45) NULL DEFAULT NULL,
  `ReserveDeler` BOOLEAN NULL DEFAULT NULL,
- `TotalArbeidsTimer` VARCHAR (255) NULL DEFAULT NULL,
+ `TotalWorkHours` VARCHAR (255) NULL DEFAULT NULL,
  PRIMARY KEY (`ServiceOrderId`),
  UNIQUE INDEX `Id_UNIQUE` (`ServiceOrderId` ASC) VISIBLE,
  INDEX `FK_CreatedById_UserId_idx` (`CreatedById` ASC) VISIBLE,
- CONSTRAINT `FK_CreatedById_UserId`
-    FOREIGN KEY (`CreatedById`)
-    REFERENCES `admindeskdatabase`.`users` (`UserId`));
-
- CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`orderlink` (
-  `OrderId` INT NOT NULL AUTO_INCREMENT,
-  `ServiceOrderId` INT NOT NULL,
-  `CustomerId` INT NOT NULL,
-  PRIMARY KEY (`OrderId`),
-  UNIQUE INDEX `OrderId_UNIQUE` (`OrderId` ASC) VISIBLE,
-  INDEX `FK_ordreId_customerId_idx` (`CustomerId` ASC) VISIBLE,
-  INDEX `FK_ServiceOrderId_ServiceOrderId_idx` (`ServiceOrderId` ASC) VISIBLE,
-  CONSTRAINT `FK_ordrecustomerId_customerId`
+ INDEX `FK_customerId_customerId_idx` (`CustomerId` ASC) VISIBLE, 
+ CONSTRAINT `FK_customerId_customerId`
 	FOREIGN KEY (`CustomerId`)
 	REFERENCES `admindeskdatabase`.`customer` (`CustomerID`)
-	ON DELETE NO ACTION
+  ON DELETE NO ACTION
 	ON UPDATE NO ACTION,
-  CONSTRAINT `FK_OrdreServiceOrderId_ServiceOrderId`
-	FOREIGN KEY (`ServiceOrderId`)
-	REFERENCES `admindeskdatabase`.`serviceorders` (`ServiceOrderId`)
-	ON DELETE NO ACTION
+ CONSTRAINT `FK_CreatedById_UserId`
+    FOREIGN KEY (`CreatedById`)
+    REFERENCES `admindeskdatabase`.`users` (`UserId`)
+  ON DELETE NO ACTION
 	ON UPDATE NO ACTION);
+
 
 CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`spareparts` (
   `SparePartId` INT NOT NULL AUTO_INCREMENT,
@@ -91,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `admindeskdatabase`.`orderspareparts` (
 
 CREATE TABLE IF NOT EXISTS `report` (
   `ReportId` INT NOT NULL AUTO_INCREMENT,
-  `ServiceOrdreId` INT NOT NULL,
+  `ServiceOrderId` INT NOT NULL,
   `Mechanic` VARCHAR(255) NULL,
   `ServiceType` VARCHAR(45) NULL,
   `MechanicComment` TEXT NULL,
@@ -99,10 +90,10 @@ CREATE TABLE IF NOT EXISTS `report` (
   `ReportWriteDate` DATE NULL,
   `UserSign` INT NOT NULL,
   PRIMARY KEY (`ReportId`),
-  INDEX `FK_ServiceOrdreId_idx` (`ServiceOrdreId` ASC),
-  CONSTRAINT `FK_ServiceOrdreId`
-    FOREIGN KEY (`ServiceOrdreId`)
-    REFERENCES `serviceordre` (`ServiceOrdreId`)
+  INDEX `FK_ServiceOrderId_idx` (`ServiceOrderId` ASC),
+  CONSTRAINT `FK_ServiceOrderId`
+    FOREIGN KEY (`ServiceOrderId`)
+    REFERENCES `serviceorders` (`ServiceOrderId`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 );

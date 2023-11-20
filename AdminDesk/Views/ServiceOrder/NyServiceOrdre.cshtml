@@ -1,4 +1,4 @@
-﻿@using AdminDesk.Models.ServiceOrdrer;
+﻿@using AdminDesk.Models.ServiceOrder;
 @model ServiceOrderFullViewModel
 
 <link rel="stylesheet" href="@Url.Content("~/css/form.css")">
@@ -16,43 +16,42 @@
     <input asp-for="UpsertModel.CreatedDate" type="text" /><br />
 
 
-    <label asp-for="UpsertModel.CustomerCity"></label>
-    <input asp-for="UpsertModel.CustomerCity" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerCity"></label>
+    <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerComment"></label>
-    <input asp-for="UpsertModel.CustomerComment" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerComment"></label>
+    <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerEmail"></label>
-    <input asp-for="UpsertModel.CustomerEmail" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
+    <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerName"></label>
-    <input asp-for="UpsertModel.CustomerName" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
+    <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerStreet"></label>
-    <input asp-for="UpsertModel.CustomerStreet" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
+    <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerTelephoneNumber"></label>
-    <input asp-for="UpsertModel.CustomerTelephoneNumber" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
+    <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
 
-    <label asp-for="UpsertModel.CustomerZipcode"></label>
-    <input asp-for="UpsertModel.CustomerZipcode" type="text" /><br />
+    <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
+    <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
 
     <label asp-for="UpsertModel.FutureMaintenance"></label>
     <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
 
-    <label asp-for="UpsertModel.IsAdministrator"></label>
-    <input asp-for="UpsertModel.IsAdministrator" type="text" /><br />
+    
 
-    <label asp-for="UpsertModel.MechanicComment"></label>
-    <input asp-for="UpsertModel.MechanicComment" type="text" /><br />
+    <label asp-for="UpsertModel.Comment"></label>
+    <input asp-for="UpsertModel.Comment" type="text" /><br />
 
     <label asp-for="UpsertModel.ServiceOrderId"></label>
     <input asp-for="UpsertModel.ServiceOrderId" type="text" /><br />
 
 
-    <label asp-for="UpsertModel.ConsumedHours"></label>
-    <input asp-for="UpsertModel.ConsumedHours" type="number" />
-    @Html.ValidationMessageFor(x=>x.UpsertModel.ConsumedHours)<br />
+    <label asp-for="UpsertModel.TotalArbeidsTimer"></label>
+    <input asp-for="UpsertModel.TotalArbeidsTimer" type="number" />
+    
     <input type="submit" />
 
 </form>

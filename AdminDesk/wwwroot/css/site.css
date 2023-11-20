@@ -23,6 +23,7 @@ body {
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
+       
     }
 
 .blokk {
@@ -31,7 +32,7 @@ body {
     font-family: Robotto;
     font-weight: 500;
     line-height: 1.2;
-    margin-top: 10rem;
+    margin-top: 3rem;
     
 }
 
@@ -70,6 +71,7 @@ body {
 .Bottom {
     align-self: center;
     margin: 3rem;
+    margin-bottom: 5rem;
     font-size: 1.75rem;
     text-decoration: none;
 }
@@ -83,6 +85,7 @@ body {
     border-radius: 20px;
     text-decoration: none;
     transition: background-color 0.2s;
+    color: white;
 }
 
     .TextToSite:hover {

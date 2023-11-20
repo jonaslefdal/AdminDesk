@@ -4,9 +4,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    width:100%;
+    
 }
 
 .btn-primary {
@@ -24,13 +26,12 @@
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
-
 .box-shadow {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-    font-size: 1rem;
+    font-size: 100rem;
     line-height: inherit;
 }
 
