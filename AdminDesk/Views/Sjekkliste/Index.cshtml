@@ -501,65 +501,66 @@
     <br />
 
 
-    <script>// JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
-        const avdelinger = document.querySelectorAll('.avdeling');
+    <script>
+        // JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
+        const sjekkpunkter = document.querySelectorAll('input[type="radio"]');
+        const statusBoks = document.querySelector('.status');
+        const tømKnapp = document.querySelector('.tomKnapp');
 
-        function tømAvdeling(sjekkpunkter) {
-            sjekkpunkter.forEach(sjekkpunkt => {
-                sjekkpunkt.checked = false;
-            });
-            oppdaterStatus();
-        }
-
-        avdelinger.forEach(avdeling => {
-            const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
-            const statusBoks = avdeling.querySelector('.status');
-            const tømKnapp = avdeling.querySelector('.tomKnapp');
-
-            sjekkpunkter.forEach(sjekkpunkt => {
-                sjekkpunkt.addEventListener('change', oppdaterStatus);
-            });
-
-            tømKnapp.addEventListener('click', () => {
-                tømAvdeling(sjekkpunkter);
-            });
+        sjekkpunkter.forEach(sjekkpunkt => {
+            sjekkpunkt.addEventListener('change', oppdaterStatus);
         });
 
-        function oppdaterStatus() {
-            avdelinger.forEach(avdeling => {
-                const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
-                const statusBoks = avdeling.querySelector('.status');
-                let enDefekt = false;
-                let enBorSkiftes = false;
-                let alleOk = true;
+        tømKnapp.addEventListener('click', () => {
+            tømAvdeling(sjekkpunkter);
+        });
 
-                sjekkpunkter.forEach(sjekkpunkt => {
-                    if (sjekkpunkt.value === 'Defekt' && sjekkpunkt.checked) {
-                        enDefekt = true;
-                    } else if (sjekkpunkt.value === 'Bør skiftes' && sjekkpunkt.checked) {
-                        enBorSkiftes = true;
-                    } else if (sjekkpunkt.value === 'OK' && sjekkpunkt.checked) {
-                        alleOk = true;
-                    } else if (sjekkpunkt.checked) {
-                        alleOk = false;
-                    }
+        function clearDepartments(...departments) {
+            departments.forEach(department => {
+                const departmentCheckboxes = document.querySelectorAll(`input[name^="${department}"]`);
+
+                departmentCheckboxes.forEach(checkbox => {
+                    checkbox.checked = false;
                 });
+            });
 
-                if (enDefekt) {
-                    statusBoks.classList.remove('gronn', 'gul');
-                    statusBoks.classList.add('rod');
-                    statusBoks.textContent = 'X';
-                } else if (enBorSkiftes) {
-                    statusBoks.classList.remove('gronn', 'rod');
-                    statusBoks.classList.add('gul');
-                    statusBoks.textContent = '!';
-                } else if (alleOk) {
-                    statusBoks.classList.remove('rod', 'gul');
-                    statusBoks.classList.add('gronn');
-                    statusBoks.textContent = '✔';
-                } else {
-                    statusBoks.textContent = '';
+            updateStatus();
+        }
+
+
+
+        function oppdaterStatus() {
+            let enDefekt = false;
+            let enBorSkiftes = false;
+            let alleOk = true;
+
+            sjekkpunkter.forEach(sjekkpunkt => {
+                if (sjekkpunkt.value === 'Defekt' && sjekkpunkt.checked) {
+                    enDefekt = true;
+                } else if (sjekkpunkt.value === 'Bør skiftes' && sjekkpunkt.checked) {
+                    enBorSkiftes = true;
+                } else if (sjekkpunkt.value === 'OK' && sjekkpunkt.checked) {
+                    alleOk = true;
+                } else if (sjekkpunkt.checked) {
+                    alleOk = false;
                 }
             });
-        }</script>
+
+            if (enDefekt) {
+                statusBoks.textContent = 'X';
+                statusBoks.classList.remove('gronn', 'gul');
+                statusBoks.classList.add('rod');
+            } else if (enBorSkiftes) {
+                statusBoks.textContent = '!';
+                statusBoks.classList.remove('gronn', 'rod');
+                statusBoks.classList.add('gul');
+            } else if (alleOk) {
+                statusBoks.textContent = '✔';
+                statusBoks.classList.remove('rod', 'gul');
+                statusBoks.classList.add('gronn');
+            } else {
+                statusBoks.textContent = '';
+            }
+        }
+    </script>
 </body>
