@@ -90,7 +90,7 @@
 </head>
 
 <body>
-    <div class="avdeling">
+    <div class="avdeling" id="avdeling1">
         <label for="dato">Dato:</label>
         <input type="date" id="dato" name="dato" required>
         <br>
@@ -108,7 +108,7 @@
     </div>
 
 
-    <div class="avdeling">
+    <div class="avdeling" id="avdeling2">
         <div class="status"></div>
         <h2>Mekanisk:</h2>
         <div class="sjekkpunkt">
@@ -500,36 +500,43 @@
     <br>
     <br />
 
-
     <script>
-        // JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
-        const sjekkpunkter = document.querySelectorAll('input[type="radio"]');
-        const statusBoks = document.querySelector('.status');
-        const tømKnapp = document.querySelector('.tomKnapp');
+        const avdelinger = document.querySelectorAll('.avdeling');
+        const tømKnapper = document.querySelectorAll('.tomKnapp');
 
-        sjekkpunkter.forEach(sjekkpunkt => {
-            sjekkpunkt.addEventListener('change', oppdaterStatus);
-        });
+        avdelinger.forEach((avdeling, index) => {
+            const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
+            const statusBoks = avdeling.querySelector('.status');
 
-        tømKnapp.addEventListener('click', () => {
-            tømAvdeling(sjekkpunkter);
-        });
-
-        function clearDepartments(...departments) {
-            departments.forEach(department => {
-                const departmentCheckboxes = document.querySelectorAll(`input[name^="${department}"]`);
-
-                departmentCheckboxes.forEach(checkbox => {
-                    checkbox.checked = false;
-                });
+            sjekkpunkter.forEach(sjekkpunkt => {
+                sjekkpunkt.addEventListener('change', () => oppdaterStatus(sjekkpunkter, statusBoks));
             });
 
-            updateStatus();
+            tømKnapper[index].addEventListener('click', () => {
+                tømAvdeling(sjekkpunkter);
+            });
+        });
+
+        function tømAvdeling(department, sjekkpunkter) {
+            const departmentCheckboxes = document.querySelectorAll(`input[name^="${department}"]`);
+
+            departmentCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+
+                // Assuming there's a checkbox element associated with each department
+                const departmentCheckbox = checkbox.closest('.avdeling').querySelector('.department-checkbox');
+                if (departmentCheckbox) {
+                    departmentCheckbox.remove();
+                }
+            });
+
+            oppdaterStatus(sjekkpunkter);
         }
 
 
 
-        function oppdaterStatus() {
+
+        function oppdaterStatus(sjekkpunkter, statusBoks) {
             let enDefekt = false;
             let enBorSkiftes = false;
             let alleOk = true;
