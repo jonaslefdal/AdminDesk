@@ -587,8 +587,16 @@
     </script>
     <script>
         function autoResize(element) {
+            // Store the current scroll position
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Resize the element
             element.style.height = 'auto';
             element.style.height = (element.scrollHeight) + 'px';
+
+            // Restore the scroll position
+            window.scrollTo(0, scrollTop);
         }
+
     </script>
 </body>
