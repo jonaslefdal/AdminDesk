@@ -105,7 +105,7 @@
 </head>
 
 <body>
-    <div class="avdeling" id="avdeling1">
+    <div class="avdeling">
         <label for="dato">Dato:</label>
         <input type="date" id="dato" name="dato" required>
         <br>
@@ -123,7 +123,7 @@
     </div>
 
 
-    <div class="avdeling" id="avdeling2">
+    <div class="avdeling">
         <div class="status"></div>
         <h2>Mekanisk:</h2>
         <div class="sjekkpunkt">
@@ -511,9 +511,11 @@
     <div class="avdeling">
         <label for="kommentarer">Kommentar:</label>
         <textarea id="kommentarer" name="kommentarer" required oninput="autoResize(this)"></textarea>
+        <button onclick="submitForm()">Submit</button>
     </div>
     <br>
     <br />
+    
  
     <script>
         const avdelinger = document.querySelectorAll('.avdeling');
@@ -538,7 +540,6 @@
             departmentCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
 
-                // Assuming there's a checkbox element associated with each department
                 const departmentCheckbox = checkbox.closest('.avdeling').querySelector('.department-checkbox');
                 if (departmentCheckbox) {
                     departmentCheckbox.remove();
@@ -548,7 +549,24 @@
             oppdaterStatus(sjekkpunkter);
         }
 
+                function submitForm() {
+            // Get all form elements
+            var formElements = document.querySelectorAll('input, textarea');
 
+            // Create an object to store the form data
+            var formData = {};
+
+            // Iterate through each form element and store its value in the formData object
+            formElements.forEach(function (element) {
+                if (element.type !== 'radio' || element.checked) {
+                    formData[element.name] = element.value;
+                }
+            });
+
+            // You can now send the formData object to your server using AJAX or any other method
+            console.log(formData);
+            // Add your code to send the data to the server here
+        }
 
 
         function oppdaterStatus(sjekkpunkter, statusBoks) {
@@ -587,14 +605,11 @@
     </script>
     <script>
         function autoResize(element) {
-            // Store the current scroll position
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            // Resize the element
             element.style.height = 'auto';
             element.style.height = (element.scrollHeight) + 'px';
 
-            // Restore the scroll position
             window.scrollTo(0, scrollTop);
         }
 
