@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
+namespace AdminDesk.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
@@ -54,7 +54,7 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Nåværende passord")]
             public string OldPassword { get; set; }
 
             /// <summary>
@@ -64,7 +64,7 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nytt passord")]
             public string NewPassword { get; set; }
 
             /// <summary>
@@ -72,8 +72,8 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Bekreft nytt passord")]
+            [Compare("NewPassword", ErrorMessage = "Det nye passordet og bekreftelsespassordet stemmer ikke overens.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -118,8 +118,8 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _logger.LogInformation("Brukerens passord ble endret.");
+            StatusMessage = "Passord ditt har blitt endret.";
 
             return RedirectToPage();
         }

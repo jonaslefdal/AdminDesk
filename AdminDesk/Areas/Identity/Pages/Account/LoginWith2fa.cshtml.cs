@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account
+namespace AdminDesk.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {

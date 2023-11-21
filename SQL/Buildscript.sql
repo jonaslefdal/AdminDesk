@@ -97,3 +97,93 @@ CREATE TABLE IF NOT EXISTS `report` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
+
+CREATE TABLE IF NOT EXISTS `aspnetroles` (
+  `Id` VARCHAR(255) NOT NULL,
+  `Name` VARCHAR(256) NULL DEFAULT NULL,
+  `NormalizedName` VARCHAR(256) NULL DEFAULT NULL,
+  `ConcurrencyStamp` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `RoleNameIndex` (`NormalizedName` ASC) VISIBLE);
+
+
+CREATE TABLE IF NOT EXISTS `aspnetroleclaims` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `RoleId` VARCHAR(255) NOT NULL,
+  `ClaimType` LONGTEXT NULL DEFAULT NULL,
+  `ClaimValue` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `IX_AspNetRoleClaims_RoleId` (`RoleId` ASC) VISIBLE,
+  CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId`
+    FOREIGN KEY (`RoleId`)
+    REFERENCES `aspnetroles` (`Id`)
+    ON DELETE CASCADE);
+
+CREATE TABLE IF NOT EXISTS `aspnetusers` (
+  `Id` VARCHAR(255) NOT NULL,
+  `UserName` VARCHAR(256) NULL DEFAULT NULL,
+  `NormalizedUserName` VARCHAR(256) NULL DEFAULT NULL,
+  `Email` VARCHAR(256) NULL DEFAULT NULL,
+  `NormalizedEmail` VARCHAR(256) NULL DEFAULT NULL,
+  `EmailConfirmed` TINYINT(1) NOT NULL,
+  `PasswordHash` LONGTEXT NULL DEFAULT NULL,
+  `SecurityStamp` LONGTEXT NULL DEFAULT NULL,
+  `ConcurrencyStamp` LONGTEXT NULL DEFAULT NULL,
+  `PhoneNumber` LONGTEXT NULL DEFAULT NULL,
+  `PhoneNumberConfirmed` TINYINT(1) NOT NULL,
+  `TwoFactorEnabled` TINYINT(1) NOT NULL,
+  `LockoutEnd` DATETIME(6) NULL DEFAULT NULL,
+  `LockoutEnabled` TINYINT(1) NOT NULL,
+  `AccessFailedCount` INT(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE INDEX `UserNameIndex` (`NormalizedUserName` ASC) VISIBLE,
+  INDEX `EmailIndex` (`NormalizedEmail` ASC) VISIBLE);
+
+      CREATE TABLE IF NOT EXISTS .`aspnetuserclaims` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `UserId` VARCHAR(255) NOT NULL,
+  `ClaimType` LONGTEXT NULL DEFAULT NULL,
+  `ClaimValue` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `IX_AspNetUserClaims_UserId` (`UserId` ASC) VISIBLE,
+  CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+    ON DELETE CASCADE);
+
+   CREATE TABLE IF NOT EXISTS `aspnetuserlogins` (
+  `LoginProvider` VARCHAR(255) NOT NULL,
+  `ProviderKey` VARCHAR(255) NOT NULL,
+  `ProviderDisplayName` LONGTEXT NULL DEFAULT NULL,
+  `UserId` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`LoginProvider`, `ProviderKey`),
+  INDEX `IX_AspNetUserLogins_UserId` (`UserId` ASC) VISIBLE,
+  CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+    ON DELETE CASCADE);
+
+CREATE TABLE IF NOT EXISTS `aspnetuserroles` (
+  `UserId` VARCHAR(255) NOT NULL,
+  `RoleId` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`UserId`, `RoleId`),
+  INDEX `IX_AspNetUserRoles_RoleId` (`RoleId` ASC) VISIBLE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId`
+    FOREIGN KEY (`RoleId`)
+    REFERENCES .`aspnetroles` (`Id`)
+    ON DELETE CASCADE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+    ON DELETE CASCADE);
+
+CREATE TABLE IF NOT EXISTS `aspnetusertokens` (
+  `UserId` VARCHAR(255) NOT NULL,
+  `LoginProvider` VARCHAR(255) NOT NULL,
+  `Name` VARCHAR(255) NOT NULL,
+  `Value` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`UserId`, `LoginProvider`, `Name`),
+  CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+    ON DELETE CASCADE);

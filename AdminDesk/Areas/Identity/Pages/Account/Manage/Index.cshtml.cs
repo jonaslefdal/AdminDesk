@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
+namespace AdminDesk.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
@@ -56,7 +56,7 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefonnummer")]
             public string PhoneNumber { get; set; }
         }
 

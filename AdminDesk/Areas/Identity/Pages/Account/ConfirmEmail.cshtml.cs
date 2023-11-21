@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account
+namespace AdminDesk.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailModel : PageModel
     {
@@ -44,7 +44,7 @@ namespace Nøsted_Serviceordre_Behandling.Areas.Identity.Pages.Account
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            StatusMessage = result.Succeeded ? "Takk for at du bekreftet e-posten din." : "Error confirming your email.";
             return Page();
         }
     }

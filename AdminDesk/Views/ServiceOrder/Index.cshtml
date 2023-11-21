@@ -119,9 +119,9 @@
 
                         <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
 
-                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerLastName</a></td>
-
                         <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
+
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
 
                         <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate</a></td>
                     </tr>

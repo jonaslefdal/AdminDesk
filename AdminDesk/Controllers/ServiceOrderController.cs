@@ -1,4 +1,5 @@
 ﻿using AdminDesk.Entities;
+using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
@@ -12,10 +13,13 @@ namespace AdminDesk.Controllers
 
         private readonly IServiceOrderRepository _serviceOrderRepository;
 
+        private readonly IReportRepository _reportRepository;
 
-        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository)
+
+        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository, IReportRepository reportRepository)
         {
             _serviceOrderRepository = serviceOrderRepository;
+            _reportRepository = reportRepository;
         }
 
         [HttpGet]
@@ -69,12 +73,14 @@ namespace AdminDesk.Controllers
 
             return View("NyServiceOrdre", model);
         }
-        [HttpGet]
 
+
+
+        [HttpGet]
         public IActionResult Spesific(int id)
         {
             var serviceOrdre = _serviceOrderRepository.Get(id);
-
+            
 
             if (serviceOrdre == null)
             {
@@ -82,29 +88,54 @@ namespace AdminDesk.Controllers
                 return NotFound();
             }
 
-            var model = new ServiceOrderFullViewModel
+            var reportsForServiceOrder = _reportRepository
+        .GetAll()
+        .Where(r => r.ServiceOrderId == id)
+        .Select(r => new ReportViewModel
+        {
+            ReportId = r.ReportId,
+            ServiceOrderId = r.ServiceOrderId,
+            Mechanic = r.Mechanic,
+            ServiceType = r.ServiceType,
+            MechanicComment = r.MechanicComment,
+            ServiceDescription = r.ServiceDescription,
+            ReportWriteDate = r.ReportWriteDate,
+            UserSign = r.UserSign
+        })
+        .ToList();
+
+            var compositeModel = new CompositeViewModel
             {
-                UpsertModel = new ServiceOrderViewModel
+
+                ServiceOrderModel = new ServiceOrderFullViewModel
                 {
-                    ServiceOrderId = serviceOrdre.ServiceOrderId,
-                    CustomerId = serviceOrdre.CustomerId,
-                    Mechanic = serviceOrdre.Mechanic,
-                    SerialNumber = serviceOrdre.SerialNumber,
-                    CreatedDate = serviceOrdre.CreatedDate,
-                    Comment = serviceOrdre.Comment,
-                    FutureMaintenance = serviceOrdre.FutureMaintenance,
-                    CreatedById = serviceOrdre.CreatedById,
-                    OrderStatus = serviceOrdre.OrderStatus,
-                    ReserveDeler = serviceOrdre.ReserveDeler,
-                    TotalArbeidsTimer = serviceOrdre.TotalArbeidsTimer
+                    UpsertModel = new ServiceOrderViewModel
+                    {
+                        ServiceOrderId = serviceOrdre.ServiceOrderId,
+                        CustomerId = serviceOrdre.CustomerId,
+                        Mechanic = serviceOrdre.Mechanic,
+                        SerialNumber = serviceOrdre.SerialNumber,
+                        CreatedDate = serviceOrdre.CreatedDate,
+                        Comment = serviceOrdre.Comment,
+                        FutureMaintenance = serviceOrdre.FutureMaintenance,
+                        CreatedById = serviceOrdre.CreatedById,
+                        OrderStatus = serviceOrdre.OrderStatus,
+                        ReserveDeler = serviceOrdre.ReserveDeler,
+                        TotalArbeidsTimer = serviceOrdre.TotalArbeidsTimer
+                    },
+                    ServiceOrderList = new List<ServiceOrderViewModel>()
                 },
-                ServiceOrderList = new List<ServiceOrderViewModel>()
+                ReportModel = new ReportFullViewModel
+                {
+                    ReportList = reportsForServiceOrder
+                   
+                }
             };
 
             // Check if the Customer property is not null before accessing its properties
             if (serviceOrdre.Customer != null)
             {
-                model.UpsertModel.Customer = new Customer
+                compositeModel.ServiceOrderModel.UpsertModel.Customer = new Customer
                 {
                     CustomerId = serviceOrdre.Customer.CustomerId,
                     CustomerFirstName = serviceOrdre.Customer.CustomerFirstName,
@@ -124,8 +155,9 @@ namespace AdminDesk.Controllers
 
             }
 
-            return View("Spesific", model);
-        }
+            return View("Spesific", compositeModel);
+        
+    }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -174,6 +206,5 @@ namespace AdminDesk.Controllers
 
 
 
-        
     }
 }

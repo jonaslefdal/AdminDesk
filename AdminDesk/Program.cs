@@ -1,59 +1,54 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System;
 using AdminDesk.DataAccess;
-using AdminDesk.Repositories;
 
 public class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
-        builder.WebHost.ConfigureKestrel(x => x.AddServerHeader = false);
+        var host = CreateHostBuilder(args).Build();
 
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
-
-        SetupDataConnections(builder);
-
-
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
+        using (var scope = host.Services.CreateScope())
         {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<DataContext>();
+                // Migrate and seed data here if needed
+                context.Database.Migrate();
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine("An error occurred while migrating or seeding the database: " + ex.Message);
+            }
         }
 
-        app.UseStaticFiles();
-
-        app.UseRouting();
-
-
-
-        app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-        
-        app.MapControllers();
-
-
-        app.Run();
+        host.Run();
     }
 
-    private static void SetupDataConnections(WebApplicationBuilder builder)
-    {
-        builder.Services.AddTransient<ISqlConnector, SqlConnector>();
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            })
+            .ConfigureServices((hostContext, services) =>
+            {
+                var configuration = hostContext.Configuration;
+                var serverVersion = new MySqlServerVersion(new Version(8, 0, 23)); // Update this line with your MariaDB version
 
-        builder.Services.AddDbContext<DataContext>(options =>
-        {
-            options.UseMySql(builder.Configuration.GetConnectionString("MariaDb"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MariaDb")));
-        });
-        //builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
-        builder.Services.AddScoped<IServiceOrderRepository, EfServiceOrderRepository>();
-        builder.Services.AddScoped<IDyrRepository, EfDyrRepository>();
-        //builder.Services.AddSingleton<IUserRepository, SqlUserRepository>();
-        //builder.Services.AddSingleton<IUserRepository, DapperUserRepository>();
-    }
+                services.AddDbContext<DataContext>(
+                    dbContextOptions => dbContextOptions
+                        .UseMySql(configuration.GetConnectionString("MariaDb"), serverVersion)
+                        .LogTo(Console.WriteLine, LogLevel.Information)
+                        .EnableSensitiveDataLogging()
+                        .EnableDetailedErrors()
+                );
+            });
 }

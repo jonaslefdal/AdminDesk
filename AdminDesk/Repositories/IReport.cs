@@ -7,6 +7,6 @@ namespace AdminDesk.Repositories
         void Upsert(Report report);
         Report Get(int ReportId);
         List<Report> GetAll();
-        
+
     }
 }

@@ -20,6 +20,8 @@ namespace AdminDesk.Entities
         public string OrderStatus { get; set; }
         public bool ReserveDeler { get; set; }
         public string TotalArbeidsTimer { get; set; }
+        
+
 
     }
 
@@ -38,12 +40,5 @@ namespace AdminDesk.Entities
         public string CustomerPhoneNumber { get; set; }
         public string CustomerComment { get; set; }
 
-        [Table("report")]
-        public class Report
-        {
-            public int ReportId { get; set; }
-            public int ServiceOrderId { get; set; }
-
-        }
     }
 }

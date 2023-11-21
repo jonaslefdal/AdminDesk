@@ -1,5 +1,5 @@
 ﻿@using AdminDesk.Models.ServiceOrder;
-@model ServiceOrderFullViewModel
+@model CompositeViewModel
 
 <!DOCTYPE html>
 
@@ -11,22 +11,24 @@
     <table>
         <tr>
             <th>ID</th>
-            <td>@Model.UpsertModel.ServiceOrderId</td>
+            <td>@Model.ServiceOrderModel.UpsertModel.ServiceOrderId</td>
         </tr>
         <tr>
             <th>Customer Id</th>
-            <td>@Model.UpsertModel.CustomerId</td>
+            <td>@Model.ServiceOrderModel.UpsertModel.CustomerId</td>
         </tr>
         <h2>Customer Details</h2>
 
-        @if (Model.UpsertModel.Customer != null)
+
+        @if (Model.ServiceOrderModel.UpsertModel.Customer != null)
         {
+            <!-- Customer details table -->
             <table>
                 <tr>
                     <th>Customer ID</th>
-                    <td>@Model.UpsertModel.Customer.CustomerId</td>
-                    <td>@Model.UpsertModel.Customer.CustomerFirstName</td>
-                    <td>@Model.UpsertModel.Customer.CustomerLastName</td>
+                    <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerId</td>
+                    <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerFirstName</td>
+                    <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerLastName</td>
                     <!-- Add other Customer details as needed -->
                 </tr>
             </table>
@@ -34,17 +36,65 @@
         else
         {
             <p>
-                No customer information available. @if (Model.UpsertModel.Customer == null)
-                {<strong>Customer is null.</strong>}
+                No customer information available.
+                @if (Model.ServiceOrderModel.UpsertModel.Customer == null)
+                {
+                    <strong>Customer is null.</strong>
+                }
             </p>
         }
 
-        <!-- Add other rows for additional properties -->
-    </table>
-    <td class="clickable"><a class="black" href="@Url.Action("Report", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Report Side</a></td>
-    <p>
-        <!-- Add navigation back to the list or other actions as needed -->
-        <a asp-action="Index">Back to List</a>
-    </p>
+        <!-- Move the 'Report Details' heading outside the 'Customer Details' block -->
+        <h2>Report Details</h2>
+
+        @if (Model.ReportModel.UpsertModel != null)
+        {
+            var reportsForServiceOrder = Model.ReportModel.ReportList
+                .Where(report => report.ServiceOrderId == Model.ServiceOrderModel.UpsertModel.ServiceOrderId)
+                .ToList();
+
+            if (reportsForServiceOrder.Any())
+            {
+                <!-- Reports table -->
+                <table>
+                    <tr>
+                        <th>Report ID</th>
+                        <th>Mechanic</th>
+                        <!-- Add other Report properties here -->
+                    </tr>
+                    @foreach (var report in reportsForServiceOrder)
+                    {
+                        <tr>
+                            <td>@report.ReportId</td>
+                            <td>@report.Mechanic</td>
+                            <!-- Add other Report properties here -->
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No reports for the specified service order.
+                <p>@Model.ServiceOrderModel.UpsertModel.ServiceOrderId</p></p>
+            }
+        }
+        else
+        {
+            <p>
+                No reports
+                @if (Model.ReportModel.UpsertModel == null)
+                {
+                    <strong>Report is null.</strong>
+                }
+            </p>
+        }
+
+
+
+        <td class="clickable"><a class="black" href="@Url.Action("Index", "Report", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">Report Side</a></td>
+        <p>
+            <!-- Add navigation back to the list or other actions as needed -->
+            <a asp-action="Index">Back to List</a>
+        </p>
 
 </body>

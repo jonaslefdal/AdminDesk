@@ -48,3 +48,13 @@ VALUES
     ('7', 5),
     ('8', 4),
     ('8', 5);
+
+
+INSERT INTO report (ReportId, ServiceOrderId, Mechanic, ServiceType, MechanicComment, ServiceDescription, ReportWriteDate, UserSign) VALUES
+(1, 1, 'Per makaniker', 'Sjekk', 'Funker ikke','Avklart','2023-11-17 11:15:00', 3),
+(3, 1, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
+(4, 2, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
+(5, 2, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
+(6, 3, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
+(7, 4, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
+(8, 5, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3);

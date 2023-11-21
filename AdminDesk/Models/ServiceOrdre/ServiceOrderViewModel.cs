@@ -1,11 +1,19 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using AdminDesk.Entities;
+using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace AdminDesk.Models.ServiceOrder
 {
+
+
+    public class CompositeViewModel
+    {
+        public ServiceOrderFullViewModel ServiceOrderModel { get; set; }
+        public ReportFullViewModel ReportModel { get; set; }
+    }
 
     public class ServiceOrderFullViewModel
     {
@@ -56,31 +64,6 @@ namespace AdminDesk.Models.ServiceOrder
         public string CustomerZipcode { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CustomerComment { get; set; }
-    }
-
-    public class ReportFullViewModel
-    {
-        public ReportFullViewModel()
-        {
-
-
-            UpsertModel = new ReportViewModel();
-
-            ReportList = new List<ReportViewModel>();
-        }
-
-        public ReportViewModel UpsertModel { get; set; }
-        public List<ReportViewModel> ReportList { get; set; }
-    }
-
-
-    public class ReportViewModel
-    {
-        [Required]
-        public int ReportId { get; set; }
-        public int ServiceOrderId { get; set; }
-       
-
     }
 }
 

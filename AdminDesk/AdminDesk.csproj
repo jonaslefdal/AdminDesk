@@ -15,79 +15,7 @@
     <EmbeddedResource Remove="Views\ServiceOrdrer\**" />
     <None Remove="Views\ServiceOrdrer\**" />
     <None Remove="Models\Report\" />
-    <Compile Remove="Areas\Identity\IdentityHostingStartup.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml.cs" />
-    <Content Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
-    <Content Remove="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
-    <Content Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\_StatusMessage.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
-    <Compile Remove="Areas\Identity\Pages\Error.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Login.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Lockout.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Logout.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\Email.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\ManageNavPages.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml.cs" />
-    <Compile Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml.cs" />
-    <Content Remove="Areas\Identity\Pages\Error.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Lockout.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\RegisterConfirmation.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Login.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\Email.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
-    <Content Remove="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+    <None Remove="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\" />
@@ -121,5 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Report\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
 </Project>
