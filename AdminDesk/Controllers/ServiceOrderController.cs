@@ -13,13 +13,16 @@ namespace AdminDesk.Controllers
 
         private readonly IServiceOrderRepository _serviceOrderRepository;
 
+        private readonly ICustomerRepository _customerRepository;
+
         private readonly IReportRepository _reportRepository;
 
 
-        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository, IReportRepository reportRepository)
+        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository, IReportRepository reportRepository, ICustomerRepository customerRepository)
         {
             _serviceOrderRepository = serviceOrderRepository;
             _reportRepository = reportRepository;
+            _customerRepository = customerRepository;
         }
 
         [HttpGet]
@@ -44,7 +47,7 @@ namespace AdminDesk.Controllers
                 ,
                 ReserveDeler = x.ReserveDeler
                 ,
-                TotalArbeidsTimer = x.TotalArbeidsTimer,
+                TotalWorkHours = x.TotalWorkHours,
 
                 Customer = new Customer
                 {
@@ -128,7 +131,7 @@ namespace AdminDesk.Controllers
                         CreatedById = serviceOrdre.CreatedById,
                         OrderStatus = serviceOrdre.OrderStatus,
                         ReserveDeler = serviceOrdre.ReserveDeler,
-                        TotalArbeidsTimer = serviceOrdre.TotalArbeidsTimer
+                        TotalWorkHours = serviceOrdre.TotalWorkHours
                     },
                     ServiceOrderList = new List<ServiceOrderViewModel>()
                 },
@@ -170,21 +173,6 @@ namespace AdminDesk.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Post(ServiceOrderFullViewModel serviceordre)
         {
-            var entity = new ServiceOrder
-            {
-                Mechanic = serviceordre.UpsertModel.Mechanic,
-                ServiceOrderId = serviceordre.UpsertModel.ServiceOrderId,
-                CustomerId = serviceordre.UpsertModel.CustomerId,
-                SerialNumber = serviceordre.UpsertModel.SerialNumber,
-                CreatedDate = serviceordre.UpsertModel.CreatedDate,
-                Comment = serviceordre.UpsertModel.Comment,
-                FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
-                CreatedById = serviceordre.UpsertModel.CreatedById,
-                OrderStatus = serviceordre.UpsertModel.OrderStatus,
-                ReserveDeler = serviceordre.UpsertModel.ReserveDeler,
-                TotalArbeidsTimer = serviceordre.UpsertModel.TotalArbeidsTimer,
-
-            };
             var customerEntity = new Customer
             {
 
@@ -199,8 +187,26 @@ namespace AdminDesk.Controllers
                 CustomerComment = serviceordre.UpsertModel.Customer.CustomerComment,
 
             };
+            _customerRepository.Upsert(customerEntity);
 
 
+            var entity = new ServiceOrder
+            {
+                Mechanic = serviceordre.UpsertModel.Mechanic,
+                ServiceOrderId = serviceordre.UpsertModel.ServiceOrderId,
+
+                CustomerId = customerEntity.CustomerId,
+
+                SerialNumber = serviceordre.UpsertModel.SerialNumber,
+                CreatedDate = serviceordre.UpsertModel.CreatedDate,
+                Comment = serviceordre.UpsertModel.Comment,
+                FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
+                CreatedById = serviceordre.UpsertModel.CreatedById,
+                OrderStatus = serviceordre.UpsertModel.OrderStatus,
+                ReserveDeler = serviceordre.UpsertModel.ReserveDeler,
+                TotalWorkHours = serviceordre.UpsertModel.TotalWorkHours,
+
+            };
 
             _serviceOrderRepository.Upsert(entity);
 

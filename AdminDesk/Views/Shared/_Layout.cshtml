@@ -29,16 +29,12 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Verksted" asp-action="Index">Status Verksted</a>
-                    </li>
-                    <li class="nav-item right">
-                        <a class="nav-link" asp-area="" asp-controller="login" asp-action="Index">Logg inn</a>
-                    </li>
+                    
+                    <li>@await Html.PartialAsync("_LoginPartial")</li>
                 </ul>
 
             </div>
-            <div>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
+  
 
         </nav>
     </header>

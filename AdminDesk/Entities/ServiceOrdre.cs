@@ -19,26 +19,9 @@ namespace AdminDesk.Entities
         public int CreatedById { get; set; }
         public string OrderStatus { get; set; }
         public bool ReserveDeler { get; set; }
-        public string TotalArbeidsTimer { get; set; }
+        public string TotalWorkHours { get; set; }
         
 
-
-    }
-
-    [Table("customer")]
-    public class Customer
-    {
-        [Key]
-        public int CustomerId { get; set; }
-
-        public string CustomerFirstName { get; set; }
-        public string CustomerLastName { get; set; }
-        public string CustomerEmail { get; set; }
-        public string CustomerStreet { get; set; }
-        public string CustomerCity { get; set; }
-        public string CustomerZipcode { get; set; }
-        public string CustomerPhoneNumber { get; set; }
-        public string CustomerComment { get; set; }
 
     }
 }

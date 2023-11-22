@@ -50,7 +50,8 @@ public class Startup
         services.AddScoped<ISqlConnector, SqlConnector>();
         services.AddScoped<IServiceOrderRepository, EfServiceOrderRepository>();
         services.AddScoped<IReportRepository, EfReportRepository>();
-        
+        services.AddScoped<ICustomerRepository, EfCustomerRepository>();
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

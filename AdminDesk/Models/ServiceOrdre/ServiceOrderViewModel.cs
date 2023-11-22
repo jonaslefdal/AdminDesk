@@ -46,7 +46,7 @@ namespace AdminDesk.Models.ServiceOrder
         public int CreatedById { get; set; }
         public string OrderStatus { get; set; }
         public bool ReserveDeler { get; set; }
-        public string TotalArbeidsTimer { get; set; }
+        public string TotalWorkHours { get; set; }
 
     }
 

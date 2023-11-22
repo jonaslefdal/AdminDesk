@@ -18,7 +18,7 @@ INSERT INTO users (FirstName, LastName, Email, Passord, AnsattNummer, CreatedDat
 ('Bruker','6', 'user6gmail.com', '6passord123', 'E789', '2023-11-17 11:15:00'),
 ('Bruker','7', 'user7gmail.com', '7passord123', 'F123', '2023-11-17 11:15:00');
 
-INSERT INTO admindeskdatabase.serviceorders (CustomerId, Mechanic, SerialNumber, CreatedDate, Comment, FutureMaintenance, ReserveDeler, CreatedById, OrderStatus, TotalArbeidsTimer) VALUES
+INSERT INTO admindeskdatabase.serviceorders (CustomerId, Mechanic, SerialNumber, CreatedDate, Comment, FutureMaintenance, ReserveDeler, CreatedById, OrderStatus, TotalWorkHours) VALUES
 (1,'Mekaniker 1', 'SN123456', '2023-11-15 09:30:00', 'Kunden sier den ikke funker', 'Bytt olje og filter', true, 4, 'Venter', '5 timer'),
 (2,'Mekaniker 2', 'SN789012', '2023-11-16 14:45:00', 'Endre bremseklosser', 'Sjekk bremsesystemet', false, 5, 'Pågående', '0 timer'),
 (3,'Mekaniker 3', 'SN654321', '2023-11-17 11:15:00', 'Undersøk motoren', 'Bytt skrue', true, 7, 'Fullført', '8 timer'),

@@ -33,6 +33,8 @@ namespace AdminDesk.DataAccess
 
             modelBuilder.Entity<Report>().ToTable("Report").HasKey(x => x.ReportId);
 
+            modelBuilder.Entity<Customer>().ToTable("Customer").HasKey(x => x.CustomerId);
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -42,6 +44,7 @@ namespace AdminDesk.DataAccess
         public DbSet<Verksted> Verksted { get; set; }
         public DbSet<Report> Report { get; set; }
         public DbSet<ServiceOrder> ServiceOrder { get; set; }
-        
+        public DbSet<Customer> Customer { get; set; }
+
     }
 }

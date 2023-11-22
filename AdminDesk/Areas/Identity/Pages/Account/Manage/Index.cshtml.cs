@@ -12,12 +12,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AdminDesk.Areas.Identity.Pages.Account.Manage
 {
-    public class IndexModel : PageModel
+    public class ExistingIndexModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public IndexModel(
+        public ExistingIndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {

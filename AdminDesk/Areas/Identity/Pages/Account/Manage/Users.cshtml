@@ -1,0 +1,43 @@
+﻿@page
+@model AdminDesk.Areas.Identity.Pages.Account.Manage.IndexModel
+
+<h1>Manage Users</h1>
+<h3>User Information</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Two-Factor Authentication Enabled</th>
+            <th>Lockout Enabled</th>
+            <th>Access Failed Count</th>
+            <th>Edit/Save</th>
+            <th>Disable</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td data-id="@user.Id" data-property="UserName">@user.UserName</td>
+                <td data-id="@user.Id" data-property="Email">@user.Email</td>
+                <td data-id="@user.Id" data-property="PhoneNumber">@await Model.UserManager.GetPhoneNumberAsync(user)</td>
+                <td data-id="@user.Id" data-property="TwoFactorEnabled">@await Model.UserManager.GetTwoFactorEnabledAsync(user)</td>
+                <td data-id="@user.Id" data-property="LockoutEnabled">@await Model.UserManager.GetLockoutEnabledAsync(user)</td>
+                <td data-id="@user.Id" data-property="AccessFailedCount">@await Model.UserManager.GetAccessFailedCountAsync(user)</td>
+                <td>
+                    
+                        <a asp-page="./UserEdit" asp-route-id="@user.Id" class="btn btn-primary">Edit</a>
+
+                    
+                </td>
+                <td>
+                    <button class="disable-button" data-id="@user.Id">Disable</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
