@@ -534,6 +534,8 @@
             });
         });
 
+
+        //Fungerer ikke som den skal
         function tømAvdeling(department, sjekkpunkter) {
             const departmentCheckboxes = document.querySelectorAll(`input[name^="${department}"]`);
 
@@ -549,7 +551,7 @@
             oppdaterStatus(sjekkpunkter);
         }
 
-                function submitForm() {
+    function submitForm() {
             // Get all form elements
             var formElements = document.querySelectorAll('input, textarea');
 
