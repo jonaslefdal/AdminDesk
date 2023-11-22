@@ -11,10 +11,10 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item-">
-            <a class="nav-link text-dark custom-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Min side</a>
+        <li class="nav-item right">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Min side</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item right">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Logg ut</button>
             </form>
@@ -22,11 +22,11 @@
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrer</a>
+        <li class="nav-item right">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Registrer</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Logg in</a>
+        <li class="nav-item right">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Logg in</a>
         </li>
     }
 </ul>

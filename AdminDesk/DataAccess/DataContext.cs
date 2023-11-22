@@ -27,7 +27,7 @@ namespace AdminDesk.DataAccess
                 .WithMany()
                 .HasForeignKey(s => s.CustomerId);
 
-            modelBuilder.Entity<Dyr>().ToTable("Dyr").HasKey(x => x.Id);
+            
 
             modelBuilder.Entity<Verksted>().ToTable("Verksted").HasKey(x => x.VerkstedId);
 
@@ -42,6 +42,6 @@ namespace AdminDesk.DataAccess
         public DbSet<Verksted> Verksted { get; set; }
         public DbSet<Report> Report { get; set; }
         public DbSet<ServiceOrder> ServiceOrder { get; set; }
-        public DbSet<Dyr> Dyr { get; set; }
+        
     }
 }

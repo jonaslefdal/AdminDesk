@@ -70,6 +70,13 @@ namespace AdminDesk.Controllers
         public IActionResult NyServiceOrdre()
         {
             var model = new ServiceOrderFullViewModel();
+            {
+                model.UpsertModel = new ServiceOrderViewModel
+                {
+                    // other properties
+                    CreatedDate = DateTime.Now // set the CreatedDate to the current date
+                };
+            };
 
             return View("NyServiceOrdre", model);
         }
@@ -161,9 +168,6 @@ namespace AdminDesk.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-
-
         public IActionResult Post(ServiceOrderFullViewModel serviceordre)
         {
             var entity = new ServiceOrder
