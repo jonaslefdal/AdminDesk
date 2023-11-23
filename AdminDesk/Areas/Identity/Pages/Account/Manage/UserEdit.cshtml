@@ -22,9 +22,10 @@
         <input asp-for="User.PhoneNumber" class="form-control" />
     </div>
     <div>
-        <input type="hidden" asp-for="User.LockoutEnabled" />
+        
         <label asp-for="User.LockoutEnabled"></label>
-        <select asp-for="User.LockoutEnabled" asp-items="Html.GetEnumSelectList<LockoutStatusEnum>()" class="form-control" id="lockoutStatusDisplay"></select>
+        <input type="checkbox" asp-for="User.LockoutEnabled" checked="@(Model.User.LockoutEnabled ? true : false )">
+
 
     </div>
 
@@ -33,10 +34,13 @@
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
+
 @section Scripts {
-    <script>document.getElementById('lockoutStatusDisplay').addEventListener('change', function () {
-            var displayValue = this.value;
-            var hiddenField = document.querySelector('input[name="User.LockoutEnabled"]');
-            hiddenField.value = displayValue === 'På' ? 'True' : 'False';
-        });</script>
+    <script>
+        document.getElementById('lockoutStatusDisplay').addEventListener('change', function () {
+            var displayValue = this.value.trim().toLowerCase();
+            var hiddenField = document.getElementById('User_LockoutEnabled');
+            hiddenField.value = displayValue === 'av' ? 'Sibb' : 'Nibb'; // Use boolean values instead of strings
+        });
+</script>
 }

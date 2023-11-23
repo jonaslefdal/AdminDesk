@@ -16,6 +16,8 @@
     <None Remove="Views\ServiceOrdrer\**" />
     <None Remove="Models\Report\" />
     <None Remove="Views\Report\" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\UserDisable.cshtml" />
+    <None Remove="Models\ApplicationUser\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\" />
@@ -50,5 +52,6 @@
   <ItemGroup>
     <Folder Include="Models\Report\" />
     <Folder Include="Views\Report\" />
+    <Folder Include="Models\ApplicationUser\" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using AdminDesk.DataAccess;
 using AdminDesk.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using AdminDesk.Areas.Identity.Pages.Account.Manage;
 
 public class Startup
 {
@@ -43,16 +46,19 @@ public class Startup
 
         services.AddTransient<IEmailSender, YourEmailSenderImplementation>();
 
-        services.AddRazorPages();
-        services.AddControllersWithViews();
-
         // Add your services here
         services.AddScoped<ISqlConnector, SqlConnector>();
         services.AddScoped<IServiceOrderRepository, EfServiceOrderRepository>();
         services.AddScoped<IReportRepository, EfReportRepository>();
         services.AddScoped<ICustomerRepository, EfCustomerRepository>();
 
+
+        services.AddRazorPages();
+        services.AddControllersWithViews();
+
     }
+
+    
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {

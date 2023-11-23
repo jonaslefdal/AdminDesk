@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `aspnetusers` (
   `LockoutEnd` DATETIME(6) NULL DEFAULT NULL,
   `LockoutEnabled` TINYINT(1) NOT NULL,
   `AccessFailedCount` INT(11) NOT NULL,
+  `Disabled` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `UserNameIndex` (`NormalizedUserName` ASC) VISIBLE,
   INDEX `EmailIndex` (`NormalizedEmail` ASC) VISIBLE);

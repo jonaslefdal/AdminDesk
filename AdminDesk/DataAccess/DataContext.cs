@@ -1,4 +1,5 @@
-﻿using AdminDesk.Entities;
+﻿using AdminDesk.Areas.Identity.Pages.Account.Manage;
+using AdminDesk.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -7,17 +8,14 @@ namespace AdminDesk.DataAccess
 {
     public class DataContext : IdentityDbContext<IdentityUser>
     {
-        public DataContext()
-        {
-        }
+     
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-
             modelBuilder.Entity<ServiceOrder>()
                 .ToTable("serviceorders")
                 .HasKey(x => x.ServiceOrderId);
