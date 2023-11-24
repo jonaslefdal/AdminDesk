@@ -1,20 +1,17 @@
-﻿@using AdminDesk.Models.Report;
-@model ReportFullViewModel
-
+﻿@model List<AdminDesk.Models.Report.ReportViewModel>
 
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <title>Service Order Details</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Order Details Form</title>
     <style>
-
-
-        html, body {
+        body {
+            font-family: Arial, sans-serif;
             background-color: #d9e5eb;
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
             color: #313638;
         }
 
@@ -23,90 +20,208 @@
             margin-top: 5%;
         }
 
-        p {
-            margin-top: 1rem;
+        form {
+            max-width: 70%;
+            margin: 5% auto;
+            background-color: #fff;
+            padding: 2%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            display: flex;
+            margin-top: 1.25rem;
+            justify-content: space-between;
+            margin-bottom: 1%;
+        }
+
+            .section input {
+                width: calc(50% - 8px);
+                padding: 1%;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+        label {
+            display: inline-block;
+            width: 20%;
+            margin-bottom: 0.8rem;
+        }
+
+        input, select, textarea {
+            display: inline-block;
+            width: calc(50% - 8px);
+            padding: 1%;
+            margin-bottom: 1%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: calc(100% - 8px);
+        }
+
+        .other-section {
+            margin-top: 2%;
+        }
+
+            .other-section label {
+                display: inline-block;
+                width: 20%;
+                margin-bottom: 0.8rem;
+            }
+
+            .other-section input,
+            .other-section select {
+                display: inline-block;
+                width: calc(50% - 8px);
+                padding: 1%;
+                margin-bottom: 1%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .other-section textarea {
+                display: inline-block;
+                width: calc(100% - 8px);
+                padding: 1%;
+                margin-bottom: 1%;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+        .button {
+            cursor: pointer;
+            background-color: #88afc2;
+            color: black;
+            padding: 1% 1.5%;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            text-decoration: none;
+            margin-right: 5%;
             text-align: center;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100% !important;
-            margin-top: 5% !important;
-            margin: auto;
-            background-color: #f2f2f2;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 1%;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+            .button:hover {
+                background-color: rgb(251, 114, 19);
+                color: black;
+            }
     </style>
-
-
 </head>
 <body>
-    <h1>Service Order Details</h1>
-    <table>
-        <tr>
-            <th>ID</th>
+    <h1>Serviceorder Rapport</h1>
 
-        </tr>
-        <tr>
-            <th>ReportId</th>
-            <td>@Model.UpsertModel.ReportId</td>
-            <th>ServiceOrderId</th>
-            <td>@Model.UpsertModel.ServiceOrderId</td>
-            <th>Mechanic</th>
-            <td>@Model.UpsertModel.Mechanic</td>
-            <th>ServiceType</th>
-            <td>@Model.UpsertModel.ServiceType.</td>
-            <th>MechanicComment</th>
-            <td>@Model.UpsertModel.MechanicComment.</td>
-            <th>ServiceDescription</th>
-            <td>@Model.UpsertModel.ServiceDescription.</td>
-            <th>ReportWriteDate</th>
-            <td>@Model.UpsertModel.ReportWriteDate.</td>
-            <th>UserSign</th>
-            <td>@Model.UpsertModel.UserSign</td>
+    @foreach (var report in Model)
+    {
+        <form action="@Url.Action("Post", "Report")" method="post">
+            <div class="section">
+                <label for="ReportId">Report ID:</label>
+                <input type="text" id="ReportId" name="ReportId" value="@report.ReportId" readonly>
+            </div>
 
+            <div class="section">
+                <label for="ServiceOrderId">Service Order ID:</label>
+                <input type="text" id="ServiceOrderId" name="ServiceOrderId" value="@report.ServiceOrderId" readonly>
+            </div>
 
+            <div class="section">
+                <label for="Mechanic">Mechanic:</label>
+                <input type="text" id="Mechanic" name="Mechanic" value="@report.Mechanic">
+            </div>
 
-        </tr>
-        <h2>Customer Details</h2>
+            <div class="section">
+                <label for="Mechanic">Service Type:</label>
+                <input type="text" id="ServiceType" name="ServiceType" value="@report.ServiceType">
+            </div>
 
-        @if (Model != null)
+            <div class="other-section">
+                <label for="imageUpload">Medlagte bilder:</label>
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" multiple onchange="previewImages(this)">
+                <div id="imagePreviewContainer" style="margin-top: 1%;"></div>
+            </div>
 
-            {
-                <table>
-    <tr>
-        <th>Report ID</th>
-        <th>Mechanic</th>
-        <!-- Add other Report properties here -->
-    </tr>
-    @foreach (var report in Model.ReportList)
-        {
-        <tr>
-            <td>@report.ReportId</td>
-            <td>@report.Mechanic</td>
-            <!-- Add other Report properties here -->
-        </tr>
+            <div class="other-section">
+                <label for="MekanikerKommentar">Mekaniker Kommentar:</label>
+                <textarea id="MekanikerKommentar" name="MekanikerKommentar">@report.MechanicComment</textarea>
+            </div>
+
+            <div class="section">
+                <label for="Mechanic">Service Beskrivelse:</label>
+                <input type="text" id="Service Beskrivelse" name="Service Beskrivelse" value="@report.ServiceDescription">
+            </div>
+
+            <div class="section">
+                <label for="Mechanic">Rapport Dato:</label>
+                <input type="text" id="Rapport Dato" name="Rapport Dato" value="@report.ReportWriteDate">
+            </div>
+
+            <div class="section">
+                <label for="UserSign">User Sign:</label>
+                <input type="text" id="UserSign" name="UserSign" value="@report.UserSign">
+            </div>
+
+            <p>
+                <button class="button" type="submit">Send Rapport</button>
+                <a class="button" href="@Url.Action("Index", "ServiceOrder")">Tilbake til liste</a>
+            </p>
+        </form>
+    }
+
+    <script>
+        function previewImages(input) {
+            var previewContainer = document.getElementById('imagePreviewContainer');
+
+            var files = input.files;
+
+            for (var i = 0; i < files.length; i++) {
+                (function (file) {
+                    var reader = new FileReader();
+                    var image = document.createElement('div');
+                    var imgElement = document.createElement('img');
+                    var deleteButton = document.createElement('button');
+
+                    image.style.marginRight = '1%';
+                    image.style.marginBottom = '1%';
+
+                    imgElement.style.maxWidth = '100%';
+                    imgElement.style.maxHeight = '20%';
+
+                    deleteButton.textContent = 'Slett bildet';
+                    deleteButton.style.cursor = 'pointer';
+                    deleteButton.style.background = '#88afc2';
+                    deleteButton.style.border = 'none';
+                    deleteButton.style.padding = '0.5rem';
+                    deleteButton.style.borderRadius = '5px';
+                    deleteButton.style.color = '000000';
+                    deleteButton.style.marginLeft = '5%';
+
+                    deleteButton.addEventListener('click', function () {
+                        previewContainer.removeChild(image);
+                    });
+
+                    reader.onload = function () {
+                        imgElement.src = reader.result;
+                    }
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+
+                    image.appendChild(imgElement);
+                    image.appendChild(deleteButton);
+                    previewContainer.appendChild(image);
+                })(files[i]);
+            }
+
+            input.value = '';
         }
-</table>
-            }
-            else
-            {
-                <p>No reports for the specified service order.</p>
-            }
-    </table>
-
-
-    <p>
-        <!-- Add navigation back to the list or other actions as needed -->
-        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake til</a></td>
-    </p>
-
+    </script>
 </body>
+</html>
