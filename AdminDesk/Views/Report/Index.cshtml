@@ -1,0 +1,112 @@
+﻿@using AdminDesk.Models.Report;
+@model ReportFullViewModel
+
+
+<!DOCTYPE html>
+
+<head>
+    <title>Service Order Details</title>
+
+    <style>
+
+
+        html, body {
+            background-color: #d9e5eb;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #313638;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 5%;
+        }
+
+        p {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100% !important;
+            margin-top: 5% !important;
+            margin: auto;
+            background-color: #f2f2f2;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 1%;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+
+</head>
+<body>
+    <h1>Service Order Details</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+
+        </tr>
+        <tr>
+            <th>ReportId</th>
+            <td>@Model.UpsertModel.ReportId</td>
+            <th>ServiceOrderId</th>
+            <td>@Model.UpsertModel.ServiceOrderId</td>
+            <th>Mechanic</th>
+            <td>@Model.UpsertModel.Mechanic</td>
+            <th>ServiceType</th>
+            <td>@Model.UpsertModel.ServiceType.</td>
+            <th>MechanicComment</th>
+            <td>@Model.UpsertModel.MechanicComment.</td>
+            <th>ServiceDescription</th>
+            <td>@Model.UpsertModel.ServiceDescription.</td>
+            <th>ReportWriteDate</th>
+            <td>@Model.UpsertModel.ReportWriteDate.</td>
+            <th>UserSign</th>
+            <td>@Model.UpsertModel.UserSign</td>
+
+
+
+        </tr>
+        <h2>Customer Details</h2>
+
+        @if (Model != null)
+
+            {
+                <table>
+    <tr>
+        <th>Report ID</th>
+        <th>Mechanic</th>
+        <!-- Add other Report properties here -->
+    </tr>
+    @foreach (var report in Model.ReportList)
+        {
+        <tr>
+            <td>@report.ReportId</td>
+            <td>@report.Mechanic</td>
+            <!-- Add other Report properties here -->
+        </tr>
+        }
+</table>
+            }
+            else
+            {
+                <p>No reports for the specified service order.</p>
+            }
+    </table>
+
+
+    <p>
+        <!-- Add navigation back to the list or other actions as needed -->
+        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake til</a></td>
+    </p>
+
+</body>

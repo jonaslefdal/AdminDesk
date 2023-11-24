@@ -1,0 +1,63 @@
+﻿@using AdminDesk.Models.ServiceOrder;
+@model ServiceOrderFullViewModel
+
+<link rel="stylesheet" href="@Url.Content("~/css/form.css")">
+
+
+
+<form asp-action="Post" asp-controller="ServiceOrder" method="post">
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+
+    <label asp-for="UpsertModel.Mechanic"></label>
+    <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+
+    <label asp-for="UpsertModel.SerialNumber"></label>
+    <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
+
+    <label asp-for="UpsertModel.CreatedDate"></label>
+    <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
+
+
+    <label asp-for="UpsertModel.Comment"></label>
+    <input asp-for="UpsertModel.Comment" type="text" /><br />
+
+    <label asp-for="UpsertModel.FutureMaintenance"></label>
+    <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
+
+    <label asp-for="UpsertModel.CreatedById"></label>
+    <input asp-for="UpsertModel.CreatedById" type="text" /><br />
+
+    <label asp-for="UpsertModel.OrderStatus"></label>
+    <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
+
+    <label asp-for="UpsertModel.TotalWorkHours"></label>
+    <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
+    <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
+    <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
+    <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
+    <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerCity"></label>
+    <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
+    <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
+    <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerComment"></label>
+    <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
+
+    <input type="submit" />
+
+</form>

@@ -1,10 +1,10 @@
 #!/bin/zsh
 
-docker kill webapp
+docker kill admindesk
 
-docker image build -t webapp .
+docker image build -t admindesk .
 
-docker container run --rm -it -d --name webapp --publish 80:80 webapp
+docker container run --rm -it -d --name admindesk --publish 80:80 admindesk
 
 echo
 echo "Link: http://localhost:80/"

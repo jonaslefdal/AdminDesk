@@ -1,13 +1,13 @@
 @echo off
 
 :: Kill running instance of container
-docker kill webapp
+docker kill AdminDesk
 
 :: Builds image specified in Dockerfile
-docker image build -t webapp .
+docker image build -t AdminDesk .
 
 :: Starts container with web application and maps port 80 (ext) to 80 (internal)
-docker container run --rm -it -d --name webapp --publish 80:80 webapp
+docker container run --rm -it -d --name AdminDesk --publish 80:80 AdminDesk
 
 echo.
 echo "Link: http://localhost:80/"
