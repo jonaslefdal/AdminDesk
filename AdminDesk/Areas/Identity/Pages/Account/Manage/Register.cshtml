@@ -2,10 +2,11 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register ny bruker";
+    
 }
 
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-6 mx-right">
         <h1>@ViewData["Title"]</h1>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <hr />
@@ -25,6 +26,16 @@
                 <label asp-for="Input.ConfirmPassword">Bekreft passord</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="form-floating mb-3">
+                <select asp-for="Input.Role" class="form-select" aria-required="true">
+                    <option value="Admin">Admin</option>
+                    <option value="User">User</option>
+                    <!-- Add more roles as needed -->
+                </select>
+                <label asp-for="Input.Role">Role</label>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrer</button>
         </form>
     </div>

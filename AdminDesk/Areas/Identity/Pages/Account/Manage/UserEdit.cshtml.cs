@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,6 +13,7 @@ public enum LockoutStatusEnum
 
 namespace AdminDesk.Areas.Identity.Pages.Account.Manage
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class UserEditModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;

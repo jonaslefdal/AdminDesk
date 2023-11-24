@@ -51,6 +51,7 @@ public class Startup
         services.AddScoped<IServiceOrderRepository, EfServiceOrderRepository>();
         services.AddScoped<IReportRepository, EfReportRepository>();
         services.AddScoped<ICustomerRepository, EfCustomerRepository>();
+        services.AddScoped<IUserRepository, EfUserRepository>();
 
 
         services.AddRazorPages();

@@ -188,3 +188,12 @@ CREATE TABLE IF NOT EXISTS `aspnetusertokens` (
     FOREIGN KEY (`UserId`)
     REFERENCES `aspnetusers` (`Id`)
     ON DELETE CASCADE);
+
+CREATE TABLE IF NOT EXISTS `userdisabled` (
+  `UserId` VARCHAR(255) NOT NULL,
+  `Disabled` BOOLEAN NOT NULL DEFAULT 0,
+  PRIMARY KEY (`UserId`),
+  CONSTRAINT `FK_Disabled_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+);
