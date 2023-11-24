@@ -58,3 +58,8 @@ INSERT INTO report (ReportId, ServiceOrderId, Mechanic, ServiceType, MechanicCom
 (6, 3, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
 (7, 4, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3),
 (8, 5, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 3);
+
+INSERT INTO aspnetroles (Id, Name, NormalizedName)
+VALUES
+	(1, 'Admin', 'ADMIN'),
+    (2, 'User', 'USER');

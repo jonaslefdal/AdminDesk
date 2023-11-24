@@ -1,49 +1,61 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using AdminDesk.Models;  // Import your custom ApplicationUser class
+using AdminDesk.Models.User;
+using AdminDesk.Repositories;
+using AdminDesk.Entities;
+using AdminDesk.Models.User;
+using AdminDesk.Models.ServiceOrder;
 
 namespace AdminDesk.Areas.Identity.Pages.Account.Manage
-{
-    public class UserDisabledModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
-        public UserDisabledModel(UserManager<ApplicationUser> userManager)
+        public class UserDisabledModel : PageModel
         {
-            _userManager = userManager;
-        }
+            private readonly UserManager<IdentityUser> _userManager;
+            private readonly IUserRepository _userRepository;
+
+            public UserDisabledModel(UserManager<IdentityUser> userManager, IUserRepository userRepository)
+            {
+                _userManager = userManager;
+                _userRepository = userRepository;
+            }
 
         [BindProperty]
-        public ApplicationUser User { get; set; }
+        public IdentityUser User { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(UserFullViewModel userdisabled, string id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToPage("/Index");
             }
 
-            // Find the user and cast it to ApplicationUser
-            User = await _userManager.FindByIdAsync(id) as ApplicationUser;
+            User = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            if (User == null)
+
+            var thisspesificuser = await _userManager.FindByIdAsync(User.Id);
+
+            if (thisspesificuser == null)
             {
-                return NotFound();
+                return RedirectToPage("/Index");
             }
 
-            // Set Disabled to true (1)
-            User.Disabled = true;
 
-            // Save changes to the database
-            await _userManager.UpdateAsync(User);
 
-            // Optionally, you can perform additional actions here
+            var UserDisabled = new User
+            {
+                UserId = thisspesificuser.Id,
+                Disabled = userdisabled.UpsertModel.Disabled,
+            };
 
-            return RedirectToPage("./Users");
-            // Redirect back to the user management page
+            _userRepository.Upsert(UserDisabled);
+
+                return RedirectToPage("./Users");
+                // Redirect back to the user management page
+            }
         }
     }
-}
+

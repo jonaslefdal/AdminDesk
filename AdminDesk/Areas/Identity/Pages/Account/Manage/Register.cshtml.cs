@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System;
@@ -21,6 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AdminDesk.Areas.Identity.Pages.Account
 {
+    [Authorize(Policy = "RequireAdminRole")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -70,6 +72,11 @@ namespace AdminDesk.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
+
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -124,6 +131,7 @@ namespace AdminDesk.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -131,12 +139,14 @@ namespace AdminDesk.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
+                    await _userManager.AddToRoleAsync(user, Input.Role);
+
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("./RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
@@ -159,6 +169,7 @@ namespace AdminDesk.Areas.Identity.Pages.Account
             try
             {
                 return Activator.CreateInstance<IdentityUser>();
+
             }
             catch
             {

@@ -33,6 +33,9 @@ namespace AdminDesk.DataAccess
 
             modelBuilder.Entity<Customer>().ToTable("Customer").HasKey(x => x.CustomerId);
 
+            modelBuilder.Entity<User>().ToTable("UserDisabled").HasKey(x => x.UserId);
+
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -43,6 +46,13 @@ namespace AdminDesk.DataAccess
         public DbSet<Report> Report { get; set; }
         public DbSet<ServiceOrder> ServiceOrder { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<User> User { get; set; }
+
+        public DbSet<User> UserDisabled { get; set; }
+
+
+
+
 
     }
 }
