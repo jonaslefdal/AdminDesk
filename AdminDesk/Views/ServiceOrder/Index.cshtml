@@ -1,153 +1,178 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿<head>
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    @using AdminDesk.Models.ServiceOrder;
-    @model ServiceOrderFullViewModel
+    <script>
+        $(document).ready(function () {
+            $(".clickable").click(function () {
+                window.location = $(this).find("a").attr("href");
+            });
+        });
 
-    <head>
-        <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        function searchOrders() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
 
-        <script>$(document).ready(function () {
-                $(".clickable").click(function () {
-                    window.location = $(this).find("a").attr("href");
-                });
-            });</script>
-
-        <style>
-
-            html, body {
-                background-color: #d9e5eb;
-                margin: 0;
-                padding: 0;
-                font-family: sans-serif;
-                color: #313638;
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
             }
+        }
+    </script>
 
-            h1 {
-                text-align: center;
-                margin-top: 5%;
-            }
+    <style>
+        html, body {
+            font-size: 1rem;
+            background-color: #d9e5eb;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #313638;
+        }
 
-            p {
-                margin-top: 1rem;
-                text-align: center;
-            }
+        h1 {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 5%;
+        }
 
-            table {
-                border-collapse: collapse;
-                width: 100% !important;
-                margin-top: 5% !important;
-                margin: auto;
-                background-color: #f2f2f2;
-            }
+        p {
+            font-size: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
 
-            th, td {
-                border: 1px solid #000;
-                padding: 1%;
-                text-align: left;
-            }
+        table {
+            font-size: 1rem;
+            border-collapse: collapse;
+            width: 100% !important;
+            margin-top: 1% !important;
+            margin: auto;
+        }
 
-            td {
-                cursor: pointer;
-                white-space: nowrap;
-            }
+        th, td {
+            font-size: 1rem;
+            width: 15rem;
+            border: 1px solid #000;
+            padding: 1%;
+            text-align: center;
+            background-color: #f2f2f2;
+        }
 
-            tr:hover {
-                background-color: #e0e0e0;
-            }
+        tr:hover {
+            background-color: #e0e0e0;
+        }
 
-            th {
-                background-color: #f2f2f2;
-            }
+        .button-container {
+            text-align: center;
+            margin-top: 5%;
+        }
 
+        .button {
+            font-size: 14px;
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #88afc2;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: black;
+            text-decoration: none;
+        }
 
-
-            .button-container {
-                text-align: center;
-                margin-top: 5%;
-            }
-
-            .button {
-                display: inline-block;
-                padding: 1rem 2rem;
-                background-color: #88afc2;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
+            .button a {
+                text-decoration: none;
                 color: black;
             }
 
-                .button a {
-                    text-decoration: none;
-                    color: black;
-                }
+            .button:hover {
+                background-color: rgb(251, 114, 19);
+                color: black;
+            }
 
-                .button:hover {
-                    background-color: rgb(251, 114, 19);
-                    color: #9cb7c2;
-                }
-        </style>
-
-    </head>
-    <body>
+        .search-container {
+            text-align: center;
+            margin-top: 5%;
+        }
 
 
-        <div class="blokk">
+        #search {
+            padding: 0.5rem;
+            margin-right: 0.5rem;
+            width: 30rem;
+        }
 
-            <div class="Top">
-                ServiceOrdrer
+        #searchButton {
+            font-size: 14px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #88afc2;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: black;
+            text-decoration: none;
+        }
 
-            </div>
-            <div class="TopMid">
-                Sorter: Lav til høyt
-
-            </div>
-            <div>
-                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
-
-            </div>
-
-            <div class="Bottom">
-
-                <table>
-                    <tr>
-                        <th>Ordrenummer</th>
-                        <th>Kunde Navn</th>
-                        <th>Kontakt Telefon</th>
-                        <th>Ordre Status</th>
-                        <th>Dato Opprettet</th>
-                    </tr>
-                    @foreach (var serviceOrder in Model.ServiceOrderList)
-                    {
-                        <tr>
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerFirstName @serviceOrder.Customer?.CustomerLastName </a></td>
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer.CustomerId @serviceOrder.CustomerId</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Mechanic</a></td>
-                        </tr>
-                    }
-                </table>
-
-
-
-            </div>
+            #searchButton:hover {
+                background-color: rgb(251, 114, 19);
+                color: black;
+            }
+    </style>
+</head>
+<body>
+    <div class="blokk">
+        <div class="Top">
+            Serviceordrer
         </div>
-    </body>
+        <div class="TopMid">
+            Sorter: Lav til høyt
+        </div>
+        <div class="button-container">
+            <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Legg inn ny ordre</a>
+        </div>
+        <div class="search-container">
+            <label for="search">Søk: </label>
+            <input type="text" id="search" name="search" placeholder="Søk etter ordrenummer">
+            <button id="searchButton" onclick="searchOrders()">Søk</button>
+        </div>
+        <div class="Bottom">
+            <table>
+                <tr>
+                    <th>Ordrenummer</th>
+                    <th>Kunde Fornavn</th>
+                    <th>Kunde Etternavn</th>
+                    <th>Kunde Nummer</th>
+                    <th>Telefon Nummer</th>
+                    <th>Ordre Status</th>
+                    <th>Dato Opprettet</th>
+                    <th>Reperatør</th>
+                </tr>
+                @foreach (var serviceOrder in Model.ServiceOrderList)
+                {
+                    <tr>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerFirstName</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerLastName </a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer.CustomerId</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate</a></td>
+                        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Mechanic</a></td>
 
-}
-else
-{
-    <p>You do not have permission to access this page. Please log in.</p>
-}
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
