@@ -21,6 +21,7 @@ namespace AdminDesk.Controllers
 
 
         [HttpGet]
+
         public IActionResult Index(int id)
         {
             var reportsForServiceOrder = _reportRepository.GetAll().Where(r => r.ServiceOrderId == id).ToList();
@@ -41,27 +42,23 @@ namespace AdminDesk.Controllers
                 }).ToList()
             };
 
-            return View("Index", model.ReportList);
+            return View("Index", model);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
+
         public IActionResult Post(ReportFullViewModel report)
         {
             var entity = new Report
             {
                 ReportId = report.UpsertModel.ReportId,
                 ServiceOrderId = report.UpsertModel.ServiceOrderId,
-                // Set other properties as needed
+                
             };
-
             _reportRepository.Upsert(entity);
-
-            // Redirect to the Index action with the specified ServiceOrderId
-            return RedirectToAction("Index", new { id = report.UpsertModel.ServiceOrderId });
+            return View("Index");
         }
-
     }
 }

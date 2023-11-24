@@ -29,10 +29,7 @@ namespace AdminDesk.Controllers
         public IActionResult Index()
         {
             var model = new ServiceOrderFullViewModel();
-            model.ServiceOrderList = _serviceOrderRepository.GetAll().Select(x => new ServiceOrderViewModel
-            {
-                ServiceOrderId = x.ServiceOrderId,
-                Mechanic = x.Mechanic
+            model.ServiceOrderList = _serviceOrderRepository.GetAll().Select(x => new ServiceOrderViewModel { ServiceOrderId = x.ServiceOrderId, Mechanic = x.Mechanic
                 ,
                 CustomerId = x.CustomerId
                 ,
@@ -93,7 +90,7 @@ namespace AdminDesk.Controllers
         public IActionResult Spesific(int id)
         {
             var serviceOrdre = _serviceOrderRepository.Get(id);
-
+            
 
             if (serviceOrdre == null)
             {
@@ -141,7 +138,7 @@ namespace AdminDesk.Controllers
                 ReportModel = new ReportFullViewModel
                 {
                     ReportList = reportsForServiceOrder
-
+                   
                 }
             };
 
@@ -163,60 +160,59 @@ namespace AdminDesk.Controllers
             }
             else
             {
-
+                // Handle the case where the customer is null (optional)
+                // You can set default values or handle it based on your requirements
 
             }
 
             return View("Spesific", compositeModel);
-
-        }
+        
+    }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Post(ServiceOrderFullViewModel serviceordre)
         {
-            if (ModelState.IsValid)
+            var customerEntity = new Customer
             {
-                var customerEntity = new Customer
-                {
-                    CustomerId = serviceordre.UpsertModel.Customer.CustomerId,
-                    CustomerFirstName = serviceordre.UpsertModel.Customer.CustomerFirstName,
-                    CustomerLastName = serviceordre.UpsertModel.Customer.CustomerLastName,
-                    CustomerEmail = serviceordre.UpsertModel.Customer.CustomerEmail,
-                    CustomerStreet = serviceordre.UpsertModel.Customer.CustomerStreet,
-                    CustomerCity = serviceordre.UpsertModel.Customer.CustomerCity,
-                    CustomerZipcode = serviceordre.UpsertModel.Customer.CustomerZipcode,
-                    CustomerPhoneNumber = serviceordre.UpsertModel.Customer.CustomerPhoneNumber,
-                    CustomerComment = serviceordre.UpsertModel.Customer.CustomerComment,
-                };
 
-                _customerRepository.Upsert(customerEntity);
+                CustomerId = serviceordre.UpsertModel.Customer.CustomerId,
+                CustomerFirstName = serviceordre.UpsertModel.Customer.CustomerFirstName,
+                CustomerLastName = serviceordre.UpsertModel.Customer.CustomerLastName,
+                CustomerEmail = serviceordre.UpsertModel.Customer.CustomerEmail,
+                CustomerStreet = serviceordre.UpsertModel.Customer.CustomerStreet,
+                CustomerCity = serviceordre.UpsertModel.Customer.CustomerCity,
+                CustomerZipcode = serviceordre.UpsertModel.Customer.CustomerZipcode,
+                CustomerPhoneNumber = serviceordre.UpsertModel.Customer.CustomerPhoneNumber,
+                CustomerComment = serviceordre.UpsertModel.Customer.CustomerComment,
 
-                var entity = new ServiceOrder
-                {
-                    Mechanic = serviceordre.UpsertModel.Mechanic,
-                    ServiceOrderId = serviceordre.UpsertModel.ServiceOrderId,
-                    CustomerId = customerEntity.CustomerId,
-                    Customer = customerEntity,
-                    SerialNumber = serviceordre.UpsertModel.SerialNumber,
-                    CreatedDate = serviceordre.UpsertModel.CreatedDate,
-                    Comment = serviceordre.UpsertModel.Comment,
-                    FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
-                    CreatedById = serviceordre.UpsertModel.CreatedById,
-                    OrderStatus = serviceordre.UpsertModel.OrderStatus,
-                    ReserveDeler = serviceordre.UpsertModel.ReserveDeler,
-                    TotalWorkHours = serviceordre.UpsertModel.TotalWorkHours,
-                };
+            };
+            _customerRepository.Upsert(customerEntity);
 
-                _serviceOrderRepository.Upsert(entity);
 
-                return RedirectToAction("Index");
-            }
+            var entity = new ServiceOrder
+            {
+                Mechanic = serviceordre.UpsertModel.Mechanic,
+                ServiceOrderId = serviceordre.UpsertModel.ServiceOrderId,
 
-            // If validation fails, return to the create view with the model
-            return View("NyServiceOrdre", serviceordre);
+                CustomerId = customerEntity.CustomerId,
+
+                SerialNumber = serviceordre.UpsertModel.SerialNumber,
+                CreatedDate = serviceordre.UpsertModel.CreatedDate,
+                Comment = serviceordre.UpsertModel.Comment,
+                FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
+                CreatedById = serviceordre.UpsertModel.CreatedById,
+                OrderStatus = serviceordre.UpsertModel.OrderStatus,
+                ReserveDeler = serviceordre.UpsertModel.ReserveDeler,
+                TotalWorkHours = serviceordre.UpsertModel.TotalWorkHours,
+
+            };
+
+            _serviceOrderRepository.Upsert(entity);
+
+
+            return Index();
         }
-
 
 
 

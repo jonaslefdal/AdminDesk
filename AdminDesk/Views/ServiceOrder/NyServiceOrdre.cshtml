@@ -1,179 +1,63 @@
-﻿@using AdminDesk.Models.ServiceOrder
+﻿@using AdminDesk.Models.ServiceOrder;
 @model ServiceOrderFullViewModel
 
 <link rel="stylesheet" href="@Url.Content("~/css/form.css")">
 
-<style>
-    body {
-        background-color: #d9e5eb;
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        color: #313638;
-    }
-
-    #create-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        padding: 2%;
-    }
-
-    .form-container {
-        max-width: 80%; /* Adjust the width as needed */
-        width: 100%;
-        background-color: white;
-        padding: 2%;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .form-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-        gap: 1rem;
-    }
-
-    label {
-        display: block;
-        margin-top: 1rem;
-    }
-
-    input[type="text"],
-    input[type="date"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-top: 0.2rem;
-        box-sizing: border-box;
-    }
-
-    .button-container {
-        text-align: center;
-        margin-top: 5%;
-    }
-
-    .button {
-        display: inline-block;
-        padding: 0.2rem 0.4rem;
-        background-color: #88afc2;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        color: black;
-        text-decoration: none;
-        margin: 2%;
-    }
-
-        .button:hover {
-            background-color: rgb(251, 114, 19);
-            color: black;
-        }
-</style>
-
-<div id="create-container">
-    <h1>Create</h1>
-    <h4>Serviceordre</h4>
-    <hr />
-    <div class="row">
-        <div class="form-container">
-            <form asp-action="Post">
-                @Html.ValidationSummary()
-                @Html.AntiForgeryToken() <!--Is a security measure to prevent CSRF attacks.-->
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Mechanic"></label> <!--Bruk av asp-for har automatisk beskytelse mot xss fordi den enkoder dataen / render dataen som tekst istedenfor data--->
-                            <input asp-for="UpsertModel.Mechanic" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.SerialNumber"></label>
-                            <input asp-for="UpsertModel.SerialNumber" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.CreatedDate"></label>
-                            <input asp-for="UpsertModel.CreatedDate" type="date" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Comment"></label>
-                            <input asp-for="UpsertModel.Comment" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.FutureMaintenance"></label>
-                            <input asp-for="UpsertModel.FutureMaintenance" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.CreatedById"></label>
-                            <input asp-for="UpsertModel.CreatedById" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.OrderStatus"></label>
-                            <input asp-for="UpsertModel.OrderStatus" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.TotalWorkHours"></label>
-                            <input asp-for="UpsertModel.TotalWorkHours" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerCity"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerCity" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="UpsertModel.Customer.CustomerComment"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerComment" type="text" />
-                        </div>
-                    </div>
-                </div>
 
 
-                <div class="button-container">
-                    <input type="submit" value="Lagre" class="button" />
-                    <a asp-action="Index" class="button">Tilbake til liste</a>
-                </div>
+<form asp-action="Post" asp-controller="ServiceOrder" method="post">
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
 
-            </form>
-        </div>
-    </div>
-</div>
+    <label asp-for="UpsertModel.Mechanic"></label>
+    <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+
+    <label asp-for="UpsertModel.SerialNumber"></label>
+    <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
+
+    <label asp-for="UpsertModel.CreatedDate"></label>
+    <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
+
+
+    <label asp-for="UpsertModel.Comment"></label>
+    <input asp-for="UpsertModel.Comment" type="text" /><br />
+
+    <label asp-for="UpsertModel.FutureMaintenance"></label>
+    <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
+
+    <label asp-for="UpsertModel.CreatedById"></label>
+    <input asp-for="UpsertModel.CreatedById" type="text" /><br />
+
+    <label asp-for="UpsertModel.OrderStatus"></label>
+    <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
+
+    <label asp-for="UpsertModel.TotalWorkHours"></label>
+    <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
+    <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
+    <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
+    <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
+    <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerCity"></label>
+    <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
+    <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
+    <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
+
+    <label asp-for="UpsertModel.Customer.CustomerComment"></label>
+    <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
+
+    <input type="submit" />
+
+</form>
