@@ -21,6 +21,7 @@ namespace AdminDesk.Controllers
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(int id)
         {
             var reportsForServiceOrder = _reportRepository.GetAll().Where(r => r.ServiceOrderId == id).ToList();
