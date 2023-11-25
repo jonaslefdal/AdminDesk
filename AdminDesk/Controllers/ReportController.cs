@@ -28,14 +28,14 @@ namespace AdminDesk.Controllers
 
         public IActionResult Index(int serviceOrderId)
         {
-            var model = new ReportFullViewModel
-            {
-                UpsertModel = new ReportViewModel
-                {
-                    // Set other properties as needed
-                    ServiceOrderId = serviceOrderId
-                }
-            };
+            var model = new List<ReportViewModel>
+    {
+        new ReportViewModel
+        {
+            // Set other properties as needed
+            ServiceOrderId = serviceOrderId
+        }
+    };
 
             return View(model);
         }
