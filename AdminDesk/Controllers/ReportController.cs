@@ -1,4 +1,4 @@
-﻿using AdminDesk.Entities;
+using AdminDesk.Entities;
 using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
