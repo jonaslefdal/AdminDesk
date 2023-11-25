@@ -43,7 +43,7 @@ namespace AdminDesk.Models.ServiceOrder
         public DateTime CreatedDate { get; set; }
         public string Comment { get; set; }
         public string FutureMaintenance { get; set; }
-        public int CreatedById { get; set; }
+        public string CreatedById { get; set; }
         public string OrderStatus { get; set; }
         public bool ReserveDeler { get; set; }
         public string TotalWorkHours { get; set; }

@@ -30,7 +30,7 @@ namespace AdminDesk.Models.Report
         public string MechanicComment { get; set; }
         public string ServiceDescription { get; set; }
         public DateTime ReportWriteDate { get; set; }
-        public int UserSign { get; set; }
+        public string UserSign { get; set; }
 
     }
 }

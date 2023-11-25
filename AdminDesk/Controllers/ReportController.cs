@@ -1,7 +1,9 @@
-﻿using AdminDesk.Entities;
+using AdminDesk.Entities;
 using AdminDesk.Models.Report;
+using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using static AdminDesk.Entities.Report;
 
@@ -12,57 +14,84 @@ namespace AdminDesk.Controllers
     {
 
         private readonly IReportRepository _reportRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
 
-        public ReportController(IReportRepository reportRepository)
+        public ReportController(IReportRepository reportRepository, UserManager<IdentityUser> userManager)
         {
             _reportRepository = reportRepository;
+            _userManager = userManager;
         }
 
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(int id)
-        {
-            var reportsForServiceOrder = _reportRepository.GetAll().Where(r => r.ServiceOrderId == id).ToList();
 
+        public IActionResult Index(int serviceOrderId)
+        {
             var model = new ReportFullViewModel
             {
-                UpsertModel = new ReportViewModel(),
-                ReportList = reportsForServiceOrder.Select(report => new ReportViewModel
+                UpsertModel = new ReportViewModel
                 {
-                    ReportId = report.ReportId,
-                    ServiceOrderId = report.ServiceOrderId,
-                    Mechanic = report.Mechanic,
-                    ServiceType = report.ServiceType,
-                    MechanicComment = report.MechanicComment,
-                    ServiceDescription = report.ServiceDescription,
-                    ReportWriteDate = report.ReportWriteDate,
-                    UserSign = report.UserSign,
-                }).ToList()
+                    // Set other properties as needed
+                    ServiceOrderId = serviceOrderId
+                }
             };
 
-            return View("Index", model.ReportList);
+            return View(model);
         }
-
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Post(ReportFullViewModel report)
+
+        public async Task<IActionResult> PostReport(ReportFullViewModel report)
         {
-            var entity = new Report
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            string currentUserId = currentUser?.Id;
+
+            if (currentUserId == null)
             {
-                ReportId = report.UpsertModel.ReportId,
-                ServiceOrderId = report.UpsertModel.ServiceOrderId,
-                // Set other properties as needed
-            };
+                // Handle the case where the user ID is null (e.g., throw an exception or provide a default value)
+                throw new Exception("Current user ID is null.");
+            }
 
-            _reportRepository.Upsert(entity);
 
-            // Redirect to the Index action with the specified ServiceOrderId
-            return RedirectToAction("Index", new { id = report.UpsertModel.ServiceOrderId });
+            if (ModelState.IsValid)
+            {
+                // Assuming Upsert method requires a Report object
+                var reportEntity = new Report
+                {
+                    // Map properties from the ViewModel
+                    ServiceOrderId = report.UpsertModel.ServiceOrderId,
+                    Mechanic = report.UpsertModel.Mechanic,
+                    ServiceType = report.UpsertModel.ServiceType,
+                    MechanicComment = report.UpsertModel.MechanicComment,
+                    ServiceDescription = report.UpsertModel.ServiceDescription,
+                    ReportWriteDate = report.UpsertModel.ReportWriteDate,
+                    UserSign = currentUserId,
+                    // ... other properties
+                };
+
+                _reportRepository.Upsert(reportEntity);
+
+                // Redirect to the details page or any other page as needed
+                return RedirectToAction("Spesific", "ServiceOrder", new { id = report.UpsertModel.ServiceOrderId });
+            }
+
+            else
+            {
+                // Log or debug to see the ModelState errors
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+
+                // Return to the view with validation errors
+                return View("Index", report);
+            }
+
         }
-
     }
 }
