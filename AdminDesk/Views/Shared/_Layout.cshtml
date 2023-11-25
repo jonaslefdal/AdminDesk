@@ -1,75 +1,64 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        body {
-            font-family: sans-serif;
-            font-size: 1.2rem;
-        }
-
-        #logo {
-            width: 200px;
-            height: auto;
-            padding: 5px;
-        }
-
-        .custom-navbar {
-            background-color: #88afc2;
-        }
-
-        .navbar-nav .nav-link {
-            color: #9cb7c2;
-        }
-
-        .d {
-            color: #9cb7c2;
-        }
-    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Nøsted Serviceordre Behandling</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - AdminDesk</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Nøsted_Serviceordre_Behandling.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AdminDesk.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light custom-navbar border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a>
-                    <img src="~/css/nlogo.png" id="logo" width="350" height="auto" alt="Logo">
+        <nav class="custom-navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+
+            <div class="icon">
+                <a class="navbar-icon" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/css/nlogo.png" alt="Logo" style="width:200px; height:auto">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1" id="navbar">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Hjemmeside</a>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    @await Html.PartialAsync("_LoginPartial")
-                </div>
             </div>
+            <div class="collapse d-sm-inline-flex justify-content-between w-100">
+                <ul class="navbar-nav flex-grow-1" id="navbar">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Hjemmeside</a>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="ServiceOrder" asp-action="Index">Service Ordrer</a>
+                        </li>
+                    }
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    
+
+                    <li>@await Html.PartialAsync("_LoginPartial")</li>
+                </ul>
+
+            </div>
+
+
         </nav>
     </header>
-    <div>
+
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-muted" style="position: absolute; bottom: 0; width: 100%; margin-top: 20px; background-color:rgba(63, 95, 131, 0.85);">
-        <div class="d">
-            &copy; 2023 - Nøsted Serviceordre Behandling - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="text-decoration: none; color: #9cb7c2;;">Privacy</a>
+
+    <footer class="border-top footer">
+        <div class="footer-text">
+            &copy; 2023 - Nøsted Serviceordre Behandling - <a class="text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

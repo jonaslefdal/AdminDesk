@@ -43,7 +43,6 @@ namespace AdminDesk.Controllers
                     FutureMaintenance = x.FutureMaintenance,
                     CreatedById = x.CreatedById,
                     OrderStatus = x.OrderStatus,
-                    ReserveDeler = x.ReserveDeler,
                     TotalWorkHours = x.TotalWorkHours,
 
                     Customer = new Customer
