@@ -1,3 +1,5 @@
+@model List<AdminDesk.Models.Report.ReportViewModel>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,6 @@
     <title>Service Order Details Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #d9e5eb;
             margin: 0;
             padding: 0;
@@ -30,7 +31,7 @@
         }
 
             #reportViewStyles .section input,
-            #reportViewStyles .section textarea {
+            .section textarea {
                 width: 80%;
             }
 
@@ -110,10 +111,11 @@
 </head>
 <body>
     <div id="reportViewStyles">
-    <div id="pdfContent">
         @foreach (var report in Model)
         {
-            <form action="@Url.Action("PostReport", "Report")" method="post">
+            <form asp-action="PostReport" asp-controller="Report" method="post">
+                @Html.ValidationSummary()
+                @Html.AntiForgeryToken()
                 <div class="section">
                     <label for="ReportId">Report ID:</label>
                     <input type="text" id="ReportId" name="ReportId" value="@report.ReportId" readonly>
@@ -159,73 +161,71 @@
                     <label for="UserSign">User Sign:</label>
                     <input type="text" id="UserSign" name="UserSign" value="@report.UserSign">
                 </div>
-
-                <div class="button-container">
-                    <button class="button" type="submit">Send Rapport</button>
-                    <button class="button" type="button" onclick="generatePDF('@Url.Action("GeneratePDF", "Report")')">Generer PDF</button>
-                    <a class="button" href="@Url.Action("Index", "ServiceOrder")">Tilbake til liste</a>
-                </div>
             </form>
+            <div class="button-container">
+                <button class="button" type="submit">Send Rapport</button>
+                <button class="button" type="button" onclick="generatePDF('@Url.Action("GeneratePDF", "Report")')">Generer PDF</button>
+                <a class="button" href="@Url.Action("Index", "ServiceOrder")">Tilbake til liste</a>
+            </div>
         }
-    </div>
-    </div>
-    </body>
-    </html>
 
-    <script src="https://rawcdn.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+        <script src="https://rawcdn.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
-    <script>
-        function previewImages(input) {
-            var previewContainer = document.getElementById('imagePreviewContainer');
-            var files = input.files;
+        <script>
+            function previewImages(input) {
+                var previewContainer = document.getElementById('imagePreviewContainer');
+                var files = input.files;
 
-            for (var i = 0; i < files.length; i++) {
-                (function (file) {
-                    var reader = new FileReader();
-                    var image = document.createElement('div');
-                    var imgElement = document.createElement('img');
-                    var deleteButton = document.createElement('button');
+                for (var i = 0; i < files.length; i++) {
+                    (function (file) {
+                        var reader = new FileReader();
+                        var image = document.createElement('div');
+                        var imgElement = document.createElement('img');
+                        var deleteButton = document.createElement('button');
 
-                    image.style.marginRight = '1%';
-                    image.style.marginBottom = '1%';
+                        image.style.marginRight = '1%';
+                        image.style.marginBottom = '1%';
 
-                    imgElement.style.maxWidth = '100%';
-                    imgElement.style.maxHeight = '20%';
+                        imgElement.style.maxWidth = '100%';
+                        imgElement.style.maxHeight = '20%';
 
-                    deleteButton.textContent = 'Slett bildet';
-                    deleteButton.style.cursor = 'pointer';
-                    deleteButton.style.background = '#88afc2';
-                    deleteButton.style.border = 'none';
-                    deleteButton.style.padding = '0.5rem';
-                    deleteButton.style.borderRadius = '5px';
-                    deleteButton.style.color = '000000';
-                    deleteButton.style.marginLeft = '5%';
+                        deleteButton.textContent = 'Slett bildet';
+                        deleteButton.style.cursor = 'pointer';
+                        deleteButton.style.background = '#88afc2';
+                        deleteButton.style.border = 'none';
+                        deleteButton.style.padding = '0.5rem';
+                        deleteButton.style.borderRadius = '5px';
+                        deleteButton.style.color = '000000';
+                        deleteButton.style.marginLeft = '5%';
 
-                    deleteButton.addEventListener('click', function () {
-                        previewContainer.removeChild(image);
-                    });
+                        deleteButton.addEventListener('click', function () {
+                            previewContainer.removeChild(image);
+                        });
 
-                    reader.onload = function () {
-                        imgElement.src = reader.result;
-                    }
+                        reader.onload = function () {
+                            imgElement.src = reader.result;
+                        }
 
-                    if (file) {
-                        reader.readAsDataURL(file);
-                    }
+                        if (file) {
+                            reader.readAsDataURL(file);
+                        }
 
-                    image.appendChild(imgElement);
-                    image.appendChild(deleteButton);
-                    previewContainer.appendChild(image);
-                })(files[i]);
+                        image.appendChild(imgElement);
+                        image.appendChild(deleteButton);
+                        previewContainer.appendChild(image);
+                    })(files[i]);
+                }
+
+                input.value = '';
             }
 
-            input.value = '';
-        }
+            function generatePDF(pdfUrl) {
+                console.log('Generating PDF...');
 
-        function generatePDF(pdfUrl) {
-            console.log('Generating PDF...');
-
-        var element = document.getElementById('reportViewStyles');
-            html2pdf(element);
-        }
-    </script>
+                var element = document.getElementById('reportViewStyles');
+                html2pdf(element);
+            }
+        </script>
+        </div>
+</body>
+</html>
