@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Sjekkliste";
 }
 
@@ -10,7 +10,6 @@
         html, body {
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
         }
 
         body {
@@ -29,6 +28,15 @@
             padding: 10px;
             position: relative;
             background: white;
+        }
+
+        #kommentarer {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical; /* Allow vertical resizing */
         }
 
         .sjekkpunkt {
@@ -503,71 +511,111 @@
     <br />
     <div class="avdeling">
         <label for="kommentarer">Kommentar:</label>
-        <input type="text" id="kommentarer" name="kommentarer" required>
+        <textarea id="kommentarer" name="kommentarer" required oninput="autoResize(this)"></textarea>
+        <button onclick="submitForm()">Submit</button>
     </div>
     <br>
     <br />
 
 
-    <script>// JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
+    <script>
         const avdelinger = document.querySelectorAll('.avdeling');
+        const tømKnapper = document.querySelectorAll('.tomKnapp');
 
-        function tømAvdeling(sjekkpunkter) {
-            sjekkpunkter.forEach(sjekkpunkt => {
-                sjekkpunkt.checked = false;
-            });
-            oppdaterStatus();
-        }
-
-        avdelinger.forEach(avdeling => {
+        avdelinger.forEach((avdeling, index) => {
             const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
             const statusBoks = avdeling.querySelector('.status');
-            const tømKnapp = avdeling.querySelector('.tomKnapp');
 
             sjekkpunkter.forEach(sjekkpunkt => {
-                sjekkpunkt.addEventListener('change', oppdaterStatus);
+                sjekkpunkt.addEventListener('change', () => oppdaterStatus(sjekkpunkter, statusBoks));
             });
 
-            tømKnapp.addEventListener('click', () => {
+            tømKnapper[index].addEventListener('click', () => {
                 tømAvdeling(sjekkpunkter);
             });
         });
 
-        function oppdaterStatus() {
-            avdelinger.forEach(avdeling => {
-                const sjekkpunkter = avdeling.querySelectorAll('input[type="radio"]');
-                const statusBoks = avdeling.querySelector('.status');
-                let enDefekt = false;
-                let enBorSkiftes = false;
-                let alleOk = true;
 
-                sjekkpunkter.forEach(sjekkpunkt => {
-                    if (sjekkpunkt.value === 'Defekt' && sjekkpunkt.checked) {
-                        enDefekt = true;
-                    } else if (sjekkpunkt.value === 'Bør skiftes' && sjekkpunkt.checked) {
-                        enBorSkiftes = true;
-                    } else if (sjekkpunkt.value === 'OK' && sjekkpunkt.checked) {
-                        alleOk = true;
-                    } else if (sjekkpunkt.checked) {
-                        alleOk = false;
-                    }
-                });
+        //Fungerer ikke som den skal
+        function tømAvdeling(department, sjekkpunkter) {
+            const departmentCheckboxes = document.querySelectorAll(`input[name^="${department}"]`);
 
-                if (enDefekt) {
-                    statusBoks.classList.remove('gronn', 'gul');
-                    statusBoks.classList.add('rod');
-                    statusBoks.textContent = 'X';
-                } else if (enBorSkiftes) {
-                    statusBoks.classList.remove('gronn', 'rod');
-                    statusBoks.classList.add('gul');
-                    statusBoks.textContent = '!';
-                } else if (alleOk) {
-                    statusBoks.classList.remove('rod', 'gul');
-                    statusBoks.classList.add('gronn');
-                    statusBoks.textContent = '✔';
-                } else {
-                    statusBoks.textContent = '';
+            departmentCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+
+                const departmentCheckbox = checkbox.closest('.avdeling').querySelector('.department-checkbox');
+                if (departmentCheckbox) {
+                    departmentCheckbox.remove();
                 }
             });
-        }</script>
+
+            oppdaterStatus(sjekkpunkter);
+        }
+
+        //Kan se i consol på web side at data blir lagret når knappen blir trykket på
+        function submitForm() {
+            // Get all form elements
+            var formElements = document.querySelectorAll('input, textarea');
+
+            // Create an object to store the form data
+            var formData = {};
+
+            // Iterate through each form element and store its value in the formData object
+            formElements.forEach(function (element) {
+                if (element.type !== 'radio' || element.checked) {
+                    formData[element.name] = element.value;
+                }
+            });
+
+            // You can now send the formData object to your server using AJAX or any other method
+            console.log(formData);
+            // Add your code to send the data to the server here
+        }
+
+
+        function oppdaterStatus(sjekkpunkter, statusBoks) {
+            let enDefekt = false;
+            let enBorSkiftes = false;
+            let alleOk = true;
+
+            sjekkpunkter.forEach(sjekkpunkt => {
+                if (sjekkpunkt.value === 'Defekt' && sjekkpunkt.checked) {
+                    enDefekt = true;
+                } else if (sjekkpunkt.value === 'Bør skiftes' && sjekkpunkt.checked) {
+                    enBorSkiftes = true;
+                } else if (sjekkpunkt.value === 'OK' && sjekkpunkt.checked) {
+                    alleOk = true;
+                } else if (sjekkpunkt.checked) {
+                    alleOk = false;
+                }
+            });
+
+            if (enDefekt) {
+                statusBoks.textContent = 'X';
+                statusBoks.classList.remove('gronn', 'gul');
+                statusBoks.classList.add('rod');
+            } else if (enBorSkiftes) {
+                statusBoks.textContent = '!';
+                statusBoks.classList.remove('gronn', 'rod');
+                statusBoks.classList.add('gul');
+            } else if (alleOk) {
+                statusBoks.textContent = '✔';
+                statusBoks.classList.remove('rod', 'gul');
+                statusBoks.classList.add('gronn');
+            } else {
+                statusBoks.textContent = '';
+            }
+        }
+    </script>
+    <script>
+        function autoResize(element) {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            element.style.height = 'auto';
+            element.style.height = (element.scrollHeight) + 'px';
+
+            window.scrollTo(0, scrollTop);
+        }
+
+    </script>
 </body>
