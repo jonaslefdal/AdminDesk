@@ -46,11 +46,12 @@
                 <td>
                     @if (userDisabled != null && userDisabled.Disabled)
                     {
-                        <a asp-area="Identity" asp-page="./UserDisabled" asp-route-id="@user.Id" asp-route-area="Identity" class="btn btn-success">Aktiv</a>
+                        <a asp-area="Identity" asp-page="./UserDisabled" asp-route-id="@user.Id" asp-route-area="Identity" class="btn-red btn">Deaktiv</a>
                     }
                     else
                     {
-                        <a asp-area="Identity" asp-page="./UserDisabled" asp-route-id="@user.Id" asp-route-area="Identity" class="btn-red btn">Deaktiv</a>
+                        
+                        <a asp-area="Identity" asp-page="./UserDisabled" asp-route-id="@user.Id" asp-route-area="Identity" class="btn btn-success">Aktiv</a>
                     }
                 </td>
             </tr>
