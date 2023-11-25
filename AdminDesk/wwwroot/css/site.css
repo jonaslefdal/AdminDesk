@@ -97,3 +97,14 @@ body {
     text-decoration: none;
  }
 
+.btn-red {
+    color: #fff !important;
+    background-color: #dc3545 !important; /* Red color */
+    border-color: #dc3545 !important;
+}
+
+    .btn-red:hover {
+        color: #fff; 
+        background-color: #bd2130; /* Darker red color on hover */
+        border-color: #bd2130;
+    }

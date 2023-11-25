@@ -24,21 +24,34 @@ namespace AdminDesk.Repositories
         {
             return _dataContext.ServiceOrder
             .Include(so => so.Customer) // Include related Customer data
-    .       ToList();
+            .ToList();
         
     }
 
         public void Upsert(ServiceOrder serviceorder)
         {
-            var existing = Get(serviceorder.ServiceOrderId);
-            if(existing != null)
+            var existing = _dataContext.ServiceOrder
+            .Include(so => so.Customer) // Include related Customer data
+            .FirstOrDefault(x => x.ServiceOrderId == serviceorder.ServiceOrderId);
+
+            if (existing != null)
             {
-                existing.ServiceOrderId = serviceorder.ServiceOrderId;
-                _dataContext.SaveChanges();
-                return;
+                // Update existing ServiceOrder entity with new values
+                _dataContext.Entry(existing).CurrentValues.SetValues(serviceorder);
+
+                // Update the associated Customer entity
+                if (serviceorder.Customer != null)
+                {
+                    _dataContext.Entry(existing.Customer).CurrentValues.SetValues(serviceorder.Customer);
+                }
             }
-            serviceorder.ServiceOrderId = 0;
-            _dataContext.Add(serviceorder);
+            else
+            {
+                // Handle the case where the ServiceOrder does not exist
+                serviceorder.ServiceOrderId = 0;
+                _dataContext.Add(serviceorder);
+            }
+
             _dataContext.SaveChanges();
         }
     }

@@ -1,112 +1,134 @@
 ﻿@using AdminDesk.Models.Report;
 @model ReportFullViewModel
 
+<style>
+    body {
+        background-color: #d9e5eb;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        color: #313638;
+    }
 
-<!DOCTYPE html>
+    #create-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2%;
+    }
 
-<head>
-    <title>Service Order Details</title>
+    .form-container {
+        max-width: 60rem; /* Increase the max-width as needed */
+        width: 100%;
+        background-color: white;
+        padding: 2%;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-    <style>
+    .form-group {
+        margin-bottom: 1rem;
+    }
 
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
 
-        html, body {
-            background-color: #d9e5eb;
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            color: #313638;
+    input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 0.5rem;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #88afc2;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+        text-decoration: none;
+        margin: 2% 0;
+    }
+
+        .button:hover {
+            background-color: rgb(251, 114, 19);
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 5%;
-        }
+    .customer-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-        p {
-            margin-top: 1rem;
-            text-align: center;
-        }
+    .customer-group {
+        flex-basis: 48%; /* Adjust the width as needed */
+        box-sizing: border-box;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100% !important;
-            margin-top: 5% !important;
-            margin: auto;
-            background-color: #f2f2f2;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 1%;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    .customer-comment-group {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
 
 
-</head>
-<body>
-    <h1>Service Order Details</h1>
-    <table>
-        <tr>
-            <th>ID</th>
+<div id="create-container">
+    <h1>Ny</h1>
+    <h4>Serviceordre</h4>
 
-        </tr>
-        <tr>
-            <th>ReportId</th>
-            <td>@Model.UpsertModel.ReportId</td>
-            <th>ServiceOrderId</th>
-            <td>@Model.UpsertModel.ServiceOrderId</td>
-            <th>Mechanic</th>
-            <td>@Model.UpsertModel.Mechanic</td>
-            <th>ServiceType</th>
-            <td>@Model.UpsertModel.ServiceType.</td>
-            <th>MechanicComment</th>
-            <td>@Model.UpsertModel.MechanicComment.</td>
-            <th>ServiceDescription</th>
-            <td>@Model.UpsertModel.ServiceDescription.</td>
-            <th>ReportWriteDate</th>
-            <td>@Model.UpsertModel.ReportWriteDate.</td>
-            <th>UserSign</th>
-            <td>@Model.UpsertModel.UserSign</td>
+    <div class="form-container">
+        <form asp-action="PostReport" asp-controller="Report" method="post">
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
 
+            <div class="customer-container">
 
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Mechanic"></label>
+                        <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+                    </div>
 
-        </tr>
-        <h2>Customer Details</h2>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ReportWriteDate"></label>
+                        <input asp-for="UpsertModel.ReportWriteDate" type="date" /><br />
+                    </div>
 
-        @if (Model != null)
+                </div>
 
-            {
-                <table>
-    <tr>
-        <th>Report ID</th>
-        <th>Mechanic</th>
-        <!-- Add other Report properties here -->
-    </tr>
-    @foreach (var report in Model.ReportList)
-        {
-        <tr>
-            <td>@report.ReportId</td>
-            <td>@report.Mechanic</td>
-            <!-- Add other Report properties here -->
-        </tr>
-        }
-</table>
-            }
-            else
-            {
-                <p>No reports for the specified service order.</p>
-            }
-    </table>
+                <div class="form-group">
+                    <label asp-for="UpsertModel.ServiceDescription"></label>
+                    <input asp-for="UpsertModel.ServiceDescription" type="text" /><br />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UpsertModel.ServiceType"></label>
+                    <input asp-for="UpsertModel.ServiceType" type="text" /><br />
+                </div>
 
 
-    <p>
-        <!-- Add navigation back to the list or other actions as needed -->
-        <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake til</a></td>
-    </p>
+            </div>
+            <div class="customer-comment-group">
+                <div class="form-group">
+                    <label asp-for="UpsertModel.MechanicComment"></label>
+                    <input asp-for="UpsertModel.MechanicComment" type="text" /><br />
+                </div>
+            </div>
 
-</body>
+            <input type="submit" />
+
+        </form>
+
+    </div>
+</div>

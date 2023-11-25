@@ -2,6 +2,7 @@
 using AdminDesk.Entities;
 using AdminDesk.Repositories;
 using Microsoft.EntityFrameworkCore;
+using static AdminDesk.Areas.Identity.Pages.Account.Manage.IndexModel;
 
 public class EfUserRepository : IUserRepository
 {
@@ -39,6 +40,21 @@ public class EfUserRepository : IUserRepository
             .FirstOrDefaultAsync();
 
         return user;
+    }
+
+    public async Task<List<UserWithDisabledInfo>> GetAllWithDisabledInfoAsync()
+    {
+        return await _dataContext.Users
+            .Join(
+                _dataContext.UserDisabled,
+                u => u.Id,
+                ud => ud.UserId,
+                (u, ud) => new UserWithDisabledInfo
+                {
+                    User = u,
+                    UserDisabled = ud
+                })
+            .ToListAsync();
     }
 
     public void Upsert(User user)

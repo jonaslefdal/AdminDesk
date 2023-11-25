@@ -3,6 +3,7 @@ using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminDesk.Controllers
@@ -17,12 +18,18 @@ namespace AdminDesk.Controllers
 
         private readonly IReportRepository _reportRepository;
 
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository, IReportRepository reportRepository, ICustomerRepository customerRepository)
+
+
+        public ServiceOrderController(IServiceOrderRepository serviceOrderRepository, IReportRepository reportRepository, ICustomerRepository customerRepository, UserManager<IdentityUser> userManager)
+
         {
             _serviceOrderRepository = serviceOrderRepository;
             _reportRepository = reportRepository;
             _customerRepository = customerRepository;
+            _userManager = userManager;
+
         }
 
         [HttpGet]
@@ -44,8 +51,6 @@ namespace AdminDesk.Controllers
                 CreatedById = x.CreatedById
                 ,
                 OrderStatus = x.OrderStatus
-                ,
-                ReserveDeler = x.ReserveDeler
                 ,
                 TotalWorkHours = x.TotalWorkHours,
 
@@ -77,7 +82,7 @@ namespace AdminDesk.Controllers
                 model.UpsertModel = new ServiceOrderViewModel
                 {
                     // other properties
-                    CreatedDate = DateTime.Now // set the CreatedDate to the current date
+                    CreatedDate = DateTime.Today // set the CreatedDate to the current date
                 };
             };
 
@@ -130,7 +135,6 @@ namespace AdminDesk.Controllers
                         FutureMaintenance = serviceOrdre.FutureMaintenance,
                         CreatedById = serviceOrdre.CreatedById,
                         OrderStatus = serviceOrdre.OrderStatus,
-                        ReserveDeler = serviceOrdre.ReserveDeler,
                         TotalWorkHours = serviceOrdre.TotalWorkHours
                     },
                     ServiceOrderList = new List<ServiceOrderViewModel>()
@@ -171,8 +175,12 @@ namespace AdminDesk.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Post(ServiceOrderFullViewModel serviceordre)
+        public async Task<IActionResult> Post(ServiceOrderFullViewModel serviceordre)
         {
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            string currentUserId = currentUser?.Id;
+
             var customerEntity = new Customer
             {
 
@@ -201,9 +209,8 @@ namespace AdminDesk.Controllers
                 CreatedDate = serviceordre.UpsertModel.CreatedDate,
                 Comment = serviceordre.UpsertModel.Comment,
                 FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
-                CreatedById = serviceordre.UpsertModel.CreatedById,
+                CreatedById = currentUserId,
                 OrderStatus = serviceordre.UpsertModel.OrderStatus,
-                ReserveDeler = serviceordre.UpsertModel.ReserveDeler,
                 TotalWorkHours = serviceordre.UpsertModel.TotalWorkHours,
 
             };
@@ -213,6 +220,105 @@ namespace AdminDesk.Controllers
 
             return Index();
         }
+
+
+
+        [HttpGet]
+        public IActionResult ServiceOrderEdit(int id)
+        {
+            var serviceOrder = _serviceOrderRepository.Get(id);
+
+            if (serviceOrder == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ServiceOrderFullViewModel
+            {
+                UpsertModel = new ServiceOrderViewModel
+                {
+                    ServiceOrderId = serviceOrder.ServiceOrderId,
+                    CustomerId = serviceOrder.CustomerId,
+                    Mechanic = serviceOrder.Mechanic,
+                    SerialNumber = serviceOrder.SerialNumber,
+                    CreatedDate = serviceOrder.CreatedDate,
+                    Comment = serviceOrder.Comment,
+                    FutureMaintenance = serviceOrder.FutureMaintenance,
+                    CreatedById = serviceOrder.CreatedById,
+                    OrderStatus = serviceOrder.OrderStatus,
+                    TotalWorkHours = serviceOrder.TotalWorkHours
+                }
+            };
+
+            if (serviceOrder.Customer != null)
+            {
+                model.UpsertModel.Customer = new Customer
+                {
+                    CustomerId = serviceOrder.Customer.CustomerId,
+                    CustomerFirstName = serviceOrder.Customer.CustomerFirstName,
+                    CustomerLastName = serviceOrder.Customer.CustomerLastName,
+                    CustomerEmail = serviceOrder.Customer.CustomerEmail,
+                    CustomerStreet = serviceOrder.Customer.CustomerStreet,
+                    CustomerCity = serviceOrder.Customer.CustomerCity,
+                    CustomerZipcode = serviceOrder.Customer.CustomerZipcode,
+                    CustomerPhoneNumber = serviceOrder.Customer.CustomerPhoneNumber,
+                    CustomerComment = serviceOrder.Customer.CustomerComment
+                };
+
+            }
+
+            return View("ServiceOrderEdit", model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditChange(ServiceOrderFullViewModel serviceordre)
+        {
+            if (ModelState.IsValid)
+            {
+                // Update the service order
+                var serviceOrderEntity = new ServiceOrder
+                {
+                    ServiceOrderId = serviceordre.UpsertModel.ServiceOrderId,
+                    Mechanic = serviceordre.UpsertModel.Mechanic,
+                    CustomerId = serviceordre.UpsertModel.CustomerId,
+                    SerialNumber = serviceordre.UpsertModel.SerialNumber,
+                    CreatedDate = serviceordre.UpsertModel.CreatedDate,
+                    Comment = serviceordre.UpsertModel.Comment,
+                    FutureMaintenance = serviceordre.UpsertModel.FutureMaintenance,
+                    CreatedById = serviceordre.UpsertModel.CreatedById,
+                    OrderStatus = serviceordre.UpsertModel.OrderStatus,
+                    TotalWorkHours = serviceordre.UpsertModel.TotalWorkHours,
+                };
+
+                _serviceOrderRepository.Upsert(serviceOrderEntity);
+
+                // Retrieve the existing customer associated with the service order
+                var existingCustomer = _customerRepository.Get(serviceordre.UpsertModel.Customer.CustomerId);
+
+                if (existingCustomer != null)
+                {
+                    // Update the existing customer information
+                    existingCustomer.CustomerFirstName = serviceordre.UpsertModel.Customer.CustomerFirstName;
+                    existingCustomer.CustomerLastName = serviceordre.UpsertModel.Customer.CustomerLastName;
+                    existingCustomer.CustomerEmail = serviceordre.UpsertModel.Customer.CustomerEmail;
+                    existingCustomer.CustomerStreet = serviceordre.UpsertModel.Customer.CustomerStreet;
+                    existingCustomer.CustomerCity = serviceordre.UpsertModel.Customer.CustomerCity;
+                    existingCustomer.CustomerZipcode = serviceordre.UpsertModel.Customer.CustomerZipcode;
+                    existingCustomer.CustomerPhoneNumber = serviceordre.UpsertModel.Customer.CustomerPhoneNumber;
+                    existingCustomer.CustomerComment = serviceordre.UpsertModel.Customer.CustomerComment;
+
+                    _customerRepository.Upsert(existingCustomer);
+                }
+
+                return Index();
+            }
+
+            // If ModelState is not valid, return to the edit view with validation errors
+            return View("ServiceOrderEdit", serviceordre);
+        }
+
 
 
 

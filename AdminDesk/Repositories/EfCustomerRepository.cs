@@ -8,13 +8,13 @@ namespace AdminDesk.Repositories
     {
         private readonly DataContext _dataContext;
 
-        public EfCustomerRepository(DataContext dataContext) 
+        public EfCustomerRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
         }
         public Customer Get(int CustomerId)
         {
-            
+
             return _dataContext.Customer.FirstOrDefault(x => x.CustomerId == CustomerId);
 
 
@@ -23,21 +23,25 @@ namespace AdminDesk.Repositories
         public List<Customer> GetAll()
         {
             return _dataContext.Customer.ToList();
-            
-    }
+
+        }
 
         public void Upsert(Customer customer)
         {
             var existing = Get(customer.CustomerId);
-            if(existing != null)
+            if (existing != null)
             {
-                existing.CustomerId = customer.CustomerId;
-                _dataContext.SaveChanges();
-                return;
+                // Update existing customer entity with new values
+                _dataContext.Entry(existing).CurrentValues.SetValues(customer);
             }
-            customer.CustomerId = 0;
-            _dataContext.Add(customer);
+            else
+            {
+                customer.CustomerId = 0;
+                _dataContext.Add(customer);
+            }
+
             _dataContext.SaveChanges();
         }
+
     }
 }

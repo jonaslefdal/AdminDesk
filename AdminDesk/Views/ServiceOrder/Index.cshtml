@@ -18,134 +18,119 @@
             });</script>
 
         <style>
-
-            html, body {
-                background-color: #d9e5eb;
+            body {
+                background-color: #f4f4f4;
+                font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 0;
-                font-family: sans-serif;
-                color: #313638;
+            }
+
+            .container {
+                max-width: 75vw;
+                margin: 50px auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
 
             h1 {
                 text-align: center;
-                margin-top: 5%;
+                margin-top: 0;
+                color: #333;
             }
 
-            p {
-                margin-top: 1rem;
+            .button-container {
                 text-align: center;
+                margin-bottom: 20px;
             }
+
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #428bca;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+                .button:hover {
+                    background-color: #3071a9;
+                }
 
             table {
+                width: 100%;
                 border-collapse: collapse;
-                width: 100% !important;
-                margin-top: 5% !important;
-                margin: auto;
-                background-color: #f2f2f2;
+                margin-top: 20px;
             }
 
             th, td {
-                border: 1px solid #000;
-                padding: 1%;
+                padding: 12px;
                 text-align: left;
-            }
-
-            td {
-                cursor: pointer;
-                white-space: nowrap;
-            }
-
-            tr:hover {
-                background-color: #e0e0e0;
+                border-bottom: 1px solid #ddd;
             }
 
             th {
                 background-color: #f2f2f2;
             }
 
-
-
-            .button-container {
-                text-align: center;
-                margin-top: 5%;
+            tr:hover {
+                background-color: #f5f5f5;
             }
 
-            .button {
-                display: inline-block;
-                padding: 1rem 2rem;
-                background-color: #88afc2;
-                border-radius: 5px;
+            .clickable {
                 cursor: pointer;
-                transition: background-color 0.3s;
-                color: black;
             }
 
-                .button a {
+                .clickable a {
+                    color: #333;
                     text-decoration: none;
-                    color: black;
                 }
 
-                .button:hover {
-                    background-color: rgb(251, 114, 19);
-                    color: #9cb7c2;
-                }
+                    .clickable a:hover {
+                        text-decoration: underline;
+                    }
         </style>
-
     </head>
+
     <body>
 
+        <div class="container">
+            <h1>Service Orders</h1>
 
-        <div class="blokk">
-
-            <div class="Top">
-                ServiceOrdrer
-
-            </div>
-            <div class="TopMid">
-                Sorter: Lav til høyt
-
-            </div>
-            <div>
-                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
-
+            <div class="button-container">
+                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">New Order</a>
             </div>
 
-            <div class="Bottom">
-
-                <table>
+            <table>
+                <thead>
                     <tr>
-                        <th>Ordrenummer</th>
-                        <th>Kunde Navn</th>
-                        <th>Kontakt Telefon</th>
-                        <th>Ordre Status</th>
-                        <th>Dato Opprettet</th>
+                        <th>Order Number</th>
+                        <th>Customer Name</th>
+                        <th>Contact Phone</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Mechanic</th>
                     </tr>
+                </thead>
+                <tbody>
                     @foreach (var serviceOrder in Model.ServiceOrderList)
                     {
-                        <tr>
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerFirstName @serviceOrder.Customer?.CustomerLastName </a></td>
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer.CustomerId @serviceOrder.CustomerId</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate</a></td>
-
-                            <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Mechanic</a></td>
+                        <tr class="clickable">
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@($"{serviceOrder.Customer?.CustomerFirstName} {serviceOrder.Customer?.CustomerLastName}")</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate.ToString("yyyy-dd-MM")</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Mechanic</a></td>
                         </tr>
                     }
-                </table>
-
-
-
-            </div>
+                </tbody>
+            </table>
         </div>
-    </body>
 
+    </body>
 }
 else
 {
