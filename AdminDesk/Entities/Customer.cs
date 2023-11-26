@@ -1,30 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using AdminDesk.Models.ServiceOrder;
+﻿using System.ComponentModel.DataAnnotations;//Importerer for å validere modeller
+using System.ComponentModel.DataAnnotations.Schema;//Importerer for å tilkoble modellene til databasetabeller.
+using AdminDesk.Models.ServiceOrder;//Importerer for å bruke ServiceOrder-modeller i applikasjonen
 
-namespace AdminDesk.Entities
+namespace AdminDesk.Entities//Definerer navneområde for entitetsklasser
 {
-
+    // Definerer Customer-klasse som tilsvarer customer-tabell i database.
     [Table("customer")]
     public class Customer
     {
-        [Key]
+        [Key]//Nøkkel for å identefisere Customer-entitet
         public int CustomerId { get; set; }
 
         public string CustomerFirstName { get; set; }
-        [Required]
         public string CustomerLastName { get; set; }
-        [Required]
         public string CustomerEmail { get; set; }
-        [Required]
         public string CustomerStreet { get; set; }
-        [Required]
         public string CustomerCity { get; set; }
-        [Required]
         public string CustomerZipcode { get; set; }
-        [Required]
         public string CustomerPhoneNumber { get; set; }
-        [Required]
         public string CustomerComment { get; set; }
 
     }
