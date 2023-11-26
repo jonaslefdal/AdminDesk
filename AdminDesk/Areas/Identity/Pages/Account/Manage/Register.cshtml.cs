@@ -70,6 +70,11 @@ namespace AdminDesk.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        ///
+
+        public bool DisplayConfirmAccountLink { get; set; }
+
+
         public class InputModel
         {
 
@@ -131,6 +136,8 @@ namespace AdminDesk.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    DisplayConfirmAccountLink = true;
+                   
 
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -151,7 +158,7 @@ namespace AdminDesk.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return RedirectToPage("./Users");
                     }
                 }
                 foreach (var error in result.Errors)
