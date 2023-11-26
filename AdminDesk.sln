@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{
 		Dockerfile = Dockerfile
 		startDb.cmd = startDb.cmd
 		startDb.sh = startDb.sh
+		DockerBoth.sh = DockerBoth.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDeskTest", "AdminDeskTest\AdminDeskTest.csproj", "{6AD395D7-5368-4DD1-B5FB-1556F7A709B7}"

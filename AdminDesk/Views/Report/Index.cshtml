@@ -1,6 +1,7 @@
 @using AdminDesk.Models.Report;
 @model ReportFullViewModel
 
+
 <style>
     body {
         background-color: #d9e5eb;
@@ -14,7 +15,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         min-height: 100vh;
         padding: 2%;
     }
@@ -80,49 +80,61 @@
         width: 100%;
         box-sizing: border-box;
     }
+
+
 </style>
 
+    
+<p>
+    <a asp-action="Index">Tilbake</a>
+</p>
 
 <div id="create-container">
-    <h1>Ny</h1>
-    <h4>Serviceordre</h4>
+    <h1>Ny Rapport</h1>
 
     <div class="form-container">
         <form asp-action="PostReport" asp-controller="Report" method="post">
             @Html.ValidationSummary()
             @Html.AntiForgeryToken()
 
+
+
+            <input asp-for="UpsertModel.ServiceOrderId" type="hidden" /><br />
+
+            <input asp-for="UpsertModel.UserSign" type="hidden" value="0" /><br />
+
             <div class="customer-container">
 
                 <div class="customer-group">
                     <div class="form-group">
-                        <label asp-for="UpsertModel.Mechanic"></label>
-                        <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+                        <label asp-for="UpsertModel.Mechanic">Mekaniker/e</label>
+                        <input value="1" asp-for="UpsertModel.Mechanic" type="text" /><br />
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="UpsertModel.ReportWriteDate"></label>
+                        <label asp-for="UpsertModel.ReportWriteDate">Opprettelse Dato</label>
                         <input asp-for="UpsertModel.ReportWriteDate" type="date" /><br />
                     </div>
 
                 </div>
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ServiceDescription">Service Beskrivelse</label>
+                        <input value="1" asp-for="UpsertModel.ServiceDescription" type="text" /><br />
+                    </div>
 
-                <div class="form-group">
-                    <label asp-for="UpsertModel.ServiceDescription"></label>
-                    <input asp-for="UpsertModel.ServiceDescription" type="text" /><br />
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="UpsertModel.ServiceType"></label>
-                    <input asp-for="UpsertModel.ServiceType" type="text" /><br />
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ServiceType">Service Type</label>
+                        <input value="1" asp-for="UpsertModel.ServiceType" type="text" /><br />
+                    </div>
                 </div>
 
 
             </div>
             <div class="customer-comment-group">
                 <div class="form-group">
-                    <label asp-for="UpsertModel.MechanicComment"></label>
-                    <input asp-for="UpsertModel.MechanicComment" type="text" /><br />
+                    <label asp-for="UpsertModel.MechanicComment">Andre Kommentarer</label>
+                    <input value="1" asp-for="UpsertModel.MechanicComment" type="text" /><br />
                 </div>
             </div>
 

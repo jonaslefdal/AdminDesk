@@ -82,105 +82,108 @@
     }
 </style>
 
+<p>
+    <a asp-action="Index">Tilbake</a>
+</p>
 
 <div id="create-container">
     <h1>Ny</h1>
     <h4>Serviceordre</h4>
-    
-        <div class="form-container">
-            <form asp-action="Post" asp-controller="ServiceOrder" method="post">
-                @Html.ValidationSummary()
-                @Html.AntiForgeryToken()
 
-                <div class="customer-container">
-                    <div class="customer-group">
+    <div class="form-container">
+        <form asp-action="Post" asp-controller="ServiceOrder" method="post">
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
 
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Mechanic"></label>
-                            <input asp-for="UpsertModel.Mechanic" type="text" /><br />
-                        </div>
+            <div class="customer-container">
+                <div class="customer-group">
 
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.CreatedDate"></label>
-                            <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.TotalWorkHours"></label>
-                            <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
-                        </div>
-                    </div>
-                    <div class="customer-group">
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.SerialNumber"></label>
-                            <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.OrderStatus"></label>
-                            <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label asp-for="UpsertModel.Comment"></label>
-                    <input asp-for="UpsertModel.Comment" type="text" /><br />
-                </div>
-                <div class="form-group">
-                    <label asp-for="UpsertModel.FutureMaintenance"></label>
-                    <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
-                </div>
-               
-                <div class="customer-container">
-                    <div class="customer-group">
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
-                        </div>
-
-                        <!-- Add more customer-related fields as needed -->
-                    </div>
-
-                    <div class="customer-group">
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
-                        </div>
-                        
-                        <div class="form-group">
-                            <label asp-for="UpsertModel.Customer.CustomerCity"></label>
-                            <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
-                        </div>
-                        
-
-                    </div>
-                </div>
-
-                <div class="customer-comment-group">
                     <div class="form-group">
-                        <label asp-for="UpsertModel.Customer.CustomerComment"></label>
-                        <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
+                        <label asp-for="UpsertModel.Mechanic"></label>
+                        <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.CreatedDate"></label>
+                        <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.TotalWorkHours"></label>
+                        <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
                     </div>
                 </div>
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.SerialNumber"></label>
+                        <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.OrderStatus"></label>
+                        <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
+                    </div>
+                </div>
+            </div>
 
-                <input type="submit" />
+            <div class="form-group">
+                <label asp-for="UpsertModel.Comment"></label>
+                <input asp-for="UpsertModel.Comment" type="text" /><br />
+            </div>
+            <div class="form-group">
+                <label asp-for="UpsertModel.FutureMaintenance"></label>
+                <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
+            </div>
 
-            </form>
-        
+            <div class="customer-container">
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
+                    </div>
+
+                    <!-- Add more customer-related fields as needed -->
+                </div>
+
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Customer.CustomerCity"></label>
+                        <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="customer-comment-group">
+                <div class="form-group">
+                    <label asp-for="UpsertModel.Customer.CustomerComment"></label>
+                    <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
+                </div>
+            </div>
+
+            <input type="submit" />
+
+        </form>
+
     </div>
 </div>

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using AdminDesk.Models.Report;
+@model ReportFullViewModel
+
+@{
     ViewData["Title"] = "Sjekkliste";
 }
 
@@ -98,22 +101,10 @@
 </head>
 
 <body>
-    <div class="avdeling">
-        <label for="dato">Dato:</label>
-        <input type="date" id="dato" name="dato" required>
-        <br>
-        <br>
+    <h1> Sjekkliste Fullt Prosjekt</h1>
 
-        <label for="godkjentAv">Godkjent av:</label>
-        <input type="text" id="godkjentAv" name="godkjentAv" required>
-        <br>
-        <br>
 
-        <label for="utarbeidetAv">Utarbeidet av:</label>
-        <input type="text" id="utarbeidetAv" name="utarbeidetAv" required>
-        <br>
-        <br>
-    </div>
+    
 
 
     <div class="avdeling">
@@ -501,12 +492,7 @@
         <button class="tomKnapp" type="button" onclick="tømAvdeling('avd2sp1', 'avd2sp2', 'avd2sp3', 'avd2sp4')">Tøm</button>
     </div>
     <br />
-    <div class="avdeling">
-        <label for="kommentarer">Kommentar:</label>
-        <input type="text" id="kommentarer" name="kommentarer" required>
-    </div>
-    <br>
-    <br />
+
 
 
     <script>// JavaScript-kode for å oppdatere statusboksen basert på sjekkpunktene
