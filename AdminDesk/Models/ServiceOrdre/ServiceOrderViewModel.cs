@@ -1,22 +1,26 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using AdminDesk.Entities;
-using AdminDesk.Models.Report;
-using AdminDesk.Models.ServiceOrder;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System;//Importerer standard .NET-klasser
+using System.ComponentModel.DataAnnotations;//Importerer for å validere modeller
+using AdminDesk.Entities;//Importerer entitetsklasser fra AdminDesk
+using AdminDesk.Models.Report;//Importerer rapportmodeller fra AdminDesk
+using AdminDesk.Models.ServiceOrder;//Importerer for å bruke ServiceOrder-modeller i applikasjonen
+using static System.Net.Mime.MediaTypeNames;//Importerer for å tilgang til mediatypenavn
 
 namespace AdminDesk.Models.ServiceOrder
 {
 
+    //Kombinerer Serviceordre- og report-viewmodel til et integrert klasse
 
     public class CompositeViewModel
     {
         public ServiceOrderFullViewModel ServiceOrderModel { get; set; }
         public ReportFullViewModel ReportModel { get; set; }
     }
+        //Håndtere visning og oppdatering av serviceordre
 
     public class ServiceOrderFullViewModel
     {
+        //Constructor som initialiserer attributter for oppretting og oppdatering av serviceordre
+
         public ServiceOrderFullViewModel()
         {
 
@@ -30,6 +34,7 @@ namespace AdminDesk.Models.ServiceOrder
         public List<ServiceOrderViewModel> ServiceOrderList { get; set; }
     }
 
+    //Håndterer data og detaljer om spesifikke serviceordre
 
     public class ServiceOrderViewModel
     {
@@ -49,11 +54,12 @@ namespace AdminDesk.Models.ServiceOrder
         public string TotalWorkHours { get; set; }
 
     }
+    //Håndterer data og detaljer om kunder
 
     public class CustomerViewModel
     {
         [Required]
-        [Key]
+        [Key]//Primærnøkkel for identfikasjon
         public int CustomerId { get; set; }
         
         public string CustomerFirstName { get; set; }
