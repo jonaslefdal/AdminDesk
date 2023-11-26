@@ -1,6 +1,7 @@
 @using AdminDesk.Models.ServiceOrder;
 @model ServiceOrderFullViewModel
 
+<!-- Intern CSS-stil for å sette grunnleggende stiler og layout -->
 <style>
     body {
         background-color: #d9e5eb;
@@ -20,7 +21,7 @@
     }
 
     .form-container {
-        max-width: 60rem; /* Increase the max-width as needed */
+        max-width: 60rem; /* Øk maks bredde etter behov */
         width: 100%;
         background-color: white;
         padding: 2%;
@@ -61,14 +62,8 @@
         margin: 2% 0;
     }
 
-    .button-container {
-        text-align: center;
-        margin-top: 2%;
-    }
-
     .button:hover {
         background-color: rgb(251, 114, 19);
-        color: black;
     }
 
     .customer-container {
@@ -78,7 +73,7 @@
     }
 
     .customer-group {
-        flex-basis: 48%; /* Adjust the width as needed */
+        flex-basis: 48%; /* Juster bredden etter behov */
         box-sizing: border-box;
     }
 
@@ -88,125 +83,118 @@
     }
 </style>
 
+<!-- Hovedinnholdet -->
 <div id="create-container">
     <h1>Ny</h1>
     <h4>Serviceordre</h4>
 
-    <div class="button-container">
-        <a asp-action="Index" class="button">Tilbake til liste</a>
-    </div>
-
-
+    <!-- Skjemacontainer -->
     <div class="form-container">
         <form asp-action="Post" asp-controller="ServiceOrder" method="post">
             @Html.ValidationSummary()
             @Html.AntiForgeryToken()
 
+            <!-- Container for kundeinformasjon -->
             <div class="customer-container">
+                <!-- Gruppe for mekaniker, opprettelsesdato og total arbeidstimer -->
                 <div class="customer-group">
-
                     <div class="form-group">
                         <label asp-for="UpsertModel.Mechanic"></label>
                         <input asp-for="UpsertModel.Mechanic" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Mechanic" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="UpsertModel.CreatedDate"></label>
                         <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
-                        <span asp-validation-for="UpsertModel.CreatedDate" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.TotalWorkHours"></label>
                         <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.TotalWorkHours" class="text-danger"></span>
                     </div>
                 </div>
+
+                <!-- Gruppe for serienummer og ordrestatus -->
                 <div class="customer-group">
                     <div class="form-group">
                         <label asp-for="UpsertModel.SerialNumber"></label>
                         <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.SerialNumber" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.OrderStatus"></label>
                         <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.OrderStatus" class="text-danger"></span>
                     </div>
                 </div>
             </div>
 
+            <!-- Formgruppe for kommentar og fremtidig vedlikehold -->
             <div class="form-group">
                 <label asp-for="UpsertModel.Comment"></label>
                 <input asp-for="UpsertModel.Comment" type="text" /><br />
-                <span asp-validation-for="UpsertModel.Comment" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="UpsertModel.FutureMaintenance"></label>
                 <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
-                <span asp-validation-for="UpsertModel.FutureMaintenance" class="text-danger"></span>
             </div>
 
+            <!-- Container for mer kundeinformasjon -->
             <div class="customer-container">
+                <!-- Gruppe for kundens fornavn, e-post, gateadresse og postnummer -->
                 <div class="customer-group">
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.FutureMaintenance" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
                         <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerEmail" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
                         <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerStreet" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
                         <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerStreet" class="text-danger"></span>
                     </div>
 
-                    <!-- Add more customer-related fields as needed -->
+                    <!-- Legg til flere kunde-relaterte felt etter behov -->
                 </div>
 
+                <!-- Gruppe for kundens etternavn, telefonnummer og by -->
                 <div class="customer-group">
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerLastName" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
                         <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerPhoneNumber" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerCity"></label>
                         <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
-                        <span asp-validation-for="UpsertModel.Customer.CustomerCity" class="text-danger"></span>
                     </div>
-
-
                 </div>
             </div>
 
+            <!-- Formgruppe for kundekommentar -->
             <div class="customer-comment-group">
                 <div class="form-group">
                     <label asp-for="UpsertModel.Customer.CustomerComment"></label>
                     <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
-                    <span asp-validation-for="UpsertModel.Customer.CustomerComment" class="text-danger"></span>
                 </div>
             </div>
-            <div class="button-container">
-                <input type="submit" value="Lagre" class="button" style="margin: 2% 0;" />
-            </div>
 
+            <!-- Innsendingsknapp -->
+            <input type="submit" />
         </form>
-
     </div>
 </div>

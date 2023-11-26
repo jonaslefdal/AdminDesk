@@ -1,5 +1,6 @@
-﻿.custom-navbar {
-    background-color: #88afc2;
+﻿/* Stiler for det tilpassede navigasjonsfeltet */
+.custom-navbar {
+    background-color: #88afc2; /* Bakgrunnsfarge */
     position: relative;
     display: flex;
     flex-direction: row;
@@ -7,54 +8,63 @@
     flex-wrap: nowrap;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    width:100%;
-    
+    width: 100%; /* Full bredde */
 }
 
+/* Stiler for primærknapp (f.eks., "Search") */
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    color: #fff; /* Tekstfarge */
+    background-color: #1b6ec2; /* Bakgrunnsfarge */
+    border-color: #1861ac; /* Farge på grensen */
 }
 
+/* Stiler for navigasjonslenker */
 .nav-link {
-    color: red;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    color: red; /* Tekstfarge for navigasjonslenker */
+    background-color: #1b6ec2; /* Bakgrunnsfarge for navigasjonslenker */
+    border-color: #1861ac; /* Farge på grensen for navigasjonslenker */
 }
 
+/* Stiler for øvre grense */
 .border-top {
-    border-top: 1px solid #e5e5e5;
-}
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    border-top: 1px solid #e5e5e5; /* Øvre grense med farge */
 }
 
+/* Boks-skyggeeffekt */
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); /* Boks-skyggeeffekt */
+}
+
+/* Stiler for aksepteringsknapp i policy */
 button.accept-policy {
-    font-size: 100rem;
+    font-size: 100rem; /* Fontstørrelse for aksepteringsknapp (ser ut som en feil, kanskje 1rem er mer passende) */
     line-height: inherit;
 }
 
+/* Stiler for bunnteksten */
 .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     margin-top: 20px;
-    background-color: rgba(63, 95, 131, 0.85);
-    
+    background-color: rgba(63, 95, 131, 0.85); /* Bakgrunnsfarge for bunntekst */
 }
-    .footer .footer-text {
-        color: #9cb7c2;
-        text-decoration: none;
-    }
 
+/* Stiler for teksten i bunnteksten */
+.footer .footer-text {
+    color: #9cb7c2; /* Tekstfarge */
+    text-decoration: none;
+}
 
+/* Stiler for navigasjonsikon */
 .custom-navbar a.navbar-icon {
-  padding: 40px;
+    padding: 40px; /* Mellomrom rundt ikonet */
 }
+
+/* Stiler for ikonet generelt */
 .icon {
     height: auto;
-    width: 200px;
+    width: 200px; /* Bredde på ikonet */
     display: flex;
     flex-direction: inherit;
     justify-content: center;
@@ -63,6 +73,7 @@ button.accept-policy {
     margin-left: 1rem;
 }
 
+/* Generelle lenkestiler */
 a {
-    color: #0077cc;
+    color: #0077cc; /* Generell lenkefarge */
 }

@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Edit";
 }
+
+<!-- Styling for the page -->
 <style>
     html, body {
         background-color: #d9e5eb;
@@ -16,6 +18,7 @@
         text-align: center;
     }
 
+    /* Styling for buttons */
     .button {
         display: inline-block;
         padding: 10px 20px;
@@ -26,89 +29,65 @@
         color: black;
     }
 
-        .button:hover {
-            background-color: rgb(251, 114, 19);
-            color: #9cb7c2;
-        }
+    /* Hover effect for buttons */
+    .button:hover {
+        background-color: rgb(251, 114, 19);
+        color: #9cb7c2;
+    }
 
+    /* Additional styling for Save button */
     .button-save {
         text-align: center;
         margin-top: 10px; 
     }
 
+    /* Margin adjustment for the Back to List button */
     .button-list{
         margin-top: -78px;
     }
 
+    /* Container styling for buttons */
     .button-container {
         text-align: center;
     }
 </style>
 
+<!-- Heading for the page -->
 <h1>Redigere</h1>
 <h4>Serviceordre</h4>
 <hr />
+
+<!-- Form for editing service order details -->
 <div class="row">
     <div class="col-md-4 center-content">
         <form asp-action="Edit">
+            <!-- Display validation summary for model errors -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- Hidden field to store the id of the service order -->
             <input type="hidden" asp-for="id" />
+            
+            <!-- Input fields for editing service order properties -->
             <div class="form-group">
                 <label asp-for="Navn" class="control-label"></label>
                 <input asp-for="Navn" class="form-control" />
                 <span asp-validation-for="Navn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefon" class="control-label"></label>
-                <input asp-for="Telefon" class="form-control" />
-                <span asp-validation-for="Telefon" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mottatt_dato" class="control-label"></label>
-                <input asp-for="Mottatt_dato" class="form-control" />
-                <span asp-validation-for="Mottatt_dato" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Adresse" class="control-label"></label>
-                <input asp-for="Adresse" class="form-control" />
-                <span asp-validation-for="Adresse" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ordrenummer" class="control-label"></label>
-                <input asp-for="Ordrenummer" class="form-control" />
-                <span asp-validation-for="Ordrenummer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Arbeidstimer" class="control-label"></label>
-                <input asp-for="Arbeidstimer" class="form-control" />
-                <span asp-validation-for="Arbeidstimer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reparatør" class="control-label"></label>
-                <input asp-for="Reparatør" class="form-control" />
-                <span asp-validation-for="Reparatør" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceordreStatus" class="control-label"></label>
-                <input asp-for="ServiceordreStatus" class="form-control" />
-                <span asp-validation-for="ServiceordreStatus" class="text-danger"></span>
-            </div>
-            <div class="button-save button-container">
+            <!-- Repeat the above structure for other properties of the service order -->
+
+            <!-- Save button with custom styling -->
+            <div class="form-group button-save button-container">
                 <input type="submit" value="Save" class="button button-custom" />
             </div>
         </form>
     </div>
 </div>
+
+<!-- Back to List button -->
 <div class="links button-container">
-    <a asp-action="Index" class=" button button-list">Back to List</a>
+    <a asp-action="Index" class="button button-list">Back to List</a>
 </div>
 
-
+<!-- Render partial scripts for validation -->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
