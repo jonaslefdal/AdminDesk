@@ -12,8 +12,10 @@ using AdminDesk.DataAccess;
 using AdminDesk.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity;
 using AdminDesk.Areas.Identity.Pages.Account.Manage;
+using Google.Protobuf.WellKnownTypes;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 public class Startup
 {

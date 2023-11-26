@@ -1,3 +1,13 @@
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @using AdminDesk.Models.ServiceOrder;
+    @model ServiceOrderFullViewModel
+  
 <head>
     <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -24,13 +34,49 @@
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    </script>
+    
 
-    <style>
+        <script>$(document).ready(function () {
+                $(".clickable").click(function () {
+                    window.location = $(this).find("a").attr("href");
+                });
+            });</script>
+
+        
+  
+  <style>
+
+
+            .container {
+                max-width: 75vw;
+                margin: 50px auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .button-container {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #428bca;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+                .button:hover {
+                    background-color: #3071a9;
+
+                }
+            
+       
         html, body {
             font-size: 1rem;
             background-color: #d9e5eb;
@@ -128,6 +174,15 @@
                 background-color: rgb(251, 114, 19);
                 color: black;
             }
+      .clickable a {
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    .clickable a:hover {
+                        text-decoration: underline;
+                    }
+
     </style>
 </head>
 <body>
@@ -136,17 +191,31 @@
             Serviceordrer
         </div>
         <div class="TopMid">
-            Sorter: Lav til høyt
+            Sorter: Lav til hï¿½yt
         </div>
         <div class="button-container">
             <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Legg inn ny ordre</a>
         </div>
         <div class="search-container">
-            <label for="search">Søk: </label>
-            <input type="text" id="search" name="search" placeholder="Søk etter ordrenummer">
-            <button id="searchButton" onclick="searchOrders()">Søk</button>
+            <label for="search">Sï¿½k: </label>
+            <input type="text" id="search" name="search" placeholder="Sï¿½k etter ordrenummer">
+            <button id="searchButton" onclick="searchOrders()">Sï¿½k</button>
         </div>
         <div class="Bottom">
+              
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1>Service Orders</h1>
+
+            <div class="button-container">
+                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
+            </div>
+
+
             <table>
                 <tr>
                     <th>Ordrenummer</th>
@@ -156,7 +225,7 @@
                     <th>Telefon Nummer</th>
                     <th>Ordre Status</th>
                     <th>Dato Opprettet</th>
-                    <th>Reperatør</th>
+                    <th>Reperatï¿½r</th>
                 </tr>
                 @foreach (var serviceOrder in Model.ServiceOrderList)
                 {
@@ -174,5 +243,15 @@
                 }
             </table>
         </div>
+
     </div>
-</body>
+
+
+
+    </body>
+    }
+
+    else
+    {
+    <p>Logg inn for Ã¥ fÃ¥ tilgang</p>
+    }

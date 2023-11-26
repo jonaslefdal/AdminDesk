@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using AdminDesk.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +18,24 @@ namespace AdminDesk.Areas.Identity.Pages.Account.Manage
     [Authorize(Policy = "RequireAdminRole")]
     public class UserEditModel : PageModel
     {
+        public class UserEditInputModel
+        {
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+
+            // Add other properties as needed
+        }
+
         private readonly UserManager<IdentityUser> _userManager;
 
         public UserEditModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
+
+        [BindProperty]
+        public UserEditInputModel Input { get; set; }
 
         [BindProperty]
         public IdentityUser User { get; set; }
@@ -39,6 +53,27 @@ namespace AdminDesk.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound();
             }
+
+
+            // Get the user's current roles
+            var userRoles = await _userManager.GetRolesAsync(User);
+
+            if (userRoles != null && userRoles.Any())
+            {
+                Input = new UserEditInputModel
+                {
+                    Role = userRoles.FirstOrDefault()
+                };
+            }
+            else
+            {
+                // Handle the case where the user has no roles
+                Input = new UserEditInputModel
+                {
+                    Role = "User" // Provide a default role if needed
+                };
+            }
+
 
             return Page();
         }
@@ -61,6 +96,8 @@ namespace AdminDesk.Areas.Identity.Pages.Account.Manage
             existingUser.Email = User.Email;
             existingUser.PhoneNumber = User.PhoneNumber;
             existingUser.LockoutEnabled = User.LockoutEnabled;
+
+            await _userManager.AddToRoleAsync(User, Input.Role); // Add this line to assign the role
 
             // Update other fields as needed
 

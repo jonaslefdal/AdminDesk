@@ -163,3 +163,24 @@ CREATE TABLE IF NOT EXISTS `userdisabled` (
     FOREIGN KEY (`UserId`)
     REFERENCES `aspnetusers` (`Id`)
 );
+
+
+
+CREATE TABLE IF NOT EXISTS `checklist` (
+  `CheckListId` int NOT NULL,
+  `ServiceOrderId` int NOT NULL,
+
+
+
+
+  
+  PRIMARY KEY (`UserId`, `RoleId`),
+  INDEX `IX_AspNetUserRoles_RoleId` (`RoleId` ASC) VISIBLE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId`
+    FOREIGN KEY (`RoleId`)
+    REFERENCES .`aspnetroles` (`Id`)
+    ON DELETE CASCADE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `aspnetusers` (`Id`)
+    ON DELETE CASCADE);

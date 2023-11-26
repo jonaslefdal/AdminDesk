@@ -26,6 +26,8 @@
             <th>Email</th>
             <th>TelefonNummer</th>
             <th>TFA Aktiv</th>
+            <th>Rolle</th> 
+
             <th>Rediger</th>
             <th>Aktiv/Ikke</th>
         </tr>
@@ -41,6 +43,9 @@
                 <td data-id="@user.Id" data-property="PhoneNumber">@await Model.UserManager.GetPhoneNumberAsync(user)</td>
                 <td data-id="@user.Id" data-property="TwoFactorEnabled">@await Model.UserManager.GetTwoFactorEnabledAsync(user)</td>
 
+                <td data-id="@user.Id" data-property="Roles">@string.Join(", ", await Model.UserManager.GetRolesAsync(user))</td>
+
+
                 <td><a asp-area="Identity" asp-page="./UserEdit" asp-route-id="@user.Id" class="btn btn-primary">Rediger</a></td>
 
                 <td>
@@ -50,7 +55,7 @@
                     }
                     else
                     {
-                        
+
                         <a asp-area="Identity" asp-page="./UserDisabled" asp-route-id="@user.Id" asp-route-area="Identity" class="btn btn-success">Aktiv</a>
                     }
                 </td>

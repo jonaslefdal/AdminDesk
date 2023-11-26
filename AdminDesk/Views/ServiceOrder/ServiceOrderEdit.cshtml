@@ -6,6 +6,7 @@
         background-color: #d9e5eb;
         margin: 0;
         padding: 0;
+        font-family: sans-serif;
         color: #313638;
     }
 
@@ -94,6 +95,12 @@
         color: red;
     }
 </style>
+
+
+
+<p>
+    <a href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake</a>
+</p>
 
 <div id="create-container">
     <h1>Edit</h1>
