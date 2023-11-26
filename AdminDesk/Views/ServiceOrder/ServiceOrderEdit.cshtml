@@ -2,6 +2,7 @@
 @model ServiceOrderFullViewModel
 
 <style>
+    /* Global styling */
     body {
         background-color: #d9e5eb;
         margin: 0;
@@ -10,6 +11,7 @@
         color: #313638;
     }
 
+    /* Container for the entire form */
     #create-container {
         display: flex;
         flex-direction: column;
@@ -19,8 +21,9 @@
         padding: 2%;
     }
 
+    /* Styling for the form container */
     .form-container {
-        max-width: 60rem; /* Increase the max-width as needed */
+        max-width: 60rem;
         width: 100%;
         background-color: white;
         padding: 2%;
@@ -30,16 +33,19 @@
         margin-right: auto;
     }
 
+    /* Styling for form groups */
     .form-group {
         margin-bottom: 1rem;
     }
 
+    /* Styling for labels */
     label {
         display: block;
         margin-bottom: 0.5rem;
         font-weight: bold;
     }
 
+    /* Styling for input fields */
     input {
         width: 100%;
         padding: 0.5rem;
@@ -49,6 +55,7 @@
         margin-bottom: 0.5rem;
     }
 
+    /* Styling for buttons */
     .button {
         display: inline-block;
         padding: 0.5rem 1rem;
@@ -61,10 +68,11 @@
         margin: 2% 0;
     }
 
-        .button:hover {
-            background-color: rgb(251, 114, 19);
-        }
+    .button:hover {
+        background-color: rgb(251, 114, 19);
+    }
 
+    /* Styling for customer-related containers */
     .customer-container {
         display: flex;
         flex-wrap: wrap;
@@ -72,7 +80,7 @@
     }
 
     .customer-group {
-        flex-basis: 48%; /* Adjust the width as needed */
+        flex-basis: 48%;
         box-sizing: border-box;
     }
 
@@ -81,8 +89,8 @@
         box-sizing: border-box;
     }
 
+    /* Common styling for form controls */
     .form-control {
-        /* Add any common styling for form controls */
         width: 100%;
         padding: 0.5rem;
         border: 1px solid #ccc;
@@ -91,85 +99,87 @@
         margin-bottom: 0.5rem;
     }
 
+    /* Styling for validation error messages */
     .text-danger {
         color: red;
     }
 </style>
 
-
-
-<p>
-    <a href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake</a>
-</p>
-
+<!-- HTML body -->
 <div id="create-container">
     <h1>Edit</h1>
     <h4>Service Order</h4>
 
+    <!-- Form container -->
     <div class="form-container">
+        <!-- Edit form -->
         <form asp-action="EditChange" asp-controller="ServiceOrder" method="post">
 
+            <!-- Validation summary for displaying error messages -->
             @Html.ValidationSummary()
+            
+            <!-- Anti-forgery token for security -->
             @Html.AntiForgeryToken()
 
+            <!-- Hidden input fields for preserving data -->
             <input asp-for="UpsertModel.ServiceOrderId" type="hidden" />
             <input asp-for="UpsertModel.CustomerId" type="hidden" />
             <input asp-for="UpsertModel.Customer.CustomerId" type="hidden" />
 
-
+            <!-- Customer-related form groups -->
             <div class="customer-container">
+                <!-- Customer group 1 -->
                 <div class="customer-group">
-                    <!-- Other form fields ... -->
-
+                    <!-- Mechanic field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Mechanic"></label>
                         <input asp-for="UpsertModel.Mechanic" class="form-control" />
                         <span asp-validation-for="UpsertModel.Mechanic" class="text-danger"></span>
                     </div>
 
+                    <!-- CreatedDate field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.CreatedDate"></label>
                         <input asp-for="UpsertModel.CreatedDate" type="date" class="form-control" />
                         <span asp-validation-for="UpsertModel.CreatedDate" class="text-danger"></span>
                     </div>
 
-
-
+                    <!-- FutureMaintenance field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.FutureMaintenance"></label>
                         <input asp-for="UpsertModel.FutureMaintenance" class="form-control" />
                         <span asp-validation-for="UpsertModel.FutureMaintenance" class="text-danger"></span>
                     </div>
-
-                    <!-- Add other form fields ... -->
                 </div>
 
+                <!-- Customer group 2 -->
                 <div class="customer-group">
-                    <!-- Other form fields ... -->
-
+                    <!-- SerialNumber field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.SerialNumber"></label>
                         <input asp-for="UpsertModel.SerialNumber" class="form-control" />
                         <span asp-validation-for="UpsertModel.SerialNumber" class="text-danger"></span>
                     </div>
 
+                    <!-- OrderStatus field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.OrderStatus"></label>
                         <input asp-for="UpsertModel.OrderStatus" class="form-control" />
                         <span asp-validation-for="UpsertModel.OrderStatus" class="text-danger"></span>
                     </div>
 
+                    <!-- TotalWorkHours field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.TotalWorkHours"></label>
                         <input asp-for="UpsertModel.TotalWorkHours" class="form-control" />
                         <span asp-validation-for="UpsertModel.TotalWorkHours" class="text-danger"></span>
                     </div>
 
+                    <!-- Hidden input field for CreatedById -->
                     <input type="hidden" asp-for="UpsertModel.CreatedById" class="form-control" />
-
-                    <!-- Add other form fields ... -->
                 </div>
-
+                
+                <!-- Comment field for the entire form -->
                 <div class="form-group">
                     <label asp-for="UpsertModel.Comment"></label>
                     <input asp-for="UpsertModel.Comment" class="form-control" />
@@ -177,66 +187,74 @@
                 </div>
             </div>
 
-            <!-- Add other form fields ... -->
+            <!-- Additional form fields -->
 
+            <!-- Another customer-related container -->
             <div class="customer-container">
+                <!-- Customer group 3 -->
                 <div class="customer-group">
-                    <!-- Other form fields ... -->
-
+                    <!-- CustomerFirstName field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerFirstName" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerFirstName" class="text-danger"></span>
                     </div>
 
+                    <!-- CustomerEmail field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
                         <input asp-for="UpsertModel.Customer.CustomerEmail" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerEmail" class="text-danger"></span>
                     </div>
+
+                    <!-- CustomerStreet field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
                         <input asp-for="UpsertModel.Customer.CustomerStreet" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerStreet" class="text-danger"></span>
                     </div>
+
+                    <!-- CustomerZipcode field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
                         <input asp-for="UpsertModel.Customer.CustomerZipcode" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerZipcode" class="text-danger"></span>
                     </div>
-
-                    <!-- Add other form fields ... -->
                 </div>
 
+                <!-- Customer group 4 -->
                 <div class="customer-group">
-                    <!-- Other form fields ... -->
-
+                    <!-- CustomerLastName field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerLastName" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerLastName" class="text-danger"></span>
                     </div>
 
+                    <!-- CustomerPhoneNumber field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
                         <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerPhoneNumber" class="text-danger"></span>
                     </div>
+
+                    <!-- CustomerCity field -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerCity"></label>
                         <input asp-for="UpsertModel.Customer.CustomerCity" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerCity" class="text-danger"></span>
                     </div>
+
+                    <!-- Another CustomerPhoneNumber field (possibly a duplicate) -->
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
                         <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" class="form-control" />
                         <span asp-validation-for="UpsertModel.Customer.CustomerPhoneNumber" class="text-danger"></span>
                     </div>
-
-                    <!-- Add other form fields ... -->
                 </div>
             </div>
 
+            <!-- Customer comment group -->
             <div class="customer-comment-group">
                 <div class="form-group">
                     <label asp-for="UpsertModel.Customer.CustomerComment"></label>
@@ -245,6 +263,7 @@
                 </div>
             </div>
 
+            <!-- Submit button -->
             <input type="submit" value="Save" class="button" />
         </form>
     </div>

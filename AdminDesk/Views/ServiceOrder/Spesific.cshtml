@@ -1,190 +1,205 @@
 @using AdminDesk.Models.ServiceOrder;
 @model CompositeViewModel
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 
-    <html>
-    <head>
-        <title>Service Order Details</title>
-        <style>
-            html, body {
+<html>
+<head>
+    <title>Service Order Details</title>
+    <style>
+        /* Global styling */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #313638;
+        }
 
-                margin: 0;
-                padding: 0;
-                font-family: sans-serif;
-                color: #313638;
-            }
+        /* Center-align headings */
+        h1, h2 {
+            text-align: center;
+        }
 
+        /* Margin for the main heading */
+        h1 {
+            margin-top: 5%;
+        }
 
-            h1, h2 {
-                text-align: center;
-            }
-            h1 {
-                margin-top: 5%;
-            }
+        /* Styling for tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
 
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                margin-top: 20px;
-                margin-bottom: 40px;
-            }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }
+        /* Background color for table headers */
+        th {
+            background-color: #f2f2f2;
+        }
 
-            th {
-                background-color: #f2f2f2;
-            }
+        /* Styling for clickable links */
+        p {
+            color: #666;
+        }
 
-            p {
-                color: #666;
-            }
+        .clickable {
+            margin-top: 20px;
+        }
 
-            .clickable {
-                margin-top: 20px;
-                color: #000;
-                text-decoration: none;
-            }
+        .clickable a {
+            color: #000;
+            text-decoration: none;
+            padding: 8px;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            display: inline-block;
+        }
 
-            .center {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        </style>
-    </head>
-    <body>
+        .clickable a:hover {
+            background-color: #ddd;
+        }
 
-        <p>
-            <a asp-action="Index">Tilbake</a>
-        </p>
-        <h1>Ordre Detaljer</h1>
+        /* Text color for certain elements */
+        .black {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Service Order Details</h1>
+    <br />
 
+    <!-- Links for creating a new report and editing the service order -->
+    <div class="clickable">
+        <a class="black" href="@Url.Action("Index", "Report", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">New Report</a>
+        <a class="black" href="@Url.Action("ServiceOrderEdit", "ServiceOrder", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">Edit</a>
+    </div>
 
-        <div class="center">
-            <div class="clickable">
-                <a class="btn btn-primary" href="@Url.Action("Index", "Report", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">Ny Raport</a>
+    <!-- Back to list link -->
+    <p>
+        <a asp-action="Index">Back to List</a>
+    </p>
 
+    <!-- Customer Details Section -->
+    <h2>Customer Details</h2>
+    @if (Model.ServiceOrderModel.UpsertModel.Customer != null)
+    {
+        <!-- Display customer details in a table -->
+        <table>
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Zip Code</th>
+                <th>Phone Number</th>
+                <th>Customer Comment</th>
+            </tr>
+            <tr>
+                <!-- Populate customer details from the model -->
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerId</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerFirstName</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerLastName</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerEmail</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerStreet</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerCity</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerZipcode</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerPhoneNumber</td>
+                <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerComment</td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <!-- Display a message if there is no customer for this order -->
+        <p>No customer for this order</p>
+    }
 
-                <a class="btn btn-primary" href="@Url.Action("ServiceOrderEdit", "ServiceOrder", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">Rediger</a>
-            </div>
-        </div>
-        
-            <div class="center clickable">
-                <a class="btn btn-success" href="@Url.Action("CheckList", "Report", new { id = @Model.ServiceOrderModel.UpsertModel.ServiceOrderId })">SjekkListe</a>
-                </div>
-        
-        <br />
-        <h2>Kunde Detaljer</h2>
-        @if (Model.ServiceOrderModel.UpsertModel.Customer != null)
+    <!-- Service Order Details Section -->
+    <h2>Service Order Details</h2>
+    <table>
+        <tr>
+            <th>Mechanic</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.Mechanic</td>
+        </tr>
+        <tr>
+            <th>Serial Number</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.SerialNumber</td>
+        </tr>
+        <tr>
+            <th>Created Date</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.CreatedDate.ToString("yyyy-dd-MM")</td>
+        </tr>
+        <tr>
+            <th>Manager Comment</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.Comment</td>
+        </tr>
+        <tr>
+            <th>Future Maintenance</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.FutureMaintenance</td>
+        </tr>
+        <tr>
+            <th>Created By</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.CreatedById</td>
+        </tr>
+        <tr>
+            <th>Order Status</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.OrderStatus</td>
+        </tr>
+        <tr>
+            <th>Estimated Work Hours</th>
+            <td>@Model.ServiceOrderModel.UpsertModel.TotalWorkHours</td>
+        </tr>
+    </table>
+    <br />
+
+    <!-- Report Details Section -->
+    <h2>Report Details</h2>
+    @if (Model.ReportModel.ReportList != null && Model.ReportModel.ReportList.Any())
+    {
+        <!-- Display a table of reports if available -->
+        <table>
+            <tr>
+                <th>Report ID</th>
+                <th>ServiceOrder ID</th>
+                <th>Mechanic</th>
+                <th>Service Type</th>
+                <th>Mechanic Comment</th>
+                <th>Service Description</th>
+                <th>Report Write Date</th>
+                <th>User Sign</th>
+                <!-- Add more columns as needed -->
+            </tr>
+            <!-- Iterate through the reports and populate the table rows -->
+            @foreach (var report in Model.ReportModel.ReportList)
             {
-                <table>
-                    <tr>
-                        <th>Kunde ID</th>
-                        <th>Fornavn</th>
-                        <th>Etternavn</th>
-                        <th>Email</th>
-                        <th>Gate</th>
-                        <th>By</th>
-                        <th>Postadresse</th>
-                        <th>Mobilnummer</th>
-                        <th>Kunde Kommentar</th>
-                    </tr>
-                    <tr>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerId</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerFirstName</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerLastName</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerEmail</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerStreet</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerCity</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerZipcode</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerPhoneNumber</td>
-                        <td>@Model.ServiceOrderModel.UpsertModel.Customer.CustomerComment</td>
-                    </tr>
-                </table>
+                <tr>
+                    <td>@report.ReportId</td>
+                    <td>@report.ServiceOrderId</td>
+                    <td>@report.ServiceType</td>
+                    <td>@report.MechanicComment</td>
+                    <td>@report.ServiceDescription</td>
+                    <td>@report.ReportWriteDate</td>
+                    <td>@report.UserSign</td>
+                    <!-- Add more cells as needed -->
+                </tr>
             }
-            else
-            {
-                <p>Ingen kunde til denne ordren</p>
-            }
-
-            <h2>Service Ordre Detaljer</h2>
-            <table>
-                <tr>
-                    <th>Mekaniker</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.Mechanic</td>
-                </tr>
-                <tr>
-                    <th>Serienummer</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.SerialNumber</td>
-                </tr>
-                <tr>
-                    <th>Dato opprettet</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.CreatedDate.ToString("yyyy-dd-MM")</td>
-                </tr>
-                <tr>
-                    <th>Leder Kommentar</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.Comment</td>
-                </tr>
-                <tr>
-                    <th>Sannsynlig videre vedlikehold</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.FutureMaintenance</td>
-                </tr>
-                <tr>
-                    <th>Opprettet av</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.CreatedById</td>
-                </tr>
-                <tr>
-                    <th>Ordre Status</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.OrderStatus</td>
-                </tr>
-                <tr>
-                    <th>Antatte arbeidstimer</th>
-                    <td>@Model.ServiceOrderModel.UpsertModel.TotalWorkHours</td>
-                </tr>
-            </table>
-            <br />
-
-            <h2></h2>
-
-            <h2>Report Details</h2>
-            @if (Model.ReportModel.ReportList != null && Model.ReportModel.ReportList.Any())
-            {
-                <table>
-                    <tr>
-                        <th>Report ID</th>
-                        <th>Mekaniker/e</th>
-                        <th>Kommentar</th>
-                        <th>Service Type</th>
-                        <th>Beskrivelse</th>
-                        <th>Opprettet Dato</th>
-                        <th>Laget av</th>
-                        <!-- Add more columns as needed -->
-                    </tr>
-                    @foreach (var report in Model.ReportModel.ReportList)
-                    {
-                        <tr>
-                            <td>@report.ReportId</td>
-                            <td>@report.Mechanic</td>
-                            <td>@report.MechanicComment.</td>
-                            <td>@report.ServiceType</td>
-                            <td>@report.ServiceDescription.</td>
-                            <td>@report.ReportWriteDate.ToString("yyyy-dd-MM")</td>
-                            <td>@report.UserSign</td>
-                            <!-- Add more cells as needed -->
-                        </tr>
-                    }
-                </table>
-            }
-            else
-            {
-                <p>Ingen rapporter</p>
-            }
-
-
+        </table>
+    }
+    else
+    {
+        <!-- Display a message if there are no reports for this service order -->
+        <p>No reports available for this service order.</p>
+    }
 </body>
 </html>
