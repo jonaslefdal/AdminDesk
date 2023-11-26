@@ -1,28 +1,45 @@
 ﻿@{
+    // Setter tittelen på visningen til "Home Page"
     ViewData["Title"] = "Home Page";
 }
+<!-- HTML head-seksjon -->
 <head>
+    <!-- Inkluder stilarket site.css -->
     <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
 </head>
+
+<!-- HTML body-seksjon med klassen "start-page" og "white" -->
 <body class="start-page white">
 
+    <!-- Hovedinnholdscontainer -->
     <div class="blokk">
 
+        <!-- Toppseksjon med teksten "NøstedAS" -->
         <div class="Top">
             NøstedAS
-
         </div>
+
+        <!-- TopMid-seksjon med fargeformatert tekst -->
         <div class="TopMid">
+            <!-- Fargeformatert tekst "Alt handler om" -->
             <span style="color: rgb(122, 176, 195);">Alt handler om</span><br />
+            <!-- Fargeformatert tekst "koblinger" med oransje punktum -->
             <span style="color: white;">koblinger</span><span style="color: rgb(251, 114, 19);">.</span>
         </div>
 
+        <!-- Bottom-seksjon med lenker til forskjellige deler av nettstedet -->
         <div class="Bottom">
+            <!-- Lenke til Serviceordre med tekst "Serviceordre" -->
             <a asp-area="" asp-controller="ServiceOrder" asp-action="Index"><div class="TextToSite">Serviceordre</div></a>
+            
+            <!-- Lenke til Behandlet Ordre med tekst "Behandlet Ordre" -->
             <a asp-area="" asp-controller="Behandlet" asp-action="Index"><div class="TextToSite">Behandlet Ordre</div></a>
+            
+            <!-- Lenke til Sjekkliste med tekst "Sjekkliste" -->
             <a asp-area="" asp-controller="Sjekkliste" asp-action="Index"><div class="TextToSite">Sjekkliste</div></a>
+            
+            <!-- Lenke til Verksted Status med tekst "Verksted Status" -->
             <a asp-area="" asp-controller="Verksted" asp-action="Index"><div class="TextToSite">Verksted Status</div></a>
         </div>
     </div>
 </body>
-

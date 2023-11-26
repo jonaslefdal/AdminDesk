@@ -2,21 +2,28 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+<!-- Sjekk om brukeren er pålogget -->
 @if (SignInManager.IsSignedIn(User))
 {
+    <!-- Inkluderingsinstruksjoner og modelldefinisjon -->
     @using AdminDesk.Models.ServiceOrder;
     @model ServiceOrderFullViewModel
 
+    <!-- Head-seksjon med stiler og jQuery-script -->
     <head>
         <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script>$(document).ready(function () {
+        <!-- jQuery-script for å håndtere klikkhendelser -->
+        <script>
+            $(document).ready(function () {
                 $(".clickable").click(function () {
                     window.location = $(this).find("a").attr("href");
                 });
-            });</script>
+            });
+        </script>
 
+        <!-- Intern CSS-stil -->
         <style>
             body {
                 background-color: #f4f4f4;
@@ -55,9 +62,9 @@
                 transition: background-color 0.3s;
             }
 
-                .button:hover {
-                    background-color: #3071a9;
-                }
+            .button:hover {
+                background-color: #3071a9;
+            }
 
             table {
                 width: 100%;
@@ -83,26 +90,30 @@
                 cursor: pointer;
             }
 
-                .clickable a {
-                    color: #333;
-                    text-decoration: none;
-                }
+            .clickable a {
+                color: #333;
+                text-decoration: none;
+            }
 
-                    .clickable a:hover {
-                        text-decoration: underline;
-                    }
+            .clickable a:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
 
+    <!-- Body-seksjon -->
     <body>
 
+        <!-- Hovedcontainer -->
         <div class="container">
             <h1>Service Orders</h1>
 
+            <!-- Container for knapp -->
             <div class="button-container">
-                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
+                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">New Order</a>
             </div>
 
+            <!-- Tabell for serviceordre -->
             <table>
                 <thead>
                     <tr>
@@ -115,8 +126,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Gjennomgang av serviceordre i modellen -->
                     @foreach (var serviceOrder in Model.ServiceOrderList)
                     {
+                        <!-- Tabellrad med klikkbare celler -->
                         <tr class="clickable">
                             <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
                             <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@($"{serviceOrder.Customer?.CustomerFirstName} {serviceOrder.Customer?.CustomerLastName}")</a></td>
@@ -131,11 +144,9 @@
         </div>
 
     </body>
-    }
-    else
-    {
-
-    <p>Logg inn for å få tilgang</p>
-
-
-    }
+}
+else
+{
+    <!-- Melding for brukere som ikke er pålogget -->
+    <p>You do not have permission to access this page. Please log in.</p>
+}
