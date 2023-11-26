@@ -1,0 +1,146 @@
+@using AdminDesk.Models.Report;
+@model ReportFullViewModel
+
+
+<style>
+    body {
+        background-color: #d9e5eb;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        color: #313638;
+    }
+
+    #create-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2%;
+    }
+
+    .form-container {
+        max-width: 60rem; /* Increase the max-width as needed */
+        width: 100%;
+        background-color: white;
+        padding: 2%;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 0.5rem;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #88afc2;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        color: black;
+        text-decoration: none;
+        margin: 2% 0;
+    }
+
+        .button:hover {
+            background-color: rgb(251, 114, 19);
+        }
+
+    .customer-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .customer-group {
+        flex-basis: 48%; /* Adjust the width as needed */
+        box-sizing: border-box;
+    }
+
+    .customer-comment-group {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+</style>
+
+    
+<p>
+    <a asp-action="Index">Tilbake</a>
+</p>
+
+<div id="create-container">
+    <h1>Ny Rapport</h1>
+
+    <div class="form-container">
+        <form asp-action="PostReport" asp-controller="Report" method="post">
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+
+
+            <input asp-for="UpsertModel.ServiceOrderId" type="hidden" /><br />
+
+            <input asp-for="UpsertModel.UserSign" type="hidden" value="0" /><br />
+
+            <div class="customer-container">
+
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.Mechanic">Mekaniker/e</label>
+                        <input value="1" asp-for="UpsertModel.Mechanic" type="text" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ReportWriteDate">Opprettelse Dato</label>
+                        <input asp-for="UpsertModel.ReportWriteDate" type="date" /><br />
+                    </div>
+
+                </div>
+                <div class="customer-group">
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ServiceDescription">Service Beskrivelse</label>
+                        <input value="1" asp-for="UpsertModel.ServiceDescription" type="text" /><br />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UpsertModel.ServiceType">Service Type</label>
+                        <input value="1" asp-for="UpsertModel.ServiceType" type="text" /><br />
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="customer-comment-group">
+                <div class="form-group">
+                    <label asp-for="UpsertModel.MechanicComment">Andre Kommentarer</label>
+                    <input value="1" asp-for="UpsertModel.MechanicComment" type="text" /><br />
+                </div>
+            </div>
+
+            <input type="submit" />
+
+        </form>
+
+    </div>
+</div>

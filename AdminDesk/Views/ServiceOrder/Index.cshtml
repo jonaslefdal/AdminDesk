@@ -1,0 +1,141 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @using AdminDesk.Models.ServiceOrder;
+    @model ServiceOrderFullViewModel
+
+    <head>
+        <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script>$(document).ready(function () {
+                $(".clickable").click(function () {
+                    window.location = $(this).find("a").attr("href");
+                });
+            });</script>
+
+        <style>
+            body {
+                background-color: #f4f4f4;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 75vw;
+                margin: 50px auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                margin-top: 0;
+                color: #333;
+            }
+
+            .button-container {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #428bca;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+                .button:hover {
+                    background-color: #3071a9;
+                }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+
+            .clickable {
+                cursor: pointer;
+            }
+
+                .clickable a {
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    .clickable a:hover {
+                        text-decoration: underline;
+                    }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <h1>Service Orders</h1>
+
+            <div class="button-container">
+                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Customer Name</th>
+                        <th>Contact Phone</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Mechanic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var serviceOrder in Model.ServiceOrderList)
+                    {
+                        <tr class="clickable">
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@($"{serviceOrder.Customer?.CustomerFirstName} {serviceOrder.Customer?.CustomerLastName}")</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerPhoneNumber</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.OrderStatus</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.CreatedDate.ToString("yyyy-dd-MM")</a></td>
+                            <td><a href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Mechanic</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+    }
+    else
+    {
+
+    <p>Logg inn for å få tilgang</p>
+
+
+    }

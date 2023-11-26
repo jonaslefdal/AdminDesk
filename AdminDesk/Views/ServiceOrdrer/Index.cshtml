@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Nøsted_Serviceordre_Behandling.Models.Serviceordre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    html, body {
+        background-color: #d9e5eb;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        color: #313638;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 80px
+    }
+
+    p {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 100px;
+    }
+
+    th, td {
+        border: 1px solid #000; 
+        padding: 8px; 
+        text-align: left; 
+    }
+
+    th {
+        background-color: #f2f2f2; 
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+<h1>Oversikt over serviceordre</h1>
+
+<p>
+    <a asp-action="Create">Legg inn ny serviceordre</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Navn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mottatt_dato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ordrenummer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceordreStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Arbeidstimer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reparatør)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Navn)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mottatt_dato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ordrenummer)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceordreStatus)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Arbeidstimer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reparatør)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Rediger</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Detaljer</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Slette</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
