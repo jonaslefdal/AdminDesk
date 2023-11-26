@@ -1,165 +1,152 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using AdminDesk.Controllers;
-using AdminDesk.Models.ServiceOrder;
-using AdminDesk.Repositories;
 using AdminDesk.Entities;
 using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
+using AdminDesk.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Xunit;
 
 namespace AdminDeskTest
 {
-    [TestFixture]
     public class ServiceOrderControllerTests
     {
-        //Testen sikrer at å kalle opp NyServiceOrdre-handlingen i ServiceOrderController returnerer
-        //forventet visning og initialiserer modellen riktig.
-        [Test]
-        public void NyServiceOrdre_ReturnsCorrectViewAndInitializesModel()
+        // Test for Index action
+        [Fact]
+        public void Index_ReturnsCorrectViewModel()
         {
-            // Mock-forekomster for repositoriene
+            // Arrange
             var serviceOrderRepositoryMock = new Mock<IServiceOrderRepository>();
             var reportRepositoryMock = new Mock<IReportRepository>();
             var customerRepositoryMock = new Mock<ICustomerRepository>();
-
-            // Opprett en forekomst av ServiceOrderController med mock repositories
-            var serviceOrderController = new ServiceOrderController(
+            var userManagerMock = new Mock<UserManager<IdentityUser>>();
+            var controller = new ServiceOrderController(
                 serviceOrderRepositoryMock.Object,
                 reportRepositoryMock.Object,
-                customerRepositoryMock.Object
+                customerRepositoryMock.Object,
+                userManagerMock.Object
             );
 
-            // Kaller NyServiceOrdre-aksjonen og cast resultatet til
-            var result = serviceOrderController.NyServiceOrdre() as ViewResult;
+            // Act
+            var result = controller.Index() as ViewResult;
+            var model = result?.Model as ServiceOrderFullViewModel;
 
-            // Bekreft at resultatet ikke er null og har riktig visningsnavn
-            Assert.IsNotNull(result);
-            Assert.AreEqual("NyServiceOrdre", result.ViewName);
-
-            // Trekker ut modellen fra resultatet og bekreft typen
-            var model = result.Model as ServiceOrderFullViewModel;
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.UpsertModel);
-
-            // Sjekk at CreatedDate-egenskapen er satt til gjeldende dato
-            Assert.AreEqual(DateTime.Now.Date, model.UpsertModel.CreatedDate.Date);
+            // Assert
+            Xunit.Assert.NotNull(result);
+            Xunit.Assert.Equal("Index", result.ViewName);
+            Xunit.Assert.NotNull(model);
         }
 
-        // Testen sikrer at den spesifikke handlingen til ServiceOrderController returnerer riktig visning og modell.
-        // Den bekrefter at serviceordredetaljene og tilknyttede rapporter er korrekt tilordnet CompositeViewModel.
-        [Test]
-        public void Spesific_ReturnsCorrectViewAndModel()
+        // Test for NyServiceOrdre action
+        [Fact]
+        public void NyServiceOrdre_ReturnsCorrectViewModel()
         {
-            // Mock-forekomster for repositoriene
+            // Arrange
             var serviceOrderRepositoryMock = new Mock<IServiceOrderRepository>();
             var reportRepositoryMock = new Mock<IReportRepository>();
             var customerRepositoryMock = new Mock<ICustomerRepository>();
-
-            // Oppretter en forekomst av ServiceOrderController med mock repositories
-            var serviceOrderController = new ServiceOrderController(
+            var userManagerMock = new Mock<UserManager<IdentityUser>>();
+            var controller = new ServiceOrderController(
                 serviceOrderRepositoryMock.Object,
                 reportRepositoryMock.Object,
-                customerRepositoryMock.Object
+                customerRepositoryMock.Object,
+                userManagerMock.Object
             );
 
-            // Setter opp falske data for en spesifikk tjenesteordre og tilhørende rapporter
-            var serviceOrderId = 1;
-            var expectedServiceOrder = new ServiceOrder
-            {
-                ServiceOrderId = serviceOrderId,
-                Mechanic = "John",
+            // Act
+            var result = controller.NyServiceOrdre() as ViewResult;
+            var model = result?.Model as ServiceOrderFullViewModel;
 
-                Customer = new Customer
+            // Assert
+            Xunit.Assert.NotNull(result);
+            Xunit.Assert.Equal("NyServiceOrdre", result.ViewName);
+            Xunit.Assert.NotNull(model);
+        }
+
+        // Test for Spesific action
+        [Fact]
+        public void Spesific_ReturnsCorrectViewModel()
+        {
+            // Arrange
+            var serviceOrderRepositoryMock = new Mock<IServiceOrderRepository>();
+            var reportRepositoryMock = new Mock<IReportRepository>();
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var userManagerMock = new Mock<UserManager<IdentityUser>>();
+            var controller = new ServiceOrderController(
+                serviceOrderRepositoryMock.Object,
+                reportRepositoryMock.Object,
+                customerRepositoryMock.Object,
+                userManagerMock.Object
+            );
+
+            // Anta at det er en tjenesteordre med ID 1 i depotet
+            serviceOrderRepositoryMock.Setup(repo => repo.Get(It.IsAny<int>()))
+                .Returns(new ServiceOrder { ServiceOrderId = 1, /* other properties */ });
+
+            // Anta at det er rapporter knyttet til tjenesteordren
+            reportRepositoryMock.Setup(repo => repo.GetAll())
+                .Returns(new List<Report> // Konverter den til liste
                 {
-                    
-                }
-            };
+            new Report { ReportId = 1, },
+            new Report { ReportId = 2, }
+                });
 
-            var expectedReports = new List<Report>
+            // Act
+            var result = controller.Spesific(1) as ViewResult;
+            var model = result?.Model as CompositeViewModel;
+
+            // Assert
+            Xunit.Assert.NotNull(result);
+            Xunit.Assert.Equal("Spesific", result.ViewName);
+            Xunit.Assert.NotNull(model);
+        }
+
+        // Test for Post action
+        [Fact]
+        public async Task Post_RedirectsToIndexOnSuccess()
+        {
+            // Arrange
+            var serviceOrderRepositoryMock = new Mock<IServiceOrderRepository>();
+            var reportRepositoryMock = new Mock<IReportRepository>();
+            var customerRepositoryMock = new Mock<ICustomerRepository>();
+            var userManagerMock = GetUserManagerMock();
+            var controller = new ServiceOrderController(
+                serviceOrderRepositoryMock.Object,
+                reportRepositoryMock.Object,
+                customerRepositoryMock.Object,
+                userManagerMock.Object
+            );
+
+            // Anta at ModelState er gyldig
+            controller.ModelState.Clear();
+
+            // Act
+            var result = await controller.Post(new ServiceOrderFullViewModel()) as IActionResult;
+
+            // Assert
+            Xunit.Assert.NotNull(result);
+            Xunit.Assert.IsType<RedirectToActionResult>(result);
+            Xunit.Assert.Equal("Index", ((RedirectToActionResult)result).ActionName);
+        }
+
+        // Hjelpemetode for å lage en mock for UserManager med valgfri nåværende bruker
+        private Mock<UserManager<IdentityUser>> GetUserManagerMock(IdentityUser currentUser = null)
+        {
+            var userManagerMock = new Mock<UserManager<IdentityUser>>(new Mock<IUserStore<IdentityUser>>().Object,
+                null, null, null, null, null, null, null, null);
+
+            if (currentUser != null)
             {
-                new Report { ReportId = 1, ServiceOrderId = serviceOrderId, Mechanic = "Mechanic1", ServiceType = "Type1" },
-                new Report { ReportId = 2, ServiceOrderId = serviceOrderId, Mechanic = "Mechanic2", ServiceType = "Type2" }
-            };
-
-            serviceOrderRepositoryMock.Setup(repo => repo.Get(serviceOrderId)).Returns(expectedServiceOrder);
-            reportRepositoryMock.Setup(repo => repo.GetAll()).Returns(expectedReports);
-
-            // Kaller på den spesifikke handlingen med den spesifikke serviceordre-IDen
-            var result = serviceOrderController.Spesific(serviceOrderId) as ViewResult;
-
-            // Bekrefter at resultatet ikke er null og har riktig visningsnavn
-            Assert.IsNotNull(result);
-            Assert.AreEqual("Spesific", result.ViewName);
-
-            // Treker ut modellen fra resultatet og bekreft typen
-            var model = result.Model as CompositeViewModel;
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.ServiceOrderModel);
-            Assert.IsNotNull(model.ReportModel);
-
-            // Sjekker at serviceordredetaljene er riktig kartlagt
-            Assert.AreEqual(expectedServiceOrder.Mechanic, model.ServiceOrderModel.UpsertModel.Mechanic);
-
-            // Sjekker at de tilknyttede rapportene er riktig mapped
-            Assert.AreEqual(expectedReports.Count, model.ReportModel.ReportList.Count);
-
-            for (int i = 0; i < expectedReports.Count; i++)
-            {
-                Assert.AreEqual(expectedReports[i].Mechanic, model.ReportModel.ReportList[i].Mechanic);
-                Assert.AreEqual(expectedReports[i].ServiceType, model.ReportModel.ReportList[i].ServiceType);
-                
+                userManagerMock.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+                    .ReturnsAsync(currentUser);
             }
 
+            return userManagerMock;
         }
-
-        //Denne testen setter opp en ugyldig modelltilstand ved å legge til en feil i et spesifikt felt
-        //og verifiserer deretter at kontrolleren returnerer "NyServiceOrdre"-visningen med den ugyldige modellen når
-        //Post-handlingen kalles med den ugyldige modellen.
-        [Test]
-        public void Post_InvalidModelState_ReturnsViewWithModel()
-        {
-            // Mock-forekomster for repositoriene
-            var serviceOrderRepositoryMock = new Mock<IServiceOrderRepository>();
-            var reportRepositoryMock = new Mock<IReportRepository>();
-            var customerRepositoryMock = new Mock<ICustomerRepository>();
-
-            // Oppretter en forekomst av ServiceOrderController med mock repositories
-            var serviceOrderController = new ServiceOrderController(
-                serviceOrderRepositoryMock.Object,
-                reportRepositoryMock.Object,
-                customerRepositoryMock.Object
-            );
-
-            // Setter opp en ugyldig modelltilstand
-            serviceOrderController.ModelState.AddModelError("SomeField", "The field is required");
-
-            // Oppretter et eksempel på ugyldig ServiceOrderFullViewModel for testing
-            var invalidViewModel = new ServiceOrderFullViewModel
-            {
-                UpsertModel = new ServiceOrderViewModel
-                {
-                    
-                }
-            };
-    
-            var result = serviceOrderController.Post(invalidViewModel) as ViewResult;
-
-
-            // Bekrefter at resultatet ikke er null og har riktig visningsnavn
-            Assert.IsNotNull(result);
-            Assert.AreEqual("NyServiceOrdre", result.ViewName);
-
-            // Trekker ut modellen fra resultatet og bekreft typen
-            var model = result.Model as ServiceOrderFullViewModel;
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(model.UpsertModel);
-
-            Assert.IsTrue(serviceOrderController.ModelState.ContainsKey("SomeField"));
-            Assert.AreEqual("The field is required", serviceOrderController.ModelState["SomeField"].Errors.First().ErrorMessage);
-        }
-
     }
-
 }

@@ -7,7 +7,6 @@
         background-color: #d9e5eb;
         margin: 0;
         padding: 0;
-        font-family: sans-serif;
         color: #313638;
     }
 
@@ -63,7 +62,14 @@
 
         .button:hover {
             background-color: rgb(251, 114, 19);
+            color: black;
         }
+
+    .button-container {
+        text-align: center;
+        margin-top: 2%;
+    }
+
 
     .customer-container {
         display: flex;
@@ -80,67 +86,75 @@
         width: 100%;
         box-sizing: border-box;
     }
-
-
 </style>
-
-    
-<p>
-    <a asp-action="Index">Tilbake</a>
-</p>
-
 <div id="create-container">
     <h1>Ny Rapport</h1>
 
     <div class="form-container">
-        <form asp-action="PostReport" asp-controller="Report" method="post">
-            @Html.ValidationSummary()
-            @Html.AntiForgeryToken()
+        <div id="reportViewStyles">
+            <form asp-action="PostReport" asp-controller="Report" method="post">
+                @Html.ValidationSummary()
+                @Html.AntiForgeryToken()
 
 
 
-            <input asp-for="UpsertModel.ServiceOrderId" type="hidden" /><br />
+                <input asp-for="UpsertModel.ServiceOrderId" type="hidden" /><br />
 
-            <input asp-for="UpsertModel.UserSign" type="hidden" value="0" /><br />
+                <input asp-for="UpsertModel.UserSign" type="hidden" value="0" /><br />
 
-            <div class="customer-container">
+                <div class="customer-container">
 
-                <div class="customer-group">
-                    <div class="form-group">
-                        <label asp-for="UpsertModel.Mechanic">Mekaniker/e</label>
-                        <input value="1" asp-for="UpsertModel.Mechanic" type="text" /><br />
+                    <div class="customer-group">
+                        <div class="form-group">
+                            <label asp-for="UpsertModel.Mechanic">Mekaniker/e</label>
+                            <input value="1" asp-for="UpsertModel.Mechanic" type="text" /><br />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UpsertModel.ReportWriteDate">Opprettelse Dato</label>
+                            <input asp-for="UpsertModel.ReportWriteDate" type="date" /><br />
+                        </div>
+
+                    </div>
+                    <div class="customer-group">
+                        <div class="form-group">
+                            <label asp-for="UpsertModel.ServiceDescription">Service Beskrivelse</label>
+                            <input value="1" asp-for="UpsertModel.ServiceDescription" type="text" /><br />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UpsertModel.ServiceType">Service Type</label>
+                            <input value="1" asp-for="UpsertModel.ServiceType" type="text" /><br />
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label asp-for="UpsertModel.ReportWriteDate">Opprettelse Dato</label>
-                        <input asp-for="UpsertModel.ReportWriteDate" type="date" /><br />
-                    </div>
 
                 </div>
-                <div class="customer-group">
+                <div class="customer-comment-group">
                     <div class="form-group">
-                        <label asp-for="UpsertModel.ServiceDescription">Service Beskrivelse</label>
-                        <input value="1" asp-for="UpsertModel.ServiceDescription" type="text" /><br />
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="UpsertModel.ServiceType">Service Type</label>
-                        <input value="1" asp-for="UpsertModel.ServiceType" type="text" /><br />
+                        <label asp-for="UpsertModel.MechanicComment">Andre Kommentarer</label>
+                        <input value="1" asp-for="UpsertModel.MechanicComment" type="text" /><br />
                     </div>
                 </div>
 
 
-            </div>
-            <div class="customer-comment-group">
-                <div class="form-group">
-                    <label asp-for="UpsertModel.MechanicComment">Andre Kommentarer</label>
-                    <input value="1" asp-for="UpsertModel.MechanicComment" type="text" /><br />
-                </div>
-            </div>
+                <p class="button-container">
+                    <button class="button" type="submit">Send Rapport</button>
+                    <button class="button" type="button" onclick="generatePDF('@Url.Action("GeneratePDF", "Report")')">Generer PDF</button>
+                </p>
 
-            <input type="submit" />
+            </form>
 
-        </form>
+            <script src="https://rawcdn.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
+            <script>
+            function generatePDF(pdfUrl) {
+                console.log('Generating PDF...');
+
+                var element = document.getElementById('reportViewStyles');
+                html2pdf(element);
+            }
+            </script>
+        </div>
     </div>
 </div>

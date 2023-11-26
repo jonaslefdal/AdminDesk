@@ -46,7 +46,6 @@ public class Startup
             options.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
         });
 
-        services.AddTransient<IEmailSender, YourEmailSenderImplementation>();
 
         // Add your services here
         services.AddScoped<ISqlConnector, SqlConnector>();
@@ -54,6 +53,7 @@ public class Startup
         services.AddScoped<IReportRepository, EfReportRepository>();
         services.AddScoped<ICustomerRepository, EfCustomerRepository>();
         services.AddScoped<IUserRepository, EfUserRepository>();
+        services.AddScoped<ICheckListRepository, EfCheckListRepository>();
 
 
         services.AddRazorPages();

@@ -35,6 +35,8 @@ namespace AdminDesk.DataAccess
 
             modelBuilder.Entity<User>().ToTable("UserDisabled").HasKey(x => x.UserId);
 
+            modelBuilder.Entity<CheckList>().ToTable("CheckList").HasKey(x => x.CheckListId);
+
 
 
 
@@ -49,6 +51,8 @@ namespace AdminDesk.DataAccess
         public DbSet<User> User { get; set; }
 
         public DbSet<User> UserDisabled { get; set; }
+
+        public DbSet<CheckList> CheckList { get; set; }
 
 
 

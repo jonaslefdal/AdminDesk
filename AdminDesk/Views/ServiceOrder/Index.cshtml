@@ -9,98 +9,130 @@
 
     <head>
         <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-        <script>$(document).ready(function () {
-                $(".clickable").click(function () {
-                    window.location = $(this).find("a").attr("href");
-                });
-            });</script>
 
         <style>
-            body {
-                background-color: #f4f4f4;
-                font-family: Arial, sans-serif;
+            html, body {
+                font-size: 1rem;
+                background-color: #d9e5eb;
                 margin: 0;
                 padding: 0;
-            }
-
-            .container {
-                max-width: 75vw;
-                margin: 50px auto;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                font-family: sans-serif;
+                color: #313638;
             }
 
             h1 {
+                font-size: 1rem;
                 text-align: center;
-                margin-top: 0;
-                color: #333;
+                margin-top: 5%;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-top: 1rem;
+                text-align: center;
+            }
+
+            table {
+                font-size: 1rem;
+                border-collapse: collapse;
+                width: 100% !important;
+                margin-top: 1% !important;
+                margin-bottom: 2% !important;
+                margin: auto;
+            }
+
+            th, td {
+                font-size: 1rem;
+                width: 15rem;
+                border: 1px solid #000;
+                padding: 1%;
+                text-align: center;
+                background-color: #f2f2f2;
+                cursor: pointer;
+            }
+
+                td a {
+                    text-decoration: none;
+                    color: inherit;
+                }
+
+            tr:hover {
+                background-color: #e0e0e0;
+                color: black;
             }
 
             .button-container {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-top: 5%;
             }
 
             .button {
+                font-size: 14px;
                 display: inline-block;
-                padding: 10px 20px;
-                background-color: #428bca;
-                color: #fff;
-                text-decoration: none;
+                padding: 1rem 2rem;
+                background-color: #88afc2;
                 border-radius: 5px;
+                cursor: pointer;
                 transition: background-color 0.3s;
+                color: black;
+                text-decoration: none;
             }
+
+                .button a {
+                    text-decoration: none;
+                    color: black;
+                }
 
                 .button:hover {
-                    background-color: #3071a9;
+                    background-color: rgb(251, 114, 19);
+                    color: black;
                 }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
+            .search-container {
+                text-align: center;
+                margin-top: 3%;
             }
 
-            th, td {
-                padding: 12px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
+
+            #search {
+                padding: 0.5rem;
+                margin-right: 0.5rem;
+                width: 30rem;
             }
 
-            th {
-                background-color: #f2f2f2;
-            }
-
-            tr:hover {
-                background-color: #f5f5f5;
-            }
-
-            .clickable {
+            #searchButton {
+                font-size: 14px;
+                display: inline-block;
+                padding: 0.5rem 1rem;
+                background-color: #88afc2;
+                border-radius: 5px;
                 cursor: pointer;
+                transition: background-color 0.3s;
+                color: black;
+                text-decoration: none;
             }
 
-                .clickable a {
-                    color: #333;
-                    text-decoration: none;
+                #searchButton:hover {
+                    background-color: rgb(251, 114, 19);
+                    color: black;
                 }
-
-                    .clickable a:hover {
-                        text-decoration: underline;
-                    }
         </style>
     </head>
-
     <body>
-
-        <div class="container">
-            <h1>Service Orders</h1>
-
+        <div class="blokk">
+            <div class="Top">
+                Serviceordrer
+            </div>
+            <div class="TopMid">
+                Sorter: Lav til høyt
+            </div>
             <div class="button-container">
-                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Ny Ordre</a>
+                <a class="button" asp-controller="ServiceOrder" asp-action="NyServiceOrdre">Legg inn ny ordre</a>
+            </div>
+            <div class="search-container">
+                <label for="search">Søk: </label>
+                <input type="text" id="search" name="search" placeholder="Søk etter ordrenummer">
+                <button id="searchButton" onclick="searchOrders()">Søk</button>
             </div>
 
             <table>
@@ -130,12 +162,40 @@
             </table>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script>$(document).ready(function () {
+                $(".clickable").click(function () {
+                    window.location = $(this).find("a").attr("href");
+                });
+            });
+            function searchOrders() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("search");
+                filter = input.value.toUpperCase();
+                table = document.querySelector("table");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+
+                }
+            }</script>
+
     </body>
-    }
-    else
-    {
+}
+else
+{
 
     <p>Logg inn for å få tilgang</p>
 
 
-    }
+}

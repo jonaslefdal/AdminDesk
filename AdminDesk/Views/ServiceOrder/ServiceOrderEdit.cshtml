@@ -63,7 +63,13 @@
 
         .button:hover {
             background-color: rgb(251, 114, 19);
+            color: black;
         }
+
+    .button-container {
+        text-align: center;
+        margin-top: 2%;
+    }
 
     .customer-container {
         display: flex;
@@ -98,13 +104,13 @@
 
 
 
-<p>
-    <a href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake</a>
-</p>
-
 <div id="create-container">
     <h1>Edit</h1>
     <h4>Service Order</h4>
+
+    <p class="button-container">
+        <a class="button" href="@Url.Action("Spesific", "ServiceOrder", new { id = @Model.UpsertModel.ServiceOrderId })">Tilbake</a>
+    </p>
 
     <div class="form-container">
         <form asp-action="EditChange" asp-controller="ServiceOrder" method="post">
@@ -245,7 +251,9 @@
                 </div>
             </div>
 
-            <input type="submit" value="Save" class="button" />
+            <p class="button-container">
+                <input type="submit" value="Lagre" class="button" style="margin: 2% 0;" />
+            </p>
         </form>
     </div>
 </div>

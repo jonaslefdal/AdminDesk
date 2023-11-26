@@ -61,9 +61,15 @@
         margin: 2% 0;
     }
 
-        .button:hover {
-            background-color: rgb(251, 114, 19);
-        }
+    .button-container {
+        text-align: center;
+        margin-top: 2%;
+    }
+
+    .button:hover {
+        background-color: rgb(251, 114, 19);
+        color: black;
+    }
 
     .customer-container {
         display: flex;
@@ -82,13 +88,14 @@
     }
 </style>
 
-<p>
-    <a asp-action="Index">Tilbake</a>
-</p>
-
 <div id="create-container">
     <h1>Ny</h1>
     <h4>Serviceordre</h4>
+
+    <div class="button-container">
+        <a asp-action="Index" class="button">Tilbake til liste</a>
+    </div>
+
 
     <div class="form-container">
         <form asp-action="Post" asp-controller="ServiceOrder" method="post">
@@ -101,25 +108,30 @@
                     <div class="form-group">
                         <label asp-for="UpsertModel.Mechanic"></label>
                         <input asp-for="UpsertModel.Mechanic" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Mechanic" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="UpsertModel.CreatedDate"></label>
                         <input asp-for="UpsertModel.CreatedDate" type="date" /><br />
+                        <span asp-validation-for="UpsertModel.CreatedDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.TotalWorkHours"></label>
                         <input asp-for="UpsertModel.TotalWorkHours" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.TotalWorkHours" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="customer-group">
                     <div class="form-group">
                         <label asp-for="UpsertModel.SerialNumber"></label>
                         <input asp-for="UpsertModel.SerialNumber" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.SerialNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.OrderStatus"></label>
                         <input asp-for="UpsertModel.OrderStatus" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.OrderStatus" class="text-danger"></span>
                     </div>
                 </div>
             </div>
@@ -127,10 +139,12 @@
             <div class="form-group">
                 <label asp-for="UpsertModel.Comment"></label>
                 <input asp-for="UpsertModel.Comment" type="text" /><br />
+                <span asp-validation-for="UpsertModel.Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UpsertModel.FutureMaintenance"></label>
                 <input asp-for="UpsertModel.FutureMaintenance" type="text" /><br />
+                <span asp-validation-for="UpsertModel.FutureMaintenance" class="text-danger"></span>
             </div>
 
             <div class="customer-container">
@@ -138,18 +152,22 @@
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerFirstName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerFirstName" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.FutureMaintenance" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerEmail"></label>
                         <input asp-for="UpsertModel.Customer.CustomerEmail" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerEmail" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerStreet"></label>
                         <input asp-for="UpsertModel.Customer.CustomerStreet" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerStreet" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerZipcode"></label>
                         <input asp-for="UpsertModel.Customer.CustomerZipcode" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerStreet" class="text-danger"></span>
                     </div>
 
                     <!-- Add more customer-related fields as needed -->
@@ -159,15 +177,18 @@
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerLastName"></label>
                         <input asp-for="UpsertModel.Customer.CustomerLastName" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerLastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerPhoneNumber"></label>
                         <input asp-for="UpsertModel.Customer.CustomerPhoneNumber" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerPhoneNumber" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="UpsertModel.Customer.CustomerCity"></label>
                         <input asp-for="UpsertModel.Customer.CustomerCity" type="text" /><br />
+                        <span asp-validation-for="UpsertModel.Customer.CustomerCity" class="text-danger"></span>
                     </div>
 
 
@@ -178,10 +199,12 @@
                 <div class="form-group">
                     <label asp-for="UpsertModel.Customer.CustomerComment"></label>
                     <input asp-for="UpsertModel.Customer.CustomerComment" type="text" /><br />
+                    <span asp-validation-for="UpsertModel.Customer.CustomerComment" class="text-danger"></span>
                 </div>
             </div>
-
-            <input type="submit" />
+            <div class="button-container">
+                <input type="submit" value="Lagre" class="button" style="margin: 2% 0;" />
+            </div>
 
         </form>
 

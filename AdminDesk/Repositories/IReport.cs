@@ -9,4 +9,5 @@ namespace AdminDesk.Repositories
         List<Report> GetAll();
 
     }
+    
 }

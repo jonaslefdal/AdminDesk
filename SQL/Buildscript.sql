@@ -165,22 +165,35 @@ CREATE TABLE IF NOT EXISTS `userdisabled` (
 );
 
 
-
-CREATE TABLE IF NOT EXISTS `checklist` (
-  `CheckListId` int NOT NULL,
-  `ServiceOrderId` int NOT NULL,
-
-
-
-
-  
-  PRIMARY KEY (`UserId`, `RoleId`),
-  INDEX `IX_AspNetUserRoles_RoleId` (`RoleId` ASC) VISIBLE,
-  CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId`
-    FOREIGN KEY (`RoleId`)
-    REFERENCES .`aspnetroles` (`Id`)
-    ON DELETE CASCADE,
-  CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId`
-    FOREIGN KEY (`UserId`)
-    REFERENCES `aspnetusers` (`Id`)
-    ON DELETE CASCADE);
+CREATE TABLE IF NOT EXISTS `CheckList` (
+    `CheckListId` INT NOT NULL AUTO_INCREMENT,
+    `ServiceOrderId` INT NOT NULL,
+    `Avd1Sp1` VARCHAR(255),
+    `Avd1Sp2` VARCHAR(255),
+    `Avd1Sp3` VARCHAR(255),
+    `Avd1Sp4` VARCHAR(255),
+    `Avd1Sp5` VARCHAR(255),
+    `Avd1Sp6` VARCHAR(255),
+    `Avd1Sp7` VARCHAR(255),
+    `Avd1Sp8` VARCHAR(255),
+    `Avd2Sp1` VARCHAR(255),
+    `Avd2Sp2` VARCHAR(255),
+    `Avd2Sp3` VARCHAR(255),
+    `Avd2Sp4` VARCHAR(255),
+    `Avd2Sp5` VARCHAR(255),
+    `Avd2Sp6` VARCHAR(255),
+    `Avd2Sp7` VARCHAR(255),
+    `Avd3Sp1` VARCHAR(255),
+    `Avd3Sp2` VARCHAR(255),
+    `Avd3Sp3` VARCHAR(255),
+    `Avd4Sp1` VARCHAR(255),
+    `Avd5Sp1` VARCHAR(255),
+    `Avd5Sp2` VARCHAR(255),
+    `Avd5Sp3` VARCHAR(255),
+  PRIMARY KEY (`CheckListId`),
+  INDEX `FK_CheckList_ServiceOrderId_idx` (`ServiceOrderId` ASC),
+  CONSTRAINT `FK_CheckList_ServiceOrderId`
+    FOREIGN KEY (`ServiceOrderId`)
+    REFERENCES `serviceorders` (`ServiceOrderId`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);

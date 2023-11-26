@@ -18,7 +18,8 @@
     <None Remove="Views\Report\" />
     <Content Remove="Areas\Identity\Pages\Account\Manage\UserDisable.cshtml" />
     <None Remove="Models\User\" />
-    <Content Remove="Views\Report\CheckList.cshtml" />
+    <None Remove="Models\CheckList\" />
+    <None Remove="Views\CheckList\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Entities\" />
@@ -29,7 +30,6 @@
   <ItemGroup>
     <None Include="Views\Behandlet\Index.cshtml" />
     <None Include="Views\ServiceOrder\Index.cshtml" />
-    <None Include="Views\Report\CheckList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.15" />
@@ -57,5 +57,7 @@
     <Folder Include="Models\Report\" />
     <Folder Include="Views\Report\" />
     <Folder Include="Models\User\" />
+    <Folder Include="Models\CheckList\" />
+    <Folder Include="Views\CheckList\" />
   </ItemGroup>
 </Project>
