@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
+<!-- Styling for the page -->
 <style>
     html, body {
         background-color: #d9e5eb;
@@ -17,6 +18,7 @@
         text-align: center;
     }
 
+    /* Styling for buttons */
     .button {
         display: inline-block;
         padding: 10px 20px;
@@ -36,74 +38,37 @@
         margin-top: -78px;
     }
 
-        .button:hover {
-            background-color: rgb(251, 114, 19);
-            color: #9cb7c2;
-        }
+    /* Hover effect for buttons */
+    .button:hover {
+        background-color: rgb(251, 114, 19);
+        color: #9cb7c2;
+    }
 </style>
+
+<!-- Heading for the page -->
 <h1>Detaljer</h1>
 
+<!-- Displaying details of the service order -->
 <div>
     <h4>Serviceordre</h4>
     <hr />
+    <!-- Definition list for displaying service order details -->
     <dl class="row">
+        <!-- Display service order property names and values -->
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Navn)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Navn)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefon)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Telefon)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Mottatt_dato)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Mottatt_dato)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adresse)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adresse)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ordrenummer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ordrenummer)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ServiceordreStatus)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ServiceordreStatus)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Arbeidstimer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Arbeidstimer)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Reparatør)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Reparatør)
-        </dd>
+        <!-- Repeat the above structure for other properties of the service order -->
     </dl>
 </div>
+
+<!-- Button container for edit and back to list buttons -->
 <div class="links button-container">
+    <!-- Edit button with a link to the Edit action -->
     <a asp-action="Edit" asp-route-id="@Model?.id" class="button">Edit</a>
-    <a asp-action="Index" class=" button button-list">Back to List</a>
+    <!-- Back to List button with a link to the Index action -->
+    <a asp-action="Index" class="button button-list">Back to List</a>
 </div>

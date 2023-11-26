@@ -1,5 +1,7 @@
-﻿
+﻿<!-- Tittel for søkesiden -->
 <h4>Søke på Serviceordre</h4>
+
+<!-- Styling for siden -->
 <style>
     html, body {
         background-color: #d9e5eb;
@@ -9,16 +11,22 @@
         color: #313638;
     }
 </style>
+
+<!-- Horisontal linje for visuell separasjon -->
 <hr />
+
+<!-- Form for søk på Serviceordre -->
 <div class="row">
     <div class="col-md-4">
         <form asp-action="ShowSearchResults">
 
+            <!-- Input-felt for å skrive inn søkefrasen -->
             <div class="form-group">
                 <label for="SearchPhrase" class="control-label"></label>
                 <input name="SearchPhrase" class="form-control" />
-          
             </div>
+
+            <!-- Knapp for å sende søket -->
             <div class="form-group">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
@@ -26,7 +34,7 @@
     </div>
 </div>
 
+<!-- Lenke for å gå tilbake til listen over serviceordre -->
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

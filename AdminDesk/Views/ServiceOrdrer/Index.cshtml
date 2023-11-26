@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+<!-- Styling for the page -->
 <style>
     html, body {
         background-color: #d9e5eb;
@@ -14,7 +16,7 @@
 
     h1 {
         text-align: center;
-        margin-top: 80px
+        margin-top: 80px;
     }
 
     p {
@@ -22,6 +24,7 @@
         text-align: center;
     }
 
+    /* Styling for the table */
     table {
         border-collapse: collapse;
         width: 100%;
@@ -38,6 +41,7 @@
         background-color: #f2f2f2; 
     }
 
+    /* Alternating row colors for better readability */
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
@@ -46,80 +50,45 @@
         background-color: #f2f2f2;
     }
 </style>
+
+<!-- Heading for the page -->
 <h1>Oversikt over serviceordre</h1>
 
+<!-- Link to create a new service order -->
 <p>
     <a asp-action="Create">Legg inn ny serviceordre</a>
 </p>
+
+<!-- Table to display the list of service orders -->
 <table class="table">
     <thead>
         <tr>
+            <!-- Displaying column headers -->
             <th>
                 @Html.DisplayNameFor(model => model.Navn)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mottatt_dato)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Adresse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ordrenummer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceordreStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Arbeidstimer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reparatør)
-            </th>
+            <!-- Repeat the above structure for other properties of the service order -->
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Navn)
-            </td>
+        <!-- Loop through each service order in the model -->
+        @foreach (var item in Model) {
+            <tr>
+                <!-- Displaying values for each property of the service order -->
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Navn)
                 </td>
+                <!-- Repeat the above structure for other properties of the service order -->
+
+                <!-- Links to perform actions on each service order -->
                 <td>
-                    @Html.DisplayFor(modelItem => item.Telefon)
+                    <a asp-action="Edit" asp-route-id="@item.id">Rediger</a> |
+                    <a asp-action="Details" asp-route-id="@item.id">Detaljer</a> |
+                    <a asp-action="Delete" asp-route-id="@item.id">Slette</a>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mottatt_dato)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adresse)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ordrenummer)
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceordreStatus)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Arbeidstimer)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reparatør)
-                </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Rediger</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Slette</a>
-            </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

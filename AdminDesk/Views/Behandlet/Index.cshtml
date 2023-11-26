@@ -1,15 +1,25 @@
-﻿<head>
+﻿<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <!-- Inkluder site.css-stilarket -->
     <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
+
+    <!-- Inkluder jQuery-biblioteket -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <!-- jQuery-script for å håndtere klikkhendelser -->
     <script>
         $(document).ready(function () {
+            // Når et element med klassen 'clickable' klikkes,
+            // omdiriger til URL-en som er spesifisert i barnet 'a'-elementet
             $(".clickable").click(function () {
                 window.location = $(this).find("a").attr("href");
             });
         });
     </script>
 
+    <!-- Intern CSS-stiler -->
     <style>
         html, body {
             font-size: 1rem;
@@ -54,16 +64,24 @@
         }
     </style>
 </head>
+
 <body>
+    <!-- Hovedinnholdscontainer -->
     <div class="blokk">
+        <!-- Toppseksjon -->
         <div class="Top">
             Serviceordrer
         </div>
+
+        <!-- TopMid-seksjon -->
         <div class="TopMid">
             Sorter: Lav til høyt
         </div>
+
+        <!-- Bunnseksjon med tabell -->
         <div class="Bottom">
             <table>
+                <!-- Tabellhode -->
                 <tr>
                     <th>Ordrenummer</th>
                     <th>Kunde Fornavn</th>
@@ -72,12 +90,16 @@
                     <th>Telefon Nummer</th>
                     <th>Ordre Status</th>
                     <th>Dato Opprettet</th>
-                    <th>Reperatør</th>
+                    <th>Reparatør</th>
                 </tr>
+
+                <!-- Gjennomgå serviceordrer i modellen -->
                 @foreach (var serviceOrder in Model.ServiceOrderList)
                 {
+                    <!-- Vis kun fullførte ordrer -->
                     @if (serviceOrder.OrderStatus == "Fullført")
                     {
+                        <!-- Tabellrad med klikkbare celler -->
                         <tr>
                             <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.ServiceOrderId</a></td>
                             <td class="clickable"><a class="black" href="@Url.Action("Spesific", "ServiceOrder", new { id = serviceOrder.ServiceOrderId })">@serviceOrder.Customer?.CustomerFirstName</a></td>
@@ -92,4 +114,7 @@
                 }
             </table>
         </div>
+    </div>
 </body>
+
+</html>
