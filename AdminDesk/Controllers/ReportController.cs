@@ -1,4 +1,4 @@
-
+﻿
 using AdminDesk.Entities;
 using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
@@ -11,15 +11,15 @@ using static AdminDesk.Entities.Report;
 
 namespace AdminDesk.Controllers
 {
-    public class ReportController : Controller
+    public class ReportController : Controller //ReportController-klasse som arver fra controller-klasse
 
     {
 
-        private readonly IReportRepository _reportRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IReportRepository _reportRepository;//Privat til å holde IReportRepository(interface)
+        private readonly UserManager<IdentityUser> _userManager;// Constructor for ReportController, initaliserer reportRepository
 
 
-        public ReportController(IReportRepository reportRepository, UserManager<IdentityUser> userManager)
+        public ReportController(IReportRepository reportRepository, UserManager<IdentityUser> userManager)//GET-metode for å vise rapporter for en spesifikk serviceordre
         {
             _reportRepository = reportRepository;
             _userManager = userManager;
@@ -27,7 +27,7 @@ namespace AdminDesk.Controllers
 
 
         [HttpGet]
-        public IActionResult Index(int id)
+        public IActionResult Index(int id)//GET-metode for å vise rapporter for en spesifikk serviceordre
         {
             var model = new ReportFullViewModel
             {
