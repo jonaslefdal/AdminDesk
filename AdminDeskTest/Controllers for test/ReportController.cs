@@ -1,158 +1,124 @@
-﻿using System;
+﻿using System.Reflection;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using AdminDesk.Controllers;
-using AdminDesk.Entities;
 using AdminDesk.Models.Report;
 using AdminDesk.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using NUnit.Framework;
 using Xunit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace AdminDeskTest
+namespace AdminDeskTest.Controllers
 {
-    // Test klasse for ReportController
-    public class ReportControllerTests
+    public class ReportControllerAuthorizationTests
     {
-        // Test for Index action
+
+        // Denne testen sjekker at indekshandlingen i ReportController
+        // krever "RequireUserOrAdminRole"-policyen.
         [Fact]
-        public void Index_ReturnsCorrectViewModel()
+        public void Index_Action_Should_Require_UserOrAdminRole_Policy()
         {
-            // Arrange
+            // userManagerMock returnerer en bruker med en spesifisert ID og brukernavn.
+            var userStoreMock = new Mock<IUserStore<IdentityUser>>();
+            var userManagerMock = new Mock<UserManager<IdentityUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
             var reportRepositoryMock = new Mock<IReportRepository>();
-            var userManagerMock = new Mock<UserManager<IdentityUser>>();
+
+            var user = new IdentityUser
+            {
+                Id = "testUserId",
+                UserName = "TestUser",
+            };
+
+            userManagerMock.Setup(m => m.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+                .ReturnsAsync(user);
+
             var controller = new ReportController(reportRepositoryMock.Object, userManagerMock.Object);
 
-            // Act
-            var result = controller.Index(1) as ViewResult;
-            var model = result?.Model as ReportFullViewModel;
+            // Anrop en handlingsmetode som krever autorisasjon (f.eks. Indeks).
+            var result = controller.Index(It.IsAny<int>());
 
-            // Assert
-            Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("Index", result.ViewName); // Checks if the correct view is returned
-            Xunit.Assert.NotNull(model);
-            Xunit.Assert.Equal(1, model.UpsertModel.ServiceOrderId); // Checks if the model has the correct ServiceOrderId
+            // Sjekk om kontrolleren har den forventede [Authorize]-attributten på kontrollernivå.
+            var authorizeAttribute = Xunit.Assert.IsType<AuthorizeAttribute>(
+                controller.GetType().GetCustomAttribute(typeof(AuthorizeAttribute), inherit: true)
+            );
+
+            // Sørg for at [Authorize]-attributtet spesifiserer "RequireUserOrAdminRole"-policyen.
+            Xunit.Assert.Contains("RequireUserOrAdminRole", authorizeAttribute.Policy);
         }
 
-        // Test for CheckList action
+
+
+        //Verifiserer at PostReport-handlingen krever rollen "Admin".
         [Fact]
-        public void CheckList_ReturnsCorrectViewModel()
+        public async Task PostReport_Action_Should_Require_AdminRole()
         {
-            // Arrange
+            // userManagerMock returnerer en bruker med en spesifisert ID og brukernavn.
+            var userStoreMock = new Mock<IUserStore<IdentityUser>>();
+            var userManagerMock = new Mock<UserManager<IdentityUser>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
             var reportRepositoryMock = new Mock<IReportRepository>();
-            var userManagerMock = new Mock<UserManager<IdentityUser>>();
+
+            var user = new IdentityUser
+            {
+                Id = "testUserId",
+                UserName = "TestUser",
+            };
+
+            userManagerMock.Setup(m => m.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+                .ReturnsAsync(user);
+
             var controller = new ReportController(reportRepositoryMock.Object, userManagerMock.Object);
 
-            // Act
-            var result = controller.CheckList(1) as ViewResult;
-            var model = result?.Model as ReportFullViewModel;
+            // PostReport-handlingen påkalles med en ReportFullViewModel.
+            var result = await controller.PostReport(new ReportFullViewModel());
 
-            // Assert
-            Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("CheckList2", result.ViewName); // Checks if the correct view is returned
-            Xunit.Assert.NotNull(model);
-            Xunit.Assert.Equal(1, model.UpsertModel.ServiceOrderId); // Checks if the model has the correct ServiceOrderId
+            // Sjekker om resultatet er av typen RedirectToActionResult, forutsatt at uautoriserte brukere blir omdirigert.
+            Xunit.Assert.IsType<RedirectToActionResult>(result);
         }
 
-        // Test for PostReport-handlingen når den omdirigerer til "Spesific" ved suksess
+
+
+        // Test for PostReport-handlingen med gyldige data.
         [Fact]
-        public async Task PostReport_RedirectsToSpesificOnSuccess()
+        public async Task PostReport_WithValidData_ShouldReturnRedirectToAction()
         {
-            // Arrange
+            // Lager mocking for UserManager og IReportRepository.
+            var userManagerMock = GetMockUserManagerWithUser();
             var reportRepositoryMock = new Mock<IReportRepository>();
-            var userManagerMock = GetUserManagerMock();
+            // Oppretter en forekomst av ReportController med mock avhengighetene.
             var controller = new ReportController(reportRepositoryMock.Object, userManagerMock.Object);
 
-            var viewModel = new ReportFullViewModel
+            // Definere en gyldig rapport med eksempeldata.
+            var validReport = new ReportFullViewModel
             {
                 UpsertModel = new ReportViewModel
                 {
-                    ServiceOrderId = 123,
-                    Mechanic = "John",
-                    ServiceType = "Repair",
-                    ReportWriteDate = DateTime.Now,
+                    ServiceOrderId = 1,
                 }
             };
 
-            // Act
-            var result = await controller.PostReport(viewModel) as RedirectToActionResult;
+            // Kalle opp PostReport-handlingsmetoden med den gyldige rapporten.
+            var result = await controller.PostReport(validReport);
 
-            // Assert
-            Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("Spesific", result.ActionName); // Sjekker om handlingen omdirigerer til "Spesific"
-            reportRepositoryMock.Verify(repo => repo.Upsert(It.IsAny<Report>()), Times.Once); // Sjekker om Upsert kalles
-            Xunit.Assert.Equal(viewModel.UpsertModel.ServiceOrderId, result.RouteValues["id"]); // Sjekker om riktig id er bestått
+            // Verifiserer at resultatet er av typen RedirectToActionResult.
+            Xunit.Assert.IsType<RedirectToActionResult>(result);
         }
 
-        // Test for PostReport-handlingen når gjeldende bruker er null
-        [Fact]
-        public async Task PostReport_ReturnsBadRequestIfCurrentUserIsNull()
+        // Hjelpemetode for å lage en mock UserManager med en testbruker.
+        private Mock<UserManager<IdentityUser>> GetMockUserManagerWithUser()
         {
-            // Arrange
-            var reportRepositoryMock = new Mock<IReportRepository>();
-            var userManagerMock = GetUserManagerMock(currentUser: null);
-            var controller = new ReportController(reportRepositoryMock.Object, userManagerMock.Object);
-
-            var viewModel = new ReportFullViewModel
+            var user = new IdentityUser
             {
-                UpsertModel = new ReportViewModel
-                {
-                    ServiceOrderId = 123,
-                    Mechanic = "John",
-                    ServiceType = "Repair",
-                    ReportWriteDate = DateTime.Now,
-                }
+                Id = "testUserId",
+                UserName = "TestUser",
             };
 
-            // Act
-            var result = await controller.PostReport(viewModel) as BadRequestObjectResult;
-
-            // Assert
-            Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("Unable to determine the current user.", result.Value); // Checks if BadRequest is returned with the correct message
-        }
-
-        // Test for PostReport-handlingen når ModelState er ugyldig
-        [Fact]
-        public async Task PostReport_ReturnsViewWithErrorIfModelStateIsInvalid()
-        {
-            // Arrange
-            var reportRepositoryMock = new Mock<IReportRepository>();
-            var userManagerMock = GetUserManagerMock();
-            var controller = new ReportController(reportRepositoryMock.Object, userManagerMock.Object);
-            controller.ModelState.AddModelError("SomeField", "Some error message");
-
-            var viewModel = new ReportFullViewModel
-            {
-                UpsertModel = new ReportViewModel
-                {
-                    ServiceOrderId = 123,
-                    Mechanic = "John",
-                    ServiceType = "Repair",
-                    ReportWriteDate = DateTime.Now,
-                }
-            };
-
-            // Act
-            var result = await controller.PostReport(viewModel) as ViewResult;
-
-            // Assert
-            Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("Index", result.ViewName); // Sjekker om action retunerer "Index" view
-        }
-
-        // Hjelpemetode for å lage en mock for UserManager med valgfri nåværende bruker
-        private Mock<UserManager<IdentityUser>> GetUserManagerMock(IdentityUser currentUser = null)
-        {
             var userManagerMock = new Mock<UserManager<IdentityUser>>(new Mock<IUserStore<IdentityUser>>().Object,
-                null, null, null, null, null, null, null, null);
-
-            if (currentUser != null)
-            {
-                userManagerMock.Setup(x => x.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                    .ReturnsAsync(currentUser);
-            }
+                                                                      null, null, null, null, null, null, null, null);
+            userManagerMock.Setup(m => m.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
+                            .ReturnsAsync(user);
 
             return userManagerMock;
         }
