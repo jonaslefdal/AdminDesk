@@ -3,11 +3,14 @@ using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminDesk.Controllers
 {
+   
+    [Authorize(Policy = "RequireUserOrAdminRole")]
     public class ServiceOrderController : Controller
 
     {
@@ -75,6 +78,7 @@ namespace AdminDesk.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "RequireAdminRole")]
         public IActionResult NyServiceOrdre()
         {
             var model = new ServiceOrderFullViewModel();
@@ -175,6 +179,7 @@ namespace AdminDesk.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> Post(ServiceOrderFullViewModel serviceordre)
         {
 
@@ -224,6 +229,7 @@ namespace AdminDesk.Controllers
 
 
         [HttpGet]
+        [Authorize(Policy = "RequireAdminRole")]
         public IActionResult ServiceOrderEdit(int id)
         {
             var serviceOrder = _serviceOrderRepository.Get(id);
@@ -273,6 +279,7 @@ namespace AdminDesk.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireAdminRole")]
         public async Task<IActionResult> EditChange(ServiceOrderFullViewModel serviceordre)
         {
             if (ModelState.IsValid)

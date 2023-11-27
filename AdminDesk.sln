@@ -9,13 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{
 	ProjectSection(SolutionItems) = preProject
 		build.cmd = build.cmd
 		build.sh = build.sh
-		createdb.sql = createdb.sql
 		Dockerfile = Dockerfile
 		startDb.cmd = startDb.cmd
 		startDb.sh = startDb.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDeskTest", "AdminDeskTest\AdminDeskTest.csproj", "{6AD395D7-5368-4DD1-B5FB-1556F7A709B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminDeskTest", "AdminDeskTest\AdminDeskTest.csproj", "{6AD395D7-5368-4DD1-B5FB-1556F7A709B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -95,9 +95,18 @@ namespace AdminDesk.Areas.Identity.Pages.Account.Manage
             existingUser.UserName = User.UserName;
             existingUser.Email = User.Email;
             existingUser.PhoneNumber = User.PhoneNumber;
-            existingUser.LockoutEnabled = User.LockoutEnabled;
 
-            await _userManager.AddToRoleAsync(User, Input.Role); // Add this line to assign the role
+
+            var userRoles = await _userManager.GetRolesAsync(existingUser);
+
+            // Remove the user from all current roles
+            foreach (var role in userRoles)
+            {
+                await _userManager.RemoveFromRoleAsync(existingUser, role);
+            }
+
+            // Add the user to the new role
+            await _userManager.AddToRoleAsync(existingUser, Input.Role);
 
             // Update other fields as needed
 

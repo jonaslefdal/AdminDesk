@@ -13,15 +13,13 @@ namespace AdminDesk.Entities//Definerer navneområde for entitestsklasser
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public virtual Customer Customer { get; set; }
         public string Mechanic { get; set; }
         public string SerialNumber { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string Comment { get; set; }
+        public string Comment { get; set; } 
         public string FutureMaintenance { get; set; }
-        public int CreatedById { get; set; }
+        public string CreatedById { get; set; }
         public string OrderStatus { get; set; }
-        public bool ReserveDeler { get; set; }
         public string TotalWorkHours { get; set; }
 
 

@@ -1,37 +1,42 @@
-﻿using AdminDesk.Areas.Identity.Pages.Account.Manage;//Importer klasser for håndtering av brukerprofiler
-using AdminDesk.Entities;//Importerer entitetsklasser fra AdminDesk
-using Microsoft.AspNetCore.Identity;//Importerer klasser for autentisering og autorisasjon
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;//Imporerterer klasser for integrasjon av brukeridentitet med EF
-using Microsoft.EntityFrameworkCore;//Imporerer for å bruke Entity Framework, en ORM
+﻿using AdminDesk.Areas.Identity.Pages.Account.Manage;
+using AdminDesk.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace AdminDesk.DataAccess//Navneområde for DataAccess klasser
+namespace AdminDesk.DataAccess
 {
-    public class DataContext : IdentityDbContext<IdentityUser>//DataContext klasse som arver fra IdentityDbContext 
+    public class DataContext : IdentityDbContext<IdentityUser>
     {
 
 
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)//Setter opp DataContext ved hjelp av DbContextOptions
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)//Kobler ServiceOrdre-entity til serviceordre-tabell
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ServiceOrder>()//Kobler serviceorder-entitet til serviceordre-tabell via primærnøkkel
+            modelBuilder.Entity<ServiceOrder>()
                 .ToTable("serviceorders")
                 .HasKey(x => x.ServiceOrderId);
 
-            modelBuilder.Entity<ServiceOrder>()// Oppretter en relasjon mellom ServiceOrder-og Customer-entitet.
-                .HasOne(s => s.Customer)
+            modelBuilder.Entity<ServiceOrder>()
+                .HasOne(s => s.Customer)  // Assuming Customer is a navigation property in ServiceOrder
                 .WithMany()
                 .HasForeignKey(s => s.CustomerId);
 
 
-            // Koden nedenfor konfigurerer diverse entiterer ved å koble dem til deres  tabeller. Det blir definert primærnøkler i databasen
+
             modelBuilder.Entity<Verksted>().ToTable("Verksted").HasKey(x => x.VerkstedId);
 
             modelBuilder.Entity<Report>().ToTable("Report").HasKey(x => x.ReportId);
 
             modelBuilder.Entity<Customer>().ToTable("Customer").HasKey(x => x.CustomerId);
+
+            modelBuilder.Entity<User>().ToTable("UserDisabled").HasKey(x => x.UserId);
+
+            modelBuilder.Entity<CheckList>().ToTable("CheckList").HasKey(x => x.CheckListId);
+
 
 
 
@@ -43,6 +48,15 @@ namespace AdminDesk.DataAccess//Navneområde for DataAccess klasser
         public DbSet<Report> Report { get; set; }
         public DbSet<ServiceOrder> ServiceOrder { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<User> User { get; set; }
+
+        public DbSet<CheckList> CheckList { get; set; }
+
+        public DbSet<User> UserDisabled { get; set; }
+
+
+
+
 
     }
 }

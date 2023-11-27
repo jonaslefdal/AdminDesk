@@ -4,6 +4,7 @@ using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -11,6 +12,7 @@ using static AdminDesk.Entities.Report;
 
 namespace AdminDesk.Controllers
 {
+    [Authorize(Policy = "RequireUserOrAdminRole")]
     public class ReportController : Controller //ReportController-klasse som arver fra controller-klasse
 
     {
@@ -33,26 +35,12 @@ namespace AdminDesk.Controllers
             {
                 UpsertModel = new ReportViewModel
                 {
-                    ServiceOrderId = id
+                    ServiceOrderId = id,
+                    ReportWriteDate = DateTime.Today // set the CreatedDate to the current date
                 }
             };
 
             return View(model);
-        }
-
-
-        [HttpGet]
-        public IActionResult CheckList(int id)
-        {
-            var model = new ReportFullViewModel
-            {
-                UpsertModel = new ReportViewModel
-                {
-                    ServiceOrderId = id
-                }
-            };
-
-            return View("CheckList2", model);
         }
 
 

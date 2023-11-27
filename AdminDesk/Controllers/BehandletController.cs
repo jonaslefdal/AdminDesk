@@ -3,10 +3,12 @@ using AdminDesk.Models.Report;
 using AdminDesk.Models.ServiceOrder;
 using AdminDesk.Repositories;
 using Google.Protobuf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminDesk.Controllers
 {
+    [Authorize(Policy = "RequireUserOrAdminRole")]
     public class BehandletController : Controller
 
     {

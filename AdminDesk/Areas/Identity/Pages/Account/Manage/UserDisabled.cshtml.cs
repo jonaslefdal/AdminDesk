@@ -9,10 +9,12 @@ using AdminDesk.Repositories;
 using AdminDesk.Entities;
 using AdminDesk.Models.User;
 using AdminDesk.Models.ServiceOrder;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AdminDesk.Areas.Identity.Pages.Account.Manage
     {
-        public class UserDisabledModel : PageModel
+    [Authorize(Policy = "RequireAdminRole")]
+    public class UserDisabledModel : PageModel
         {
             private readonly UserManager<IdentityUser> _userManager;
             private readonly IUserRepository _userRepository;
