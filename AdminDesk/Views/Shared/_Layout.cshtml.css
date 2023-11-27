@@ -65,6 +65,7 @@ button.accept-policy {
 .icon {
     height: auto;
     width: 200px; /* Bredde på ikonet */
+    max-width: 200px; /* Set a maximum width if needed */
     display: flex;
     flex-direction: inherit;
     justify-content: center;
@@ -72,6 +73,12 @@ button.accept-policy {
     margin-right: 2rem;
     margin-left: 1rem;
 }
+
+    /* Additional styles to center the icon */
+    .icon img {
+        width: 100%;
+        height: auto;
+    }
 
 /* Generelle lenkestiler */
 a {
