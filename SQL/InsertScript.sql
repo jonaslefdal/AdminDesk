@@ -33,10 +33,9 @@ INSERT INTO admindeskdatabase.serviceorders (CustomerId, Mechanic, SerialNumber,
 (9,'Mekaniker 9', 'SN3387633', '2023-11-20', 'Vinsj kroken funker ikke', 'Bytt bremsevæske', 'ABCDEF-GHIJK-LMNOP', 'Fullført', '20 timer');
 
 INSERT INTO report (ReportId, ServiceOrderId, Mechanic, ServiceType, MechanicComment, ServiceDescription, ReportWriteDate, UserSign) VALUES
-(1, 1, 'Per makaniker', 'Sjekk', 'Funker ikke','Avklart','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(3, 1, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(4, 2, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(5, 2, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(6, 3, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(7, 4, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP'),
-(8, 5, 'user2gmail.com', '2passord123', 'A456', '2023-11-17 11:15:00','2023-11-17 11:15:00', 'ABCDEF-GHIJK-LMNOP');
+(1, 1, 'Per makaniker', 'Sjekk', 'Funker ikke','Avklart','2023-11-17', 'ABCDEF-GHIJK-LMNOP'),
+(3, 1, 'Per3 makaniker', 'Fiks', 'A456', 'Pågående','2023-11-17', 'ABCDEF-GHIJK-LMNOP'),
+(4, 2, 'Per4 makaniker', 'Se på', 'A456', 'Pågående','2023-11-17', 'ABCDEF-GHIJK-LMNOP'),
+(5, 2, 'Per12 makaniker', 'Se bort', 'A456', 'Pågående','2023-11-17', 'ABCDEF-GHIJK-LMNOP'),
+(6, 3, 'Per makaniker', 'se opp', 'A456', 'Pågående','2023-11-17', 'ABCDEF-GHIJK-LMNOP'),
+(8, 5, 'Per42 makaniker', 'ned', 'A456', 'Pågående','2023-11-17', 'ABCDEF-GHIJK-LMNOP');
