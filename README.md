@@ -2,9 +2,9 @@
 <h1>Gruppe 5</h1>
 
 
-|Nhan Thomas Trong Nguyen| Omar Passi  | Viktor J G Kalhovd | Mathias Haugen | Ole Strømme | Jonas Lefdal
-| ----------- | ------------- | ------------- | -----------------| -------------- | -------------- | ------------- | 
-| https://github.com/SSneakySnek | https://github.com/Omarp321 | https://github.com/ViktorJGK | https://github.com/mathhaug | https://github.com/onstrogithub | https://github.com/jonaslefdal | 
+|Nhan Thomas Trong Nguyen| Omar Passi | Viktor J G Kalhovd | Mathias Haugen | Ole Strømme | Jonas Lefdal |
+| ----------- | ------------- | ------------- | -----------------| -------------- | -------------- | 
+| https://github.com/SSneakySnek | https://github.com/Omarp321 | https://github.com/ViktorJGK | https://github.com/mathhaug | https://github.com/onstrogithub | https://github.com/jonaslefdal |
 
 
 
