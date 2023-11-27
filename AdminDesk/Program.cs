@@ -36,7 +36,12 @@ public class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();
+                webBuilder.UseStartup<Startup>()
+                .ConfigureKestrel(options =>
+                 {
+                     options.AddServerHeader = false; // Disable the server header
+                                                     
+                 });
             })
             .ConfigureServices((hostContext, services) =>
             {
